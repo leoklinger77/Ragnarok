@@ -16,5 +16,8 @@ namespace Ragnarok.Data
         public DbSet<City> City { get; set; }
         public DbSet<Address> Address { get; set; }
         public DbSet<Contact> Contact { get; set; }
+
+        public DbSet<Employee> Employee { get; set; }
+        public DbSet<PositionName> PositionName { get; set; }
     }
 }

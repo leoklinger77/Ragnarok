@@ -8,6 +8,8 @@ using Microsoft.Extensions.Hosting;
 using Ragnarok.Data;
 using Ragnarok.Repository;
 using Ragnarok.Repository.Interfaces;
+using Ragnarok.Services.Login;
+using Ragnarok.Services.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,10 +30,23 @@ namespace Ragnarok
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
+            services.AddHttpContextAccessor();
+
+            //Session
+            services.AddMemoryCache();
+            services.AddSession(option =>
+            {
+                option.Cookie.Name = ".Session";
+                option.IdleTimeout = TimeSpan.FromSeconds(3600);
+                option.Cookie.HttpOnly = true;
+                option.Cookie.IsEssential = true;
+            });
 
             services.AddDbContext<RagnarokContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RagnarokContext")));
 
             services.AddScoped<SeedingService>();
+            services.AddScoped<Session>();
+            services.AddScoped<EmployeeLogin>();
 
             services.AddScoped<IBusinessRepository, BusinessRepository>();
             services.AddScoped<IStateRepository, StateRepository>();
@@ -56,10 +71,10 @@ namespace Ragnarok
             }
             app.UseHttpsRedirection();
             app.UseStaticFiles();
-
             app.UseRouting();
-
             app.UseAuthorization();
+
+            app.UseSession();
 
             app.UseEndpoints(endpoints =>
             {

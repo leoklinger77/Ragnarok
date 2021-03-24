@@ -131,6 +131,9 @@ namespace Ragnarok.Migrations
                     b.Property<string>("DDD")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("EmployeeId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("InsertDate")
                         .HasColumnType("datetime2");
 
@@ -147,7 +150,79 @@ namespace Ragnarok.Migrations
 
                     b.HasIndex("BusinessId");
 
+                    b.HasIndex("EmployeeId");
+
                     b.ToTable("TB_Contact");
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.Employee", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Action")
+                        .HasColumnType("bit");
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CPF")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Login")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Password")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("PositionNameId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("PositionNameId");
+
+                    b.ToTable("TB_Employee");
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.PositionName", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("Name")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_PositionName");
                 });
 
             modelBuilder.Entity("Ragnarok.Models.State", b =>
@@ -245,6 +320,25 @@ namespace Ragnarok.Migrations
                     b.HasOne("Ragnarok.Models.Business", "Business")
                         .WithMany("Contacts")
                         .HasForeignKey("BusinessId");
+
+                    b.HasOne("Ragnarok.Models.Employee", "Employee")
+                        .WithMany()
+                        .HasForeignKey("EmployeeId");
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.Employee", b =>
+                {
+                    b.HasOne("Ragnarok.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ragnarok.Models.PositionName", "PositionName")
+                        .WithMany("Employee")
+                        .HasForeignKey("PositionNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }
