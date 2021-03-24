@@ -2,7 +2,55 @@
     ViewData["Title"] = "Home Page";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
+<div class="row">
+    <div class="col-sm-5 col-sm-offset-1 col-lg-4 col-lg-offset-2">
+        <div class="content-box-bordered login-box box-with-help">
+            <h1>Faça login na sua conta</h1>
+            <form class="form-horizontal" role="form">
+                <div class="form-group">
+                    <label for="inputEmail3b" class="control-label sr-only">Email</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon ion-email"></i></span>
+                            <input type="email" class="form-control" id="inputEmail3b" placeholder="E-mail">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label for="inputPassword3b" class="control-label sr-only">Password</label>
+                    <div class="col-sm-12">
+                        <div class="input-group">
+                            <span class="input-group-addon"><i class="icon ion-locked"></i></span>
+                            <input type="password" class="form-control" id="inputPassword3b" placeholder="Password">
+                        </div>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-sm-12">
+                        <label class="fancy-checkbox">
+                            <input type="checkbox">
+                            <span>Remember me</span>
+                        </label>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <div class="col-xs-7">
+                        <button type="submit" class="btn btn-success btn-block">Entrar</button>
+                    </div>
+                    <div class="col-xs-5 text-right">
+                        <a asp-action="Forgot"><em>Esqueceu a senha?</em></a>
+                    </div>
+                </div>
+            </form>            
+            
+        </div>
+    </div>
+    <div class="col-sm-5 col-lg-4">
+        <div class="login-copytext">
+            <h2>Heading Text</h2>
+            <p>Completely strategize mission-critical human capital before installed base intellectual capital. Proactively fashion ubiquitous architectures and value-added solutions.</p>
+            <h2>Another Heading Text</h2>
+            <p>Phosfluorescently underwhelm unique meta-services before impactful quality vectors.</p>
+        </div>
+    </div>
 </div>

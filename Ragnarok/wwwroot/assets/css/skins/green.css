@@ -1,0 +1,55 @@
+/*------------------------------------------------*/
+/*	Skin: Green
+/*------------------------------------------------*/
+/* top bar */
+.top-bar {
+  background-color: #94c632;
+  border-bottom-color: #769d28;
+}
+.top-bar .action-group .btn-group > a {
+  color: #769d28;
+}
+.top-bar .action-group .action-item > a {
+  color: #769d28;
+}
+.top-bar .action-group .action-item > a:hover, .top-bar .action-group .action-item > a:active, .top-bar .action-group .action-item > a.active {
+  color: #fff;
+}
+.top-bar .logged-user .btn-group > a {
+  color: #fff;
+}
+.top-bar .logged-user .btn img {
+  border-color: #769d28;
+}
+.top-bar .action-group .btn-group > a:hover,
+.top-bar .logged-user .btn-group > a:hover {
+  color: #fff;
+}
+.top-bar .action-group .btn-group.open > a,
+.top-bar .logged-user .btn-group.open > a {
+  color: #fff;
+}
+
+/* minified and off-canvas toggle button */
+.btn-nav-sidebar-minified i,
+.btn-off-canvas i {
+  color: #fff;
+}
+.btn-nav-sidebar-minified i:hover,
+.btn-off-canvas i:hover {
+  color: #fff;
+}
+
+/* custom nav pills */
+.nav-pills-custom-minimal > li.active a {
+  border-top-color: #94c632;
+}
+.nav-pills-custom-minimal > li.active a:hover, .nav-pills-custom-minimal > li.active a:focus {
+  border-top-color: #94c632;
+}
+.nav-pills-custom-minimal.custom-minimal-bottom > li.active a {
+  border-bottom-color: #94c632;
+}
+.nav-pills-custom-minimal.custom-minimal-bottom > li.active a:hover, .nav-pills-custom-minimal.custom-minimal-bottom > li.active a:focus {
+  border-bottom-color: #94c632;
+}

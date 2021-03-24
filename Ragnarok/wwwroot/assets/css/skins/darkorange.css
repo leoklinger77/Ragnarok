@@ -1,0 +1,55 @@
+/*------------------------------------------------*/
+/*	Skin: Dark Orange
+/*------------------------------------------------*/
+/* top bar */
+.top-bar {
+  background-color: #ff9800;
+  border-bottom-color: #cc7a00;
+}
+.top-bar .action-group .btn-group > a {
+  color: #cc7a00;
+}
+.top-bar .action-group .action-item > a {
+  color: #cc7a00;
+}
+.top-bar .action-group .action-item > a:hover, .top-bar .action-group .action-item > a:active, .top-bar .action-group .action-item > a.active {
+  color: #fff;
+}
+.top-bar .logged-user .btn-group > a {
+  color: #cc7a00;
+}
+.top-bar .logged-user .btn img {
+  border-color: #fff;
+}
+.top-bar .action-group .btn-group > a:hover,
+.top-bar .logged-user .btn-group > a:hover {
+  color: #fff;
+}
+.top-bar .action-group .btn-group.open > a,
+.top-bar .logged-user .btn-group.open > a {
+  color: #fff;
+}
+
+/* minified and off-canvas toggle button */
+.btn-nav-sidebar-minified i,
+.btn-off-canvas i {
+  color: #fff;
+}
+.btn-nav-sidebar-minified i:hover,
+.btn-off-canvas i:hover {
+  color: #fff;
+}
+
+/* custom nav pills */
+.nav-pills-custom-minimal > li.active a {
+  border-top-color: #ff9800;
+}
+.nav-pills-custom-minimal > li.active a:hover, .nav-pills-custom-minimal > li.active a:focus {
+  border-top-color: #ff9800;
+}
+.nav-pills-custom-minimal.custom-minimal-bottom > li.active a {
+  border-bottom-color: #ff9800;
+}
+.nav-pills-custom-minimal.custom-minimal-bottom > li.active a:hover, .nav-pills-custom-minimal.custom-minimal-bottom > li.active a:focus {
+  border-bottom-color: #ff9800;
+}
