@@ -32,6 +32,10 @@ namespace Ragnarok
             services.AddDbContext<RagnarokContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RagnarokContext")));
 
             services.AddScoped<IBusinessRepository, BusinessRepository>();
+            services.AddScoped<IStateRepository, StateRepository>();
+            services.AddScoped<ICityRepository, CityRepository>();
+            services.AddScoped<IAddressRepository, AddressRepository>();
+            services.AddScoped<IContactRepository, ContactRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
