@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
 {
+    [Table("BusinessPhysical")]
     public class BusinessPhysical : Business
     {
         public string FullName { get; set; }

@@ -1,11 +1,10 @@
 ﻿using Ragnarok.Models.Enums;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
 {
+    [Table("TB_Contact")]
     public class Contact
     {
         public int Id { get; set; }

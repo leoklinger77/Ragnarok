@@ -1,7 +1,9 @@
 ﻿using System;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
 {
+    [Table("TB_Address")]
     public class Address
     {
         public int Id { get; set; }

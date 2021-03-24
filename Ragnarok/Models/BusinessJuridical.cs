@@ -1,7 +1,9 @@
-﻿using System;
+﻿using Microsoft.AspNetCore.Mvc;
+using System;
 
 namespace Ragnarok.Models
 {
+    [Area("TB_BusinessJuridical")]
     public class BusinessJuridical : Business
     {
         public string CompanyName { get; set; }

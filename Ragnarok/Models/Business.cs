@@ -1,8 +1,10 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
 {
+    [Table("TB_Business")]
     public abstract class Business
     {
         public int Id { get; set; }
