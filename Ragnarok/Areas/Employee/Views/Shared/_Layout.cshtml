@@ -1,0 +1,336 @@
+﻿<!DOCTYPE html>
+<html lang="en" class="no-js">
+<head>
+    <title>@ViewBag.Title</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">    
+    <meta name="author" content="Leandro Klinger">
+    <!-- CSS -->
+    <link href="~/assets/css/bootstrap.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/ionicons.css" rel="stylesheet" type="text/css">
+    <link href="~/assets/css/main.css" rel="stylesheet" type="text/css">
+    <!-- Google Fonts -->
+    <link href='http://fonts.googleapis.com/css?family=Open+Sans:400italic,300,400,700' rel='stylesheet' type='text/css'>
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="144x144" href="~/assets/ico/queenadmin-favicon144x144.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="114x114" href="~/assets/ico/queenadmin-favicon114x114.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="72x72" href="~/assets/ico/queenadmin-favicon72x72.png">
+    <link rel="apple-touch-icon-precomposed" type="image/png" sizes="57x57" href="~/assets/ico/queenadmin-favicon57x57.png">
+    @*<link rel="shortcut icon" href="~/assets/ico/favicon.ico">*@
+</head>
+
+<body class="fixed-top-active dashboard">
+    <!-- WRAPPER -->
+    <div class="wrapper">
+        <!-- TOP NAV BAR -->
+        <nav class="top-bar navbar-fixed-top" role="navigation">
+            <div class="logo-area">
+                <a href="#" id="btn-nav-sidebar-minified" class="btn btn-link btn-nav-sidebar-minified pull-left"><i class="icon ion-arrow-swap"></i></a>
+                <a class="btn btn-link btn-off-canvas pull-left"><i class="icon ion-navicon"></i></a>
+                <div class="logo pull-left">
+                    <a href="index.html">
+                        <img src="/assets/img/queenadmin-logo.png" alt="QueenAdmin Logo" />
+                    </a>
+                </div>
+            </div>
+            <form class="form-inline searchbox hidden-xs" role="form">
+                <div class="form-group">
+                    <div class="input-group">
+                        <span class="input-group-addon"><i class="icon ion-ios-search"></i></span>
+                        <input type="search" class="form-control" placeholder="search the site ...">
+                    </div>
+                </div>
+            </form>
+            <div class="top-bar-right pull-right">
+                <div class="action-group hidden-xs hidden-sm">
+                    <ul>
+                        <!-- skins -->
+                        <li class="action-item skins">
+                            <form id="style-switcher">
+                                <div class="btn-group">
+                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" aria-expanded="true">
+                                        <i class="icon ion-ios-gear-outline"></i>
+                                    </a>
+                                    <div class="arrow"></div>
+                                    <ul class="dropdown-menu" role="menu">
+                                        <li>
+                                            <p><strong>Dark Side Nav</strong></p>
+                                            <button type="button" class="btn-skin nav-dark full-dark" data-skin="assets/css/skins/full-dark.css"></button>
+                                            <button type="button" class="btn-skin nav-dark green" data-skin="assets/css/skins/green.css"></button>
+                                            <button type="button" class="btn-skin nav-dark blue" data-skin="assets/css/skins/blue.css"></button>
+                                            <button type="button" class="btn-skin nav-dark darkorange" data-skin="assets/css/skins/darkorange.css"></button>
+                                            <button type="button" class="btn-skin nav-dark seagreen" data-skin="assets/css/skins/seagreen.css"></button>
+                                        </li>
+                                        <li>
+                                            <p><strong>Light Side Nav</strong></p>
+                                            <button type="button" class="btn-skin nav-light full-white" data-skin="assets/css/skins/full-white.css"></button>
+                                            <button type="button" class="btn-skin nav-light green green-light-nav" data-skin="assets/css/skins/green-light-nav.css"></button>
+                                            <button type="button" class="btn-skin nav-light blue blue-light-nav" data-skin="assets/css/skins/blue-light-nav.css"></button>
+                                            <button type="button" class="btn-skin nav-light darkorange darkorange-light-nav" data-skin="assets/css/skins/darkorange-light-nav.css"></button>
+                                            <button type="button" class="btn-skin nav-light seagreen seagreen-light-nav" data-skin="assets/css/skins/seagreen-light-nav.css"></button>
+                                        </li>
+                                        <li>
+                                            <label class="fancy-checkbox">
+                                                <input type="checkbox" id="fixed-top-nav" checked="checked"><span>Fixed Top Navigation</span>
+                                            </label>
+                                        </li>
+                                        <li data-toggle="popover" data-placement="top" data-container="body" data-content="If checked, try expanding <strong>Pages</strong> menu item on left sidebar. Disabled on minified sidebar." data-trigger="hover">
+                                            <label class="fancy-checkbox">
+                                                <input type="checkbox" id="fixed-left-nav"><span>Fixed Left Navigation</span>
+                                            </label>
+                                        </li>
+                                        <li class="menu-item-footer"><a href="#" title="Reset Style" class="reset-style">Reset Style</a></li>
+                                    </ul>
+                                </div>
+                            </form>
+                        </li>
+                        <!-- end skins -->
+                        <!-- notification: inbox -->
+                        <li class="action-item inbox">
+                            <div class="btn-group">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon ion-ios-email-outline"></i><span class="count">2</span>
+                                </a>
+                                <div class="arrow"></div>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="menu-item-header">You have 2 unread messages</li>
+                                    <li class="inbox-item clearfix">
+                                        <a href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="media-object" src="~/assets/img/user1.png" alt="Antonio">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading name">Antonius</h5>
+                                                    <p class="text">The problem just happened this morning. I can't see ...</p>
+                                                    <span class="timestamp text-muted">4 minutes ago</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="inbox-item unread clearfix">
+                                        <a href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="media-object" src="~/assets/img/user2.png" alt="Antonio">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading name">Michael</h5>
+                                                    <p class="text">Hey dude, cool theme!</p>
+                                                    <span class="timestamp text-muted">2 hours ago</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="inbox-item unread clearfix">
+                                        <a href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="media-object" src="~/assets/img/user3.png" alt="Antonio">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading name">Stella</h5>
+                                                    <p class="text">Ok now I can see the status for each item. Thanks! :D</p>
+                                                    <span class="timestamp text-muted">Oct 6</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="inbox-item clearfix">
+                                        <a href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="media-object" src="~/assets/img/user4.png" alt="Antonio">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading name">Jane Doe</h5>
+                                                    <p class="text"><i class="icon ion-reply text-muted"></i> Please check the status of your ...</p>
+                                                    <span class="timestamp text-muted">Oct 2</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="inbox-item clearfix">
+                                        <a href="#">
+                                            <div class="media">
+                                                <div class="pull-left">
+                                                    <img class="media-object" src="~/assets/img/user5.png" alt="Antonio">
+                                                </div>
+                                                <div class="media-body">
+                                                    <h5 class="media-heading name">John Simmons</h5>
+                                                    <p class="text"><i class="icon ion-reply text-muted"></i> I've fixed the problem :)</p>
+                                                    <span class="timestamp text-muted">Sep 12</span>
+                                                </div>
+                                            </div>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item-footer">
+                                        <a href="#">View All Messages</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- end notification: inbox -->
+                        <!-- notification: general -->
+                        <li class="action-item general">
+                            <div class="btn-group">
+                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+                                    <i class="icon ion-ios-bell-outline"></i><span class="count">8</span>
+                                </a>
+                                <ul class="dropdown-menu" role="menu">
+                                    <li class="menu-item-header">You have 8 notifications</li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-chatbubble text-success"></i>
+                                            <span class="text">New comment on the blog post</span>
+                                            <span class="timestamp text-muted">1 minute ago</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-person-add text-success"></i>
+                                            <span class="text">New registered user</span>
+                                            <span class="timestamp text-muted">12 minutes ago</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-chatbubble text-success"></i>
+                                            <span class="text">New comment on the blog post</span>
+                                            <span class="timestamp text-muted">18 minutes ago</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-ios-cart text-danger"></i>
+                                            <span class="text">4 new sales order</span>
+                                            <span class="timestamp text-muted">4 hours ago</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-edit yellow-font"></i>
+                                            <span class="text">3 product reviews awaiting moderation</span>
+                                            <span class="timestamp text-muted">1 day ago</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-chatbubble text-success"></i>
+                                            <span class="text">New comment on the blog post</span>
+                                            <span class="timestamp text-muted">3 days ago</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-chatbubble text-success"></i>
+                                            <span class="text">New comment on the blog post</span>
+                                            <span class="timestamp text-muted">Oct 15</span>
+                                        </a>
+                                    </li>
+                                    <li>
+                                        <a href="#">
+                                            <i class="icon ion-alert-circled text-danger"></i>
+                                            <span class="text text-danger">Low disk space!</span>
+                                            <span class="timestamp text-muted">Oct 11</span>
+                                        </a>
+                                    </li>
+                                    <li class="menu-item-footer">
+                                        <a href="#">View All Notifications</a>
+                                    </li>
+                                </ul>
+                            </div>
+                        </li>
+                        <!-- end notification: general -->
+                    </ul>
+                </div>
+                <div class="logged-user">
+                    <div class="btn-group">
+                        <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
+                            <img src="~/assets/img/user-loggedin.png" alt="Sebastian" /><span class="name">Sebastian <i class="icon ion-ios-arrow-down"></i></span>
+                        </a>
+                        <ul class="dropdown-menu" role="menu">
+                            <li>
+                                <a href="#">
+                                    <i class="icon ion-ios-person"></i>
+                                    <span class="text">Profile</span>
+                                </a>
+                            </li>                            
+                            <li>
+                                <a href="#">
+                                    <i class="icon ion-power"></i>
+                                    <span class="text">Logout</span>
+                                </a>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+                <div class="action-group visible-lg-inline-block">
+                    <ul>
+                        <li class="action-item chat">
+                            <a href="#" id="toggle-right-sidebar" class="toggle-right-sidebar"><i class="icon ion-ios-chatboxes-outline"></i><span class="count">5</span></a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <!-- END TOP NAV BAR -->
+        <!-- COLUMN LEFT -->
+        <div id="col-left" class="col-left">
+            <div class="main-nav-wrapper">
+                <nav id="main-nav" class="main-nav">
+                    <h3>MAIN</h3>
+                    <ul class="main-menu">
+                        <li class="has-submenu active">
+                            <a href="#" class="submenu-toggle"><i class="icon ion-ios-speedometer-outline"></i><span class="text">Dashboards</span></a>
+                            <ul class="list-unstyled sub-menu collapse in">
+                                <li class="active"><a href="index.html"><span class="text">Dashboard v1</span></a></li>
+                                <li><a href="index2.html"><span class="text">Dashboard v2</span></a></li>
+                            </ul>
+                        </li>                       
+                    </ul>
+                    <h3>ESSENTIALS</h3>
+                    <ul class="main-menu">
+                        <li class="has-submenu">
+                            <a href="#" class="submenu-toggle"><i class="icon ion-ios-pie-outline"></i><span class="text">Charts</span></a>
+                            <ul class="list-unstyled sub-menu collapse">
+                                <li class="active"><a href="charts-basic.html"><span class="text">Basic</span></a></li>
+                                <li><a href="charts-interactive.html"><span class="text">Interactive Charts</span></a></li>
+                            </ul>
+                        </li>                        
+                    </ul>
+                </nav>
+            </div>
+        </div>
+        <!-- END COLUMN LEFT -->
+        <!-- COLUMN RIGHT -->
+        <div id="col-right" class="col-right ">
+            @RenderBody()
+        </div>
+        <!-- END COLUMN RIGHT -->
+    </div>
+    <!-- END WRAPPER -->
+    <!-- Javascript -->
+    <script src="~/assets/js/jquery/jquery-2.1.0.min.js"></script>
+    <script src="~/assets/js/bootstrap/bootstrap.js"></script>
+    <script src="~/assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js"></script>
+    <script src="~/assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
+    <script src="~/assets/js/queen-common.js"></script>
+    <script src="~/assets/js/plugins/stat/flot/jquery.flot.min.js"></script>
+    <script src="~/assets/js/plugins/stat/flot/jquery.flot.resize.min.js"></script>
+    <script src="~/assets/js/plugins/stat/flot/jquery.flot.time.min.js"></script>
+    <script src="~/assets/js/plugins/stat/flot/jquery.flot.orderBars.js"></script>
+    <script src="~/assets/js/plugins/stat/flot/jquery.flot.tooltip.min.js"></script>
+    <script src="~/assets/js/plugins/mapael/raphael/raphael-min.js"></script>
+    <script src="~/assets/js/plugins/mapael/jquery.mapael.js"></script>
+    <script src="~/assets/js/plugins/mapael/maps/world_countries.js"></script>
+    <script src="~/assets/js/plugins/bootstrap-progressbar/bootstrap-progressbar.min.js"></script>
+    <script src="~/assets/js/plugins/moment/moment.min.js"></script>
+    <script src="~/assets/js/plugins/bootstrap-editable/bootstrap-editable.min.js"></script>
+    <script src="~/assets/js/plugins/jquery-maskedinput/jquery.masked-input.min.js"></script>
+    <script src="~/assets/js/queen-charts.js"></script>
+    <script src="~/assets/js/queen-maps.js"></script>
+    <script src="~/assets/js/queen-elements.js"></script>
+</body>
+
+</html>
