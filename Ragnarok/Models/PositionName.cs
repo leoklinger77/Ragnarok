@@ -4,32 +4,31 @@ using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
 {
-    [Table("TB_State")]
-    public class State
+    [Table("TB_PositionName")]
+    public class PositionName
     {
         public int Id { get; set; }
         public string Name { get; set; }
-        public string Sigle { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public ICollection<City> Cities { get; set; } = new HashSet<City>();
+        public ICollection<Employee> Employee { get; set; } = new HashSet<Employee>();
 
-        public State()
+        public PositionName()
         {
         }
-        public State(int id, string name, string sigle, DateTime insertDate, DateTime? updateDate)
+
+        public PositionName(int id, string name, DateTime insertDate, DateTime? updateDate)
         {
             Id = id;
             Name = name;
-            Sigle = sigle;
             InsertDate = insertDate;
             UpdateDate = updateDate;
         }
 
         public override bool Equals(object obj)
         {
-            return obj is State state &&
-                   Id == state.Id;
+            return obj is PositionName name &&
+                   Id == name.Id;
         }
 
         public override int GetHashCode()

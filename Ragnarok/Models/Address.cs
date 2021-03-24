@@ -14,7 +14,7 @@ namespace Ragnarok.Models
         public string Reference { get; set; }
         public string Neighborhood { get; set; }
         public DateTime InsertDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public City City{ get; set; }
         public int CityId { get; set; }
 
@@ -22,7 +22,7 @@ namespace Ragnarok.Models
         {
         }
 
-        public Address(int id, string zipCode, string street, int number, string complement, string reference, string neighborhood, DateTime insertDate, DateTime updateDate, City city)
+        public Address(int id, string zipCode, string street, int number, string complement, string reference, string neighborhood, DateTime insertDate, DateTime? updateDate, City city)
         {
             Id = id;
             ZipCode = zipCode;

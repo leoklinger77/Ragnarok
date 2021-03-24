@@ -12,7 +12,7 @@ namespace Ragnarok.Models
         [EmailValidationBusiness]
         public string Email { get; set; }
         public DateTime InsertDate { get; set; }
-        public DateTime UpdateDate { get; set; }
+        public DateTime? UpdateDate { get; set; }
         public Address Address { get; set; }
         public int AddressId { get; set; }
         public ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
@@ -20,7 +20,7 @@ namespace Ragnarok.Models
         public Business()
         {
         }
-        protected Business(int id, string email, DateTime insertDate, DateTime updateDate, Address address)
+        protected Business(int id, string email, DateTime insertDate, DateTime? updateDate, Address address)
         {
             Id = id;
             InsertDate = insertDate;

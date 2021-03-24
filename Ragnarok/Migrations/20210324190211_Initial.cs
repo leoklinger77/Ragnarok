@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ragnarok.Migrations
 {
-    public partial class Intial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -16,7 +16,7 @@ namespace Ragnarok.Migrations
                     Name = table.Column<string>(nullable: true),
                     Sigle = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: false)
+                    UpdateDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -31,7 +31,7 @@ namespace Ragnarok.Migrations
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
                     StateId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -58,7 +58,7 @@ namespace Ragnarok.Migrations
                     Reference = table.Column<string>(nullable: true),
                     Neighborhood = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
                     CityId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
@@ -78,8 +78,9 @@ namespace Ragnarok.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
                     AddressId = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     CompanyName = table.Column<string>(nullable: true),
@@ -111,7 +112,7 @@ namespace Ragnarok.Migrations
                     DDD = table.Column<string>(nullable: true),
                     Number = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
                     BusinessId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
