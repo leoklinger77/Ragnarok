@@ -6,6 +6,8 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Ragnarok.Data;
+using Ragnarok.Repository;
+using Ragnarok.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -28,6 +30,8 @@ namespace Ragnarok
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
 
             services.AddDbContext<RagnarokContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RagnarokContext")));
+
+            services.AddScoped<IBusinessRepository, BusinessRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

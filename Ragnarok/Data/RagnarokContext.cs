@@ -8,7 +8,7 @@ namespace Ragnarok.Data
         public RagnarokContext(DbContextOptions<RagnarokContext> options) : base(options)
         {
         }
-
+        public DbSet<Business> Business { get; set; }
         public DbSet<BusinessJuridical> BusinessJuridical { get; set; }
         public DbSet<BusinessPhysical> BusinessPhysicals { get; set; }
 
