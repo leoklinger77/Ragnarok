@@ -171,6 +171,9 @@ namespace Ragnarok.Migrations
                     b.Property<DateTime>("BirthDay")
                         .HasColumnType("datetime2");
 
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
                     b.Property<string>("CPF")
                         .HasColumnType("nvarchar(max)");
 
@@ -199,6 +202,8 @@ namespace Ragnarok.Migrations
 
                     b.HasIndex("AddressId");
 
+                    b.HasIndex("BusinessId");
+
                     b.HasIndex("PositionNameId");
 
                     b.ToTable("TB_Employee");
@@ -211,6 +216,9 @@ namespace Ragnarok.Migrations
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
+                    b.Property<int>("BusinessId")
+                        .HasColumnType("int");
+
                     b.Property<DateTime>("InsertDate")
                         .HasColumnType("datetime2");
 
@@ -221,6 +229,8 @@ namespace Ragnarok.Migrations
                         .HasColumnType("datetime2");
 
                     b.HasKey("Id");
+
+                    b.HasIndex("BusinessId");
 
                     b.ToTable("TB_PositionName");
                 });
@@ -334,9 +344,24 @@ namespace Ragnarok.Migrations
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
+                    b.HasOne("Ragnarok.Models.Business", "Business")
+                        .WithMany("Employee")
+                        .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("Ragnarok.Models.PositionName", "PositionName")
                         .WithMany("Employee")
                         .HasForeignKey("PositionNameId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.PositionName", b =>
+                {
+                    b.HasOne("Ragnarok.Models.Business", "Business")
+                        .WithMany()
+                        .HasForeignKey("BusinessId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

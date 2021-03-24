@@ -1,4 +1,5 @@
-﻿using Ragnarok.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Ragnarok.Data;
 using Ragnarok.Models;
 using Ragnarok.Repository.Interfaces;
 using System;
@@ -47,7 +48,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.BusinessPhysicals.Where(x => x.CPF == cpf).ToList();
+                return _context.BusinessPhysicals.Where(x => x.CPF == cpf).AsNoTracking().ToList();
             }
             catch (Exception e)
             {
@@ -59,7 +60,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.BusinessJuridical.Where(x => x.CNPJ == cnpj).ToList();
+                return _context.BusinessJuridical.Where(x => x.CNPJ == cnpj).AsNoTracking().ToList();
             }
             catch (Exception e)
             {

@@ -16,6 +16,7 @@ namespace Ragnarok.Models
         public Address Address { get; set; }
         public int AddressId { get; set; }
         public ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
+        public ICollection<Employee> Employee { get; set; } = new HashSet<Employee>();
 
         public Business()
         {

@@ -83,7 +83,8 @@ namespace Ragnarok.Data
             PositionName positionName = new PositionName
             {
                 Name = "Desenvolvedor",
-                InsertDate = DateTime.Now
+                InsertDate = DateTime.Now,
+                Business = business1
             };
 
             Employee employee = new Employee
@@ -97,7 +98,8 @@ namespace Ragnarok.Data
                 InsertDate = DateTime.Now,
                 Action = true,
                 BirthDay = DateTime.Parse("11/09/1995"),
-                PositionName = positionName
+                PositionName = positionName,
+                Business = business1
             };
 
             Contact contact2 = new Contact

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Ragnarok.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -14,7 +15,12 @@ namespace Ragnarok.Controllers
         public IActionResult Index()
         {
             return View();
-        }        
+        }      
+        [HttpPost]
+        public IActionResult Login(Employee employee)
+        {
+            return View();
+        }
 
         public IActionResult Forgot()
         {

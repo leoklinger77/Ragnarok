@@ -20,6 +20,8 @@ namespace Ragnarok.Models
         public string ConfirmePasswor { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public Business Business { get; set; }
+        public int BusinessId { get; set; }
         public PositionName PositionName { get; set; }
         public int PositionNameId { get; set; }
         public Address Address { get; set; }
@@ -30,7 +32,7 @@ namespace Ragnarok.Models
         }
 
         public Employee(int id, string name, string cPF, DateTime birthDay, bool action, string email, 
-            string login, string password, string confirmePasswor, DateTime insertDate, DateTime? updateDate, 
+            string login, string password, string confirmePasswor, DateTime insertDate, DateTime? updateDate, Business business,
             PositionName positionName, Address address)
         {
             Id = id;
@@ -46,6 +48,7 @@ namespace Ragnarok.Models
             UpdateDate = updateDate;
             PositionName = positionName;
             Address = address;
+            Business = business;
         }
 
         public override bool Equals(object obj)

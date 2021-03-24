@@ -11,18 +11,21 @@ namespace Ragnarok.Models
         public string Name { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
+        public Business Business { get; set; }
+        public int BusinessId { get; set; }
         public ICollection<Employee> Employee { get; set; } = new HashSet<Employee>();
 
         public PositionName()
         {
         }
 
-        public PositionName(int id, string name, DateTime insertDate, DateTime? updateDate)
+        public PositionName(int id, string name, DateTime insertDate, DateTime? updateDate, Business business)
         {
             Id = id;
             Name = name;
             InsertDate = insertDate;
             UpdateDate = updateDate;
+            Business = business;
         }
 
         public override bool Equals(object obj)

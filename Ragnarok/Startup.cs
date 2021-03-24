@@ -73,6 +73,7 @@ namespace Ragnarok
             services.AddScoped<ICityRepository, CityRepository>();
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
+            services.AddScoped<IPositionNameRepository, PositionNameRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

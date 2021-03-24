@@ -8,21 +8,6 @@ namespace Ragnarok.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TB_PositionName",
-                columns: table => new
-                {
-                    Id = table.Column<int>(nullable: false)
-                        .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    InsertDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_TB_PositionName", x => x.Id);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "TB_State",
                 columns: table => new
                 {
@@ -118,6 +103,28 @@ namespace Ragnarok.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TB_PositionName",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Name = table.Column<string>(nullable: true),
+                    InsertDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    BusinessId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_PositionName", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TB_PositionName_TB_Business_BusinessId",
+                        column: x => x.BusinessId,
+                        principalTable: "TB_Business",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_Employee",
                 columns: table => new
                 {
@@ -132,6 +139,7 @@ namespace Ragnarok.Migrations
                     Password = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
+                    BusinessId = table.Column<int>(nullable: false),
                     PositionNameId = table.Column<int>(nullable: false),
                     AddressId = table.Column<int>(nullable: false)
                 },
@@ -145,11 +153,17 @@ namespace Ragnarok.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
+                        name: "FK_TB_Employee_TB_Business_BusinessId",
+                        column: x => x.BusinessId,
+                        principalTable: "TB_Business",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.NoAction);
+                    table.ForeignKey(
                         name: "FK_TB_Employee_TB_PositionName_PositionNameId",
                         column: x => x.PositionNameId,
                         principalTable: "TB_PositionName",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -214,9 +228,19 @@ namespace Ragnarok.Migrations
                 column: "AddressId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_Employee_BusinessId",
+                table: "TB_Employee",
+                column: "BusinessId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_Employee_PositionNameId",
                 table: "TB_Employee",
                 column: "PositionNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_PositionName_BusinessId",
+                table: "TB_PositionName",
+                column: "BusinessId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
@@ -225,16 +249,16 @@ namespace Ragnarok.Migrations
                 name: "TB_Contact");
 
             migrationBuilder.DropTable(
-                name: "TB_Business");
-
-            migrationBuilder.DropTable(
                 name: "TB_Employee");
 
             migrationBuilder.DropTable(
-                name: "TB_Address");
+                name: "TB_PositionName");
 
             migrationBuilder.DropTable(
-                name: "TB_PositionName");
+                name: "TB_Business");
+
+            migrationBuilder.DropTable(
+                name: "TB_Address");
 
             migrationBuilder.DropTable(
                 name: "TB_City");
