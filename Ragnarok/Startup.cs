@@ -8,11 +8,14 @@ using Microsoft.Extensions.Hosting;
 using Ragnarok.Data;
 using Ragnarok.Repository;
 using Ragnarok.Repository.Interfaces;
+using Ragnarok.Services.Email;
 using Ragnarok.Services.Login;
 using Ragnarok.Services.Session;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Net;
+using System.Net.Mail;
 using System.Threading.Tasks;
 
 namespace Ragnarok
@@ -32,6 +35,22 @@ namespace Ragnarok
             services.AddControllersWithViews().AddRazorRuntimeCompilation();
             services.AddHttpContextAccessor();
 
+            //SMTP
+            services.AddScoped<SmtpClient>(option =>
+            {
+                SmtpClient smtp = new SmtpClient()
+                {
+                    Host = Configuration.GetValue<string>("Email:ServerSMTP"),
+                    Port = Configuration.GetValue<int>("Email:Port"),
+                    UseDefaultCredentials = false,
+                    Credentials = new NetworkCredential(Configuration.GetValue<string>("Email:UserName"), Configuration.GetValue<string>("Email:Password")),
+                    EnableSsl = true
+                };
+
+                return smtp;
+            });
+
+
             //Session
             services.AddMemoryCache();
             services.AddSession(option =>
@@ -47,6 +66,7 @@ namespace Ragnarok
             services.AddScoped<SeedingService>();
             services.AddScoped<Session>();
             services.AddScoped<EmployeeLogin>();
+            services.AddScoped<SendEmail>();
 
             services.AddScoped<IBusinessRepository, BusinessRepository>();
             services.AddScoped<IStateRepository, StateRepository>();
