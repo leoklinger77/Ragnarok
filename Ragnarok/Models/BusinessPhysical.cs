@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ragnarok.Services.Validation.Business;
+using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
@@ -7,6 +8,7 @@ namespace Ragnarok.Models
     public class BusinessPhysical : Business
     {
         public string FullName { get; set; }
+        [CPFValidationBusiness]
         public string CPF { get; set; }
         public DateTime BirthDay { get; set; }
 
@@ -14,8 +16,8 @@ namespace Ragnarok.Models
         {
         }
 
-        public BusinessPhysical(int id, DateTime insertDate, DateTime updateDate, Address address, string fullName, string cPF, DateTime birthDay) 
-            : base(id, insertDate, updateDate, address)
+        public BusinessPhysical(int id, string email, DateTime insertDate, DateTime updateDate, Address address, string fullName, string cPF, DateTime birthDay)
+            : base(id, email, insertDate, updateDate, address)
         {
             FullName = fullName;
             CPF = cPF;

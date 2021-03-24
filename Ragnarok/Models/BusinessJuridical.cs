@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Ragnarok.Services.Validation.Business;
 using System;
 
 namespace Ragnarok.Models
@@ -8,6 +9,7 @@ namespace Ragnarok.Models
     {
         public string CompanyName { get; set; }
         public string FantasyName { get; set; }
+        [CNPJValidationBusiness]
         public string CNPJ { get; set; }
         public DateTime OpeningDate { get; set; }
 
@@ -15,8 +17,8 @@ namespace Ragnarok.Models
         {
         }
 
-        public BusinessJuridical(int id, DateTime insertDate, DateTime updateDate, Address address, string companyName, string fantasyName, string cNPJ, DateTime openingDate)
-            : base(id, insertDate, updateDate, address)
+        public BusinessJuridical(int id,string email, DateTime insertDate, DateTime updateDate, Address address, string companyName, string fantasyName, string cNPJ, DateTime openingDate)
+            : base(id, email, insertDate, updateDate, address)
         {
             CompanyName = companyName;
             FantasyName = fantasyName;
