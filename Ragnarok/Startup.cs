@@ -74,6 +74,9 @@ namespace Ragnarok
             services.AddScoped<IAddressRepository, AddressRepository>();
             services.AddScoped<IContactRepository, ContactRepository>();
             services.AddScoped<IPositionNameRepository, PositionNameRepository>();
+
+            services.AddScoped<IEmployeeRepository, EmployeeRepository>();
+            services.AddScoped<IPositionNameRepository, PositionNameRepository>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -99,6 +102,10 @@ namespace Ragnarok
 
             app.UseEndpoints(endpoints =>
             {
+                endpoints.MapControllerRoute(
+                    name: "areas",
+                    pattern: "{area:exists}/{controller=Home}/{action=Index}/{id?}"
+                  );
                 endpoints.MapControllerRoute(
                     name: "default",
                     pattern: "{controller=Home}/{action=Index}/{id?}");

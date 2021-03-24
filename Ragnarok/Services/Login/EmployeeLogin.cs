@@ -13,12 +13,12 @@ namespace Ragnarok.Services.Login
             _session = session;
         }
 
-        public void SetCliente(Employee employee)
+        public void SetEmployee(Employee employee)
         {
             _session.Insert(Key, JsonConvert.SerializeObject(employee));
         }
 
-        public Employee GetCliente()
+        public Employee GetEmployee()
         {
             if (_session.GetConsult(Key) != null)
             {

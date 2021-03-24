@@ -41,6 +41,18 @@ namespace Ragnarok.Repository
             }
         }
 
+        public Employee Forgot(string login)
+        {
+            try
+            {
+                return _context.Employee.Where(x => x.Login == login).AsNoTracking().FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public void Insert(Employee employee)
         {
             try
