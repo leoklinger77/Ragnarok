@@ -1,0 +1,114 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Profile";
+}
+
+<div class="container-fluid primary-content">
+    <div class="user-profile">
+        <div class="profile-header-background"><img src="~/assets/img/city.jpg" alt="Profile Header Background" /></div>
+        <div class="row">
+            <div class="col-md-4">
+                <div class="profile-info-left">
+                    <div class="text-center">
+                        <img src="~/assets/img/avatar.png" alt="Avatar" class="avatar img-circle" />
+                        <h2>@Model.Name</h2>
+                    </div>
+                    <div class="action-buttons">
+                        <div class="row">
+                            <div class="col-lg-offset-3 col-xs-6">
+                                <a href="#" class="btn btn-success btn-block"><i class="icon ion-plus-round"></i> Alterar Foto</a>
+                            </div>                            
+                        </div>
+                    </div>
+                    <div class="section">
+                        <h3>About Me</h3>
+                        <p>Energistically administrate 24/7 portals and enabled catalysts for change. Objectively revolutionize client-centered e-commerce via covalent scenarios. Continually envisioneer.</p>
+                    </div>
+                    <div class="section">
+                        <h3>Statistics</h3>
+                        <p><span class="badge">332</span> Following</p>
+                        <p><span class="badge">124</span> Followers</p>
+                        <p><span class="badge">620</span> Likes</p>
+                    </div>                    
+                </div>
+            </div>
+            <div class="col-md-8">
+                <div class="profile-info-right">
+                    <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
+                        <li class="active"><a href="#main" data-toggle="tab">DADOS PRINCIPAIS</a></li>
+                        <li><a href="#address" data-toggle="tab">ENDEREÇO</a></li>                        
+                    </ul>
+                    <div class="tab-content">                        
+                        <div class="tab-pane fade in active" id="main">
+
+                        </div>
+                        <div class="tab-pane fade" id="address">
+
+                        </div>                                              
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="right-sidebar">
+    <!-- CHAT -->
+    <div class="widget widget-chat-contacts">
+        <div class="widget-header clearfix">
+            <h3 class="sr-only">CHAT</h3>
+            <div class="btn-group btn-group-justified widget-header-toolbar visible-lg">
+                <div class="btn-group">
+                    <button type="button" class="btn btn-primary btn-xs"><i class="icon ion-plus-circled"></i> Add</button>
+                </div>
+                <div class="btn-group">
+                    <button type="button" class="btn dropdown-toggle btn-xs btn-success" data-btnclass="btn-success" data-toggle="dropdown">Online <span class="caret"></span></button>
+                    <ul class="dropdown-menu dropdown-menu-right chat-status" role="menu">
+                        <li><a href="#" class="online" data-btnclass="btn-success">Online</a></li>
+                        <li><a href="#" class="away" data-btnclass="btn-warning">Away</a></li>
+                        <li><a href="#" class="busy" data-btnclass="btn-danger">Busy</a></li>
+                        <li><a href="#" class="offline" data-btnclass="btn-default">Offline</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        <div class="widget-content">
+            <strong>Online (4)</strong>
+            <ul class="list-unstyled chat-contacts">
+                <li>
+                    <a href="#" id="theusername"><img src="assets/img/user1.png" class="img-circle" alt="Antonius">Antonius</a>
+                </li>
+                <li>
+                    <a href="#"><img src="assets/img/user2.png" class="img-circle" alt="Antonius">Michael Smith</a>
+                </li>
+                <li class="away">
+                    <a href="#"><img src="assets/img/user3.png" class="img-circle" alt="Antonius">Stella Ray</a>
+                </li>
+                <li class="busy">
+                    <a href="#"><img src="assets/img/user4.png" class="img-circle" alt="Antonius">Jane Doe</a>
+                </li>
+            </ul>
+            <strong>Offline (6)</strong>
+            <ul class="list-unstyled chat-contacts contacts-offline">
+                <li>
+                    <a href="#"><img src="assets/img/user5.png" class="img-circle" alt="John Simmons">John Simmons</a>
+                </li>
+                <li>
+                    <a href="#"><img src="assets/img/user6.png" class="img-circle" alt="Jack Bay">Jack Bay</a>
+                </li>
+                <li>
+                    <a href="#"><img src="assets/img/user7.png" class="img-circle" alt="Daraiana">Daraiana</a>
+                </li>
+                <li>
+                    <a href="#"><img src="assets/img/user8.png" class="img-circle" alt="Alessio Ferrara">Alessio Ferrara</a>
+                </li>
+                <li>
+                    <a href="#"><img src="assets/img/user9.png" class="img-circle" alt="Sorana">Sorana</a>
+                </li>
+                <li>
+                    <a href="#"><img src="assets/img/user10.png" class="img-circle" alt="Regan Morton">Regan Morton</a>
+                </li>
+            </ul>
+        </div>
+    </div>
+    <!-- END CHAT -->
+</div>

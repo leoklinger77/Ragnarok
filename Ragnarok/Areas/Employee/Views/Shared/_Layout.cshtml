@@ -1,4 +1,5 @@
-﻿<!DOCTYPE html>
+﻿@inject Ragnarok.Services.Login.EmployeeLogin _employeeLogin
+<!DOCTYPE html>
 <html lang="en" class="no-js">
 <head>
     <title>@ViewBag.Title</title>
@@ -16,7 +17,7 @@
     <link rel="apple-touch-icon-precomposed" type="image/png" sizes="114x114" href="~/assets/ico/queenadmin-favicon114x114.png">
     <link rel="apple-touch-icon-precomposed" type="image/png" sizes="72x72" href="~/assets/ico/queenadmin-favicon72x72.png">
     <link rel="apple-touch-icon-precomposed" type="image/png" sizes="57x57" href="~/assets/ico/queenadmin-favicon57x57.png">
-    @*<link rel="shortcut icon" href="~/assets/ico/favicon.ico">*@
+    <link rel="shortcut icon" href="~/assets/ico/favicon.ico">
 </head>
 
 <body class="fixed-top-active dashboard">
@@ -29,7 +30,7 @@
                 <a class="btn btn-link btn-off-canvas pull-left"><i class="icon ion-navicon"></i></a>
                 <div class="logo pull-left">
                     <a href="index.html">
-                        <img src="/assets/img/queenadmin-logo.png" alt="QueenAdmin Logo" />
+                        <img src="~/assets/img/queenadmin-logo.png" alt="QueenAdmin Logo" />
                     </a>
                 </div>
             </div>
@@ -247,11 +248,11 @@
                 <div class="logged-user">
                     <div class="btn-group">
                         <a href="#" class="btn btn-link dropdown-toggle" data-toggle="dropdown">
-                            <img src="~/assets/img/user-loggedin.png" alt="Sebastian" /><span class="name">Sebastian <i class="icon ion-ios-arrow-down"></i></span>
+                            <img src="~/assets/img/user-loggedin.png" /><span class="name">@_employeeLogin.GetEmployee().Name <i class="icon ion-ios-arrow-down"></i></span>
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a href="#">
+                                <a asp-action="Profile" asp-controller="Employee" >
                                     <i class="icon ion-ios-person"></i>
                                     <span class="text">Perfil</span>
                                 </a>

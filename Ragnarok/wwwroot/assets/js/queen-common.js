@@ -142,7 +142,7 @@ $(document).ready(function(){
 				$(this).remove();
 		});
 
-		$('.logo img').attr('src', 'assets/img/queenadmin-logo.png');
+		$('.logo img').attr('src', '~/assets/img/queenadmin-logo.png');
 
 		localStorage.removeItem('queenSkin');
 		localStorage.setItem('queenSkinLogo', skinLogoDefault);
