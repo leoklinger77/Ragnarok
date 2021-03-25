@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ragnarok.Migrations
 {
-    public partial class Initial : Migration
+    public partial class initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -133,6 +133,7 @@ namespace Ragnarok.Migrations
                     Name = table.Column<string>(nullable: true),
                     CPF = table.Column<string>(nullable: true),
                     BirthDay = table.Column<DateTime>(nullable: false),
+                    Sexo = table.Column<int>(nullable: false),
                     Action = table.Column<bool>(nullable: false),
                     Email = table.Column<string>(nullable: true),
                     Login = table.Column<string>(nullable: true),
@@ -163,7 +164,7 @@ namespace Ragnarok.Migrations
                         column: x => x.PositionNameId,
                         principalTable: "TB_PositionName",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(

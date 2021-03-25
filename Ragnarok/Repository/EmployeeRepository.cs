@@ -23,7 +23,8 @@ namespace Ragnarok.Repository
             {
                 return _context.Employee.Where(x => x.BusinessId == businessId).ToList();
 
-            }catch(Exception e)
+            }
+            catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
@@ -33,7 +34,39 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.Employee.FirstOrDefault(x => x.Id == id);
+                return _context.Employee
+                    .Include(x => x.Contacts)
+                    .Include(x => x.Address)
+                    .Include(x => x.Address.City)
+                    .Include(x => x.Address.City.State)
+                    .FirstOrDefault(x => x.Id == id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public Address FindByIdAddress(int id)
+        {
+            try
+            {
+                return _context.Address
+                    .Include(x => x.City)
+                    .Include(x => x.City.State)
+                    .FirstOrDefault(x => x.Id == id);
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public Contact FindByIdContacts(int id)
+        {
+            try
+            {
+                return _context.Contact.FirstOrDefault(x => x.Id == id);
             }
             catch (Exception e)
             {
@@ -58,6 +91,20 @@ namespace Ragnarok.Repository
             try
             {
                 _context.Employee.Add(employee);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void InsertPhone(Contact contact)
+        {
+            try
+            {
+                _context.Contact.Add(contact);                
+                _context.SaveChanges();
             }
             catch (Exception e)
             {
@@ -70,6 +117,18 @@ namespace Ragnarok.Repository
             try
             {
                 return _context.Employee.Where(x => x.Login == login && x.Password == password).AsNoTracking().FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public Employee LoginUpdate(int id)
+        {
+            try
+            {
+                return _context.Employee.Where(x => x.Id == id).AsNoTracking().FirstOrDefault();
             }
             catch (Exception e)
             {
@@ -91,11 +150,85 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Update(Employee employee)
+        public void RemoveContact(int id)
+        {
+            try
+            {
+                Contact contact = FindByIdContacts(id);
+                _context.Contact.Remove(contact);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void UpdateAddress(Address address)
+        {
+            try
+            {
+                _context.Address.Update(address);
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void UpdateMain(Employee employee)
         {
             try
             {
                 _context.Employee.Update(employee);
+                //_context.Entry(employee).Property(x => x.AddressId).IsModified = false;
+                _context.Entry(employee).Property(x => x.Password).IsModified = false;
+                _context.Entry(employee).Property(x => x.Action).IsModified = false;
+                _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
+                _context.Entry(employee).Property(x => x.CPF).IsModified = false;
+                
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void UpdatePassword(Employee employee)
+        {
+            try
+            {
+                _context.Employee.Update(employee);
+                _context.Entry(employee).Property(x => x.Address).IsModified = false;
+                _context.Entry(employee).Property(x => x.Action).IsModified = false;
+                _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
+                _context.Entry(employee).Property(x => x.CPF).IsModified = false;
+                _context.Entry(employee).Property(x => x.Name).IsModified = false;
+                _context.Entry(employee).Property(x => x.BirthDay).IsModified = false;
+                _context.Entry(employee).Property(x => x.Email).IsModified = false;
+                _context.Entry(employee).Property(x => x.Sexo).IsModified = false;
+                _context.Entry(employee).Property(x => x.Login).IsModified = false;
+                _context.Entry(employee).Property(x => x.PositionName).IsModified = false;
+                _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public void UpdatePhone(List<Contact> contacts)
+        {
+            try
+            {
+                _context.Contact.UpdateRange(contacts);
+                foreach (var item in contacts)
+                {
+                    _context.Entry(item).Property(x => x.InsertDate).IsModified = false;
+                }
+                
                 _context.SaveChanges();
             }
             catch (Exception e)

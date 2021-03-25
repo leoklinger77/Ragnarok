@@ -1,4 +1,5 @@
 ﻿using Ragnarok.Models.Enums;
+using Ragnarok.Services.Validation.Contact;
 using System;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -10,6 +11,7 @@ namespace Ragnarok.Models
         public int Id { get; set; }
         public TypeNumber TypeNumber { get; set; }
         public string DDD { get; set; }
+        [NumberValidation]
         public string Number { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }

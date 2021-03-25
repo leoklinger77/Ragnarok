@@ -195,6 +195,9 @@ namespace Ragnarok.Migrations
                     b.Property<int>("PositionNameId")
                         .HasColumnType("int");
 
+                    b.Property<int>("Sexo")
+                        .HasColumnType("int");
+
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 

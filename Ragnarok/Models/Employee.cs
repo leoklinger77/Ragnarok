@@ -1,4 +1,7 @@
-﻿using System;
+﻿using Ragnarok.Models.Enums;
+using Ragnarok.Services.Lang;
+using System;
+using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,16 +11,25 @@ namespace Ragnarok.Models
     public class Employee
     {
         public int Id { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Name { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string CPF { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime BirthDay { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        public Sexo Sexo { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public Boolean Action { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Email { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Login { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Password { get; set; }
         [Compare("Password")]
         [NotMapped]
-        public string ConfirmePasswor { get; set; }
+        public string ConfirmePassword { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public Business Business { get; set; }
@@ -26,29 +38,31 @@ namespace Ragnarok.Models
         public int PositionNameId { get; set; }
         public Address Address { get; set; }
         public int AddressId { get; set; }
+        public ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
 
         public Employee()
         {
         }
 
-        public Employee(int id, string name, string cPF, DateTime birthDay, bool action, string email, 
-            string login, string password, string confirmePasswor, DateTime insertDate, DateTime? updateDate, Business business,
-            PositionName positionName, Address address)
+        public Employee(int id, string name, string cPF, DateTime birthDay, Sexo sexo, bool action, 
+            string email, string login, string password, string confirmePasswor, DateTime insertDate, 
+            DateTime? updateDate, Business business, PositionName positionName, Address address)
         {
             Id = id;
             Name = name;
             CPF = cPF;
             BirthDay = birthDay;
+            Sexo = sexo;
             Action = action;
             Email = email;
             Login = login;
             Password = password;
-            ConfirmePasswor = confirmePasswor;
+            ConfirmePassword = confirmePasswor;
             InsertDate = insertDate;
             UpdateDate = updateDate;
+            Business = business;
             PositionName = positionName;
             Address = address;
-            Business = business;
         }
 
         public override bool Equals(object obj)

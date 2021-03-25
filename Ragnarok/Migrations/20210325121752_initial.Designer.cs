@@ -10,8 +10,8 @@ using Ragnarok.Data;
 namespace Ragnarok.Migrations
 {
     [DbContext(typeof(RagnarokContext))]
-    [Migration("20210324195908_Initial")]
-    partial class Initial
+    [Migration("20210325121752_initial")]
+    partial class initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -195,6 +195,9 @@ namespace Ragnarok.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PositionNameId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("Sexo")
                         .HasColumnType("int");
 
                     b.Property<DateTime?>("UpdateDate")

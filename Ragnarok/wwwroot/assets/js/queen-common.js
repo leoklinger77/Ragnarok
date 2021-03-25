@@ -65,10 +65,10 @@ $(document).ready(function(){
 	// check if skin has already applied before
 	var skin = localStorage.getItem('queenSkin');
 	var skinLogo = localStorage.getItem('queenSkinLogo');
-	var skinLogoDefault = 'assets/img/queenadmin-logo.png';
+	var skinLogoDefault = '/assets/img/queenadmin-logo.png';
 
 	if(skin != null) {
-		$('head').append('<link rel="stylesheet" href="' + skin + '" type="text/css" />');
+		$('head').append('<link rel="stylesheet" href="/' + skin + '" type="text/css" />');
 	}
 
 	if(skinLogo != null) {
@@ -81,10 +81,10 @@ $(document).ready(function(){
 		e.preventDefault();
 
 		resetStyle();
-		$('head').append('<link rel="stylesheet" href="' + $(this).attr('data-skin') + '" type="text/css" />');
+		$('head').append('<link rel="stylesheet" href="/' + $(this).attr('data-skin') + '" type="text/css" />');
 
 		if(!$(this).hasClass('full-white')) {
-			skinLogo = 'assets/img/queenadmin-logo-white.png';
+			skinLogo = '/assets/img/queenadmin-logo-white.png';
 		}else {
 			skinLogo = skinLogoDefault;
 		}
@@ -142,7 +142,7 @@ $(document).ready(function(){
 				$(this).remove();
 		});
 
-		$('.logo img').attr('src', '~/assets/img/queenadmin-logo.png');
+		$('.logo img').attr('src', 'assets/img/queenadmin-logo.png');
 
 		localStorage.removeItem('queenSkin');
 		localStorage.setItem('queenSkinLogo', skinLogoDefault);

@@ -93,6 +93,7 @@ namespace Ragnarok.Data
                 CPF = "36018556820",
                 Email = "klinger@gmail.com",
                 Login = "klinger@gmail.com",
+                Sexo = Models.Enums.Sexo.Masculino,
                 Password = "123",
                 Address = ad2,
                 InsertDate = DateTime.Now,
