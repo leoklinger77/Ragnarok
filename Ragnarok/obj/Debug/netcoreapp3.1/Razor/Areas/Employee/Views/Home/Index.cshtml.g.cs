@@ -12,13 +12,29 @@ namespace AspNetCore
     using Microsoft.AspNetCore.Mvc;
     using Microsoft.AspNetCore.Mvc.Rendering;
     using Microsoft.AspNetCore.Mvc.ViewFeatures;
+#nullable restore
+#line 1 "C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\Areas\Employee\Views\_ViewImports.cshtml"
+using Ragnarok;
+
+#line default
+#line hidden
+#nullable disable
+#nullable restore
+#line 2 "C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\Areas\Employee\Views\_ViewImports.cshtml"
+using Ragnarok.Models;
+
+#line default
+#line hidden
+#nullable disable
     [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d19b77fe1915f402bb6d2760588e54a90c6b1216", @"/Areas/Employee/Views/Home/Index.cshtml")]
-    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"57218c316b6921e2cd61027a2387edc31a2d9471", @"/Areas/Employee/Views/_ViewImports.cshtml")]
+    [global::Microsoft.AspNetCore.Razor.Hosting.RazorSourceChecksumAttribute(@"SHA1", @"d8c9f9a0adac03fa744bf9c5859e54792fab4324", @"/Areas/Employee/Views/_ViewImports.cshtml")]
     public class Areas_Employee_Views_Home_Index : global::Microsoft.AspNetCore.Mvc.Razor.RazorPage<dynamic>
     {
-        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("src", new global::Microsoft.AspNetCore.Html.HtmlString("~/assets/img/avatar145px.png"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
-        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("img-circle"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
-        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_2 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("alt", new global::Microsoft.AspNetCore.Html.HtmlString("Avatar"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_0 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("form-horizontal"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_1 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("role", new global::Microsoft.AspNetCore.Html.HtmlString("form"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_2 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("src", new global::Microsoft.AspNetCore.Html.HtmlString("~/assets/img/avatar145px.png"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_3 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("class", new global::Microsoft.AspNetCore.Html.HtmlString("img-circle"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
+        private static readonly global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute __tagHelperAttribute_4 = new global::Microsoft.AspNetCore.Razor.TagHelpers.TagHelperAttribute("alt", new global::Microsoft.AspNetCore.Html.HtmlString("Avatar"), global::Microsoft.AspNetCore.Razor.TagHelpers.HtmlAttributeValueStyle.DoubleQuotes);
         #line hidden
         #pragma warning disable 0649
         private global::Microsoft.AspNetCore.Razor.Runtime.TagHelpers.TagHelperExecutionContext __tagHelperExecutionContext;
@@ -39,6 +55,8 @@ namespace AspNetCore
                 return __backed__tagHelperScopeManager;
             }
         }
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.FormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper;
+        private global::Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper __Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper;
         private global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper;
         #pragma warning disable 1998
         public async override global::System.Threading.Tasks.Task ExecuteAsync()
@@ -84,10 +102,9 @@ namespace AspNetCore
                     <div class=""modal-header"">
                         <button type=""button"" class=""close"" data-dismiss=""modal"" aria-hidden=""true"">&times;</button>
                         <h4 class=""modal-title"" id=""myModalLabel"">Quick Task</h");
-            WriteLiteral(@"4>
-                    </div>
-                    <div class=""modal-body"">
-                        <form class=""form-horizontal"" role=""form"">
+            WriteLiteral("4>\r\n                    </div>\r\n                    <div class=\"modal-body\">\r\n                        ");
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("form", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.StartTagAndEndTag, "d19b77fe1915f402bb6d2760588e54a90c6b12167813", async() => {
+                WriteLiteral(@"
                             <div class=""form-group"">
                                 <label for=""task-title"" class=""control-label sr-only"">Title</label>
                                 <div class=""col-sm-12"">
@@ -100,10 +117,25 @@ namespace AspNetCore
                                     <textarea class=""form-control"" name=""task-description"" rows=""5"" cols=""30"" placeholder=""Description""></textarea>
                                 </div>
                             </div>
-                            <button type=""button"" ");
-            WriteLiteral(@"class=""btn btn-default"" data-dismiss=""modal"">Close</button>
-                            <button type=""button"" class=""btn btn-primary"">Save Task</button>
-                        </form>
+                            <button type=""button"" class=""btn btn-default"" data-dismiss=""modal"">Close</button>
+                            <button type=""button"" class=""btn btn-primary"">Save Task");
+                WriteLiteral("</button>\r\n                        ");
+            }
+            );
+            __Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.FormTagHelper>();
+            __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_FormTagHelper);
+            __Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.TagHelpers.RenderAtEndOfFormTagHelper>();
+            __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_TagHelpers_RenderAtEndOfFormTagHelper);
+            __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_0);
+            __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_1);
+            await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
+            if (!__tagHelperExecutionContext.Output.IsContentModified)
+            {
+                await __tagHelperExecutionContext.SetOutputContentAsync();
+            }
+            Write(__tagHelperExecutionContext.Output);
+            __tagHelperExecutionContext = __tagHelperScopeManager.End();
+            WriteLiteral(@"
                     </div>
                 </div>
             </div>
@@ -124,11 +156,11 @@ namespace AspNetCore
                 </div>
                 <div class=""col-sm-3 text-center"">
                     <div class=""quick-info horizontal"">
-           ");
-            WriteLiteral(@"             <i class=""icon ion-arrow-graph-up-right pull-left bg-orange""></i>
+                        <i class=""icon ion-arrow-graph-up-right pull-left bg-orange""></i>
                         <p>27% <span>GROWTH</span></p>
                     </div>
-                </div>
+                </div>");
+            WriteLiteral(@"
                 <div class=""col-sm-3 text-center"">
                     <div class=""quick-info horizontal"">
                         <i class=""icon ion-cash pull-left bg-green""></i>
@@ -149,12 +181,10 @@ namespace AspNetCore
         <div class=""col-md-8"">
             <!-- CHART WITH JUSTIFIED TAB -->
             <div class=""widget"">
-                <");
-            WriteLiteral(@"div class=""widget-header clearfix no-padding"">
+                <div class=""widget-header clearfix no-padding"">
                     <h3 class=""sr-only""><span>SALES AND VISITS STAT</span></h3>
-                    <ul id=""dashboard-stat-tab"" class=""nav nav-pills nav-justified"">
-                        <li class=""active""><a href=""#tab-sales"" data-cid=""#dashboard-sales-chart"">Sales</a></li>
-                        <li");
+                    <ul id=""dashboard-stat-tab"" class=""na");
+            WriteLiteral("v nav-pills nav-justified\">\r\n                        <li class=\"active\"><a href=\"#tab-sales\" data-cid=\"#dashboard-sales-chart\">Sales</a></li>\r\n                        <li");
             BeginWriteAttribute("class", " class=\"", 5519, "\"", 5527, 0);
             EndWriteAttribute();
             WriteLiteral(@"><a href=""#tab-visits"" data-cid=""#dashboard-visits-chart"">Visits</a></li>
@@ -458,14 +488,14 @@ namespace AspNetCore
                 </div>
                 <div class=""widget-content text-center"">
                     ");
-            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "d19b77fe1915f402bb6d2760588e54a90c6b121628146", async() => {
+            __tagHelperExecutionContext = __tagHelperScopeManager.Begin("img", global::Microsoft.AspNetCore.Razor.TagHelpers.TagMode.SelfClosing, "d19b77fe1915f402bb6d2760588e54a90c6b121630876", async() => {
             }
             );
             __Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper = CreateTagHelper<global::Microsoft.AspNetCore.Mvc.Razor.TagHelpers.UrlResolutionTagHelper>();
             __tagHelperExecutionContext.Add(__Microsoft_AspNetCore_Mvc_Razor_TagHelpers_UrlResolutionTagHelper);
-            __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_0);
-            __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_1);
             __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_2);
+            __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_3);
+            __tagHelperExecutionContext.AddHtmlAttribute(__tagHelperAttribute_4);
             await __tagHelperRunner.RunAsync(__tagHelperExecutionContext);
             if (!__tagHelperExecutionContext.Output.IsContentModified)
             {
