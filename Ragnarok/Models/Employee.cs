@@ -27,7 +27,7 @@ namespace Ragnarok.Models
         public string Login { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Password { get; set; }
-        [Compare("Password")]
+        [Compare("Password", ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_002")]
         [NotMapped]
         public string ConfirmePassword { get; set; }
         public DateTime InsertDate { get; set; }

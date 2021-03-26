@@ -120,4 +120,16 @@
   <data name="MSG_E_001" xml:space="preserve">
     <value>O campo {0} é obrigatório.</value>
   </data>
+  <data name="MSG_E_002" xml:space="preserve">
+    <value>O campo {0} não confere com {1}</value>
+  </data>
+  <data name="MSG_S_001" xml:space="preserve">
+    <value>Cadastro alterado com sucesso.</value>
+  </data>
+  <data name="MSG_S_002" xml:space="preserve">
+    <value>Cadastro criado com sucesso.</value>
+  </data>
+  <data name="MSG_S_003" xml:space="preserve">
+    <value>Endereço alterado com sucesso.</value>
+  </data>
 </root>

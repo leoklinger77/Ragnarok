@@ -16,24 +16,10 @@ namespace Ragnarok.Data
         public void Seed()
         {
 
-            if (_context.Business.Any() || _context.Address.Any() || _context.State.Any() || _context.City.Any() || _context.Contact.Any())
+            if (_context.Business.Any() || _context.Address.Any() || _context.Contact.Any())
             {
                 return;
             }
-            State state1 = new State
-            {
-                Name = "São Paulo",
-                Sigle = "SP",
-                InsertDate = DateTime.Now                
-            };
-
-            City c1 = new City
-            {
-                Name = "Jandira",
-                State = state1,
-                InsertDate = DateTime.Now
-            };
-
             Address ad1 = new Address
             {
                 ZipCode = "06622280",
@@ -41,7 +27,7 @@ namespace Ragnarok.Data
                 Number = 130,
                 Neighborhood = "Santa Tereza",
                 InsertDate = DateTime.Now,
-                City = c1                
+                CityId = 887                
             };
 
             Business business1 = new BusinessPhysical
@@ -63,13 +49,6 @@ namespace Ragnarok.Data
                 InsertDate = DateTime.Now
             };
 
-            City c2 = new City
-            {
-                Name = "Barueri",
-                State = state1,
-                InsertDate = DateTime.Now
-            };
-
             Address ad2 = new Address
             {
                 ZipCode = "06449162",
@@ -77,7 +56,7 @@ namespace Ragnarok.Data
                 Number = 71,
                 Neighborhood = "Viana",
                 InsertDate = DateTime.Now,
-                City = c2
+                CityId = 263
             };
 
             PositionName positionName = new PositionName
@@ -112,10 +91,6 @@ namespace Ragnarok.Data
                 Employee = employee
             };
 
-
-
-            _context.State.AddRange(state1);
-            _context.City.AddRange(c1, c2);
             _context.Address.AddRange(ad1, ad2);
             _context.PositionName.AddRange(positionName);
             _context.Business.AddRange(business1);

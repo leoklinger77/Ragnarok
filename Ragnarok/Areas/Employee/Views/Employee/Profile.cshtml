@@ -34,6 +34,23 @@
                 </div>
             </div>
             <div class="col-md-8">
+                @if (TempData["MSG_S"] != null)
+                {
+                    <div class="alert alert-success fade in">
+                        <button class="close" data-dismiss="alert">&times;</button>
+                        <i class="icon ion-checkmark-circled"></i>
+                        <strong>Feito!</strong> @TempData["MSG_S"]
+                    </div>
+                }
+                @if (TempData["MSG_E"] != null)
+                {
+                    <div class="alert alert-danger fade in">
+                        <button class="close" data-dismiss="alert">&times;</button>
+                        <i class="icon ion-checkmark-circled"></i>
+                        <strong>Erro!</strong> @TempData["MSG_E"]
+                    </div>
+                }
+
                 <div class="profile-info-right">
                     <ul class="nav nav-pills nav-pills-custom-minimal custom-minimal-bottom">
                         <li class="active"><a href="#main" data-toggle="tab">DADOS PRINCIPAIS</a></li>
@@ -43,33 +60,35 @@
                     <div class="tab-content">
                         <div class="tab-pane fade in active" id="main">
                             <form class="form-horizontal" method="post" asp-action="ProfileMainUpdate">
-                                <input asp-for="Employee.Id" type="hidden" class="form-control">
-                                <input asp-for="Employee.BusinessId" type="hidden" class="form-control">
-                                <input asp-for="Employee.AddressId" type="hidden" class="form-control">
-                                <input asp-for="Employee.PositionNameId" type="hidden" class="form-control">
+                                <input asp-for="Employee.Id" type="hidden" />
+                                <input asp-for="Employee.BusinessId" type="hidden" />
+                                <input asp-for="Employee.AddressId" type="hidden" />
+                                <input asp-for="Employee.PositionNameId" type="hidden" />
+                                <input asp-for="Employee.CPF" type="hidden" />
+                                <input asp-for="Employee.BirthDay" type="hidden" />
                                 <div class="row">
                                     <div class="col-sm-8">
                                         <label asp-for="Employee.Name"></label>
-                                        <input asp-for="Employee.Name" type="text" class="form-control">
+                                        <input asp-for="Employee.Name" type="text" class="form-control" required>
                                         <span asp-validation-for="Employee.Name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <label asp-for="Employee.CPF"></label>
-                                        <input asp-for="Employee.CPF" type="text" class="form-control">
+                                        <input asp-for="Employee.CPF" type="text" class="form-control" required disabled style="background-color:white">
                                         <span asp-validation-for="Employee.CPF" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-4">
                                         <label asp-for="Employee.BirthDay"></label>
-                                        <input asp-for="Employee.BirthDay" type="date" class="form-control">
+                                        <input asp-for="Employee.BirthDay" type="date" class="form-control" required disabled style="background-color:white">
                                         <span asp-validation-for="Employee.BirthDay" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <label asp-for="Employee.Email"></label>
-                                        <input asp-for="Employee.Email" type="text" class="form-control" />
+                                        <input asp-for="Employee.Email" type="text" class="form-control" required />
                                         <span asp-validation-for="Employee.Email" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-5">
@@ -78,7 +97,7 @@
                                                 <label class="col-md-2 control-label">Sexo</label>
                                                 <div class="col-md-10">
                                                     <label class="radio radio-inline">
-                                                        <input asp-for="Employee.Sexo" type="radio" value="Masculino"> Masculino
+                                                        <input asp-for="Employee.Sexo" type="radio" value="Masculino" required> Masculino
                                                         <span asp-validation-for="Employee.Sexo" class="text-danger"></span>
                                                     </label>
                                                     <label class="radio radio-inline">
@@ -101,12 +120,12 @@
                                     <input asp-for="ContactFixo.EmployeeId" type="hidden" />
                                     <div class="col-sm-1">
                                         <label asp-for="ContactCel.DDD "></label>
-                                        <input asp-for="ContactCel.DDD" type="tel" class="form-control">
+                                        <input asp-for="ContactCel.DDD" type="tel" class="form-control" required>
                                         <span asp-validation-for="ContactCel.DDD" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-3">
                                         <label asp-for="ContactCel.Number "></label>
-                                        <input asp-for="ContactCel.Number" type="tel" class="form-control">
+                                        <input asp-for="ContactCel.Number" type="tel" class="form-control" required>
                                         <span asp-validation-for="ContactCel.Number" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-1">
@@ -129,77 +148,104 @@
                             </form>
                         </div>
                         <div class="tab-pane fade" id="address">
-                            <form class="form-horizontal">
+                            <form class="form-horizontal" asp-action="ProfileAddressUpdate" method="post" asp-fragment="address">
+                                <input asp-for="Address.Id" type="hidden" />
+                                <input asp-for="Address.City.Id" type="hidden" id="cityId" />
+                                <input asp-for="Address.City.InsertDate" type="hidden" id="stateId" />
+                                <input asp-for="Address.City.State.Id" type="hidden" id="stateId" />
+                                <input asp-for="Address.City.State.Sigle" type="hidden" id="cityId" />
+                                <input asp-for="Address.City.State.InsertDate" type="hidden" id="stateId" />
                                 <div class="row">
                                     <div class="col-sm-3">
                                         <label asp-for="Address.ZipCode"></label>
-                                        <input asp-for="Address.ZipCode" type="text" class="form-control">
+                                        <input asp-for="Address.ZipCode" type="text" class="form-control cep">
+                                        <span asp-validation-for="Address.ZipCode" class="text-danger span-cep"></span>
                                     </div>
                                     <div class="col-sm-6">
                                         <label asp-for="Address.Street"></label>
-                                        <input asp-for="Address.Street" type="text" class="form-control">
+                                        <input asp-for="Address.Street" type="text" class="form-control" id="street">
+                                        <span asp-validation-for="Address.Street" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-3">
                                         <label asp-for="Address.Number"></label>
                                         <input asp-for="Address.Number" type="text" class="form-control">
+                                        <span asp-validation-for="Address.Number" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-6">
                                         <label asp-for="Address.Complement"></label>
                                         <input asp-for="Address.Complement" type="text" class="form-control">
+                                        <span asp-validation-for="Address.Complement" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-6">
                                         <label asp-for="Address.Reference"></label>
                                         <input asp-for="Address.Reference" type="text" class="form-control">
+                                        <span asp-validation-for="Address.Reference" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <label asp-for="Address.Neighborhood"></label>
-                                        <input asp-for="Address.Neighborhood" type="text" class="form-control" />
+                                        <input asp-for="Address.Neighborhood" type="text" class="form-control" id="neighborhood" />
+                                        <span asp-validation-for="Address.Neighborhood" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-4">
                                         <label asp-for="Address.City.Name"></label>
-                                        <input asp-for="Address.City.Name" type="text" class="form-control" />
+                                        <input asp-for="Address.City.Name" type="text" class="form-control" id="city" />
+                                        <span asp-validation-for="Address.City.Name" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-4">
                                         <label asp-for="Address.City.State.Name"></label>
-                                        <input asp-for="Address.City.State.Name" type="text" class="form-control" />
+                                        <input asp-for="Address.City.State.Name" type="text" class="form-control" id="state" />
+                                        <span asp-validation-for="Address.City.State.Name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-5">
-                                        <a class="btn btn-success">Alterar</a>
+                                        <button type="submit" class="btn btn-success">Alterar</button>
                                     </div>
                                 </div>
                             </form>
                         </div>
                         <div class="tab-pane fade" id="security">
-                            <form>
+                            <form asp-action="ProfilePasswordUpdate" method="post">
+
+                                <input asp-for="Employee.Id" type="hidden" />
+                                <input asp-for="Employee.BusinessId" type="hidden" class="form-control">
+                                <input asp-for="Employee.AddressId" type="hidden" class="form-control">
+                                <input asp-for="Employee.PositionNameId" type="hidden" class="form-control">
+                                <input asp-for="Employee.Name" type="hidden" />
+                                <input asp-for="Employee.CPF" type="hidden" />
+                                <input asp-for="Employee.Sexo" type="hidden" />
+                                <input asp-for="Employee.Email" type="hidden" />
+                                <input asp-for="Employee.Login" type="hidden" />
+                                <input asp-for="Employee.Action" type="hidden" />
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <label>Informa sua Senha</label>
-                                        <input id="informationPassword" type="password" class="form-control" />
+                                        <input id="informationPassword" name="informationPassword" type="password" class="form-control" required />
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
                                         <label asp-for="Employee.Password"></label>
-                                        <input asp-for="Employee.Password" type="password" class="form-control" />
+                                        <input asp-for="Employee.Password" type="password" class="form-control" required />
+                                        <span asp-validation-for="Employee.Password" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
                                     <div class="col-sm-4">
-                                        <label asp-for="Employee.Password"></label>
-                                        <input asp-for="Employee.ConfirmePassword" type="password" class="form-control" />
+                                        <label asp-for="Employee.ConfirmePassword"></label>
+                                        <input asp-for="Employee.ConfirmePassword" type="password" class="form-control" required />
+                                        <span asp-validation-for="Employee.ConfirmePassword" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <br />
                                 <div class="row">
                                     <div class="col-sm-5">
-                                        <a class="btn btn-success">Alterar</a>
+                                        <button type="submit" class="btn btn-success">Alterar</button>
                                     </div>
                                 </div>
                             </form>

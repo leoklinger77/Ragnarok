@@ -34,7 +34,7 @@ namespace Ragnarok.Controllers
                 return RedirectToAction("Index", "Home", new { Area = "Employee" });
             }
             TempData["MSG_E"] = "Verifique seu E-mail ou Senha";
-            return View();
+            return View(nameof(Index));
         }
         [HttpGet]
         public IActionResult Forgot()

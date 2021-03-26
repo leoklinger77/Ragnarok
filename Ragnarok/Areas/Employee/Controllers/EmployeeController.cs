@@ -75,7 +75,6 @@ namespace Ragnarok.Areas.Employee.Controllers
                     
                     viewModel.ContactFixo.InsertDate = DateTime.Now;
                     viewModel.ContactFixo.EmployeeId = viewModel.Employee.Id;
-
                     viewModel.ContactCel.UpdateDate = DateTime.Now;
 
                     _employeeRepository.InsertPhone(viewModel.ContactFixo);
@@ -84,9 +83,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 else if (viewModel.ContactFixo.Id > 0 && viewModel.ContactFixo.DDD is null && viewModel.ContactFixo.Number is null)
                 {
                     viewModel.ContactCel.UpdateDate = DateTime.Now;
-
                     _employeeRepository.RemoveContact(viewModel.ContactFixo.Id);
-
                     _employeeRepository.UpdatePhone(new List<Models.Contact> { viewModel.ContactCel });
                 }
                 else
@@ -94,14 +91,76 @@ namespace Ragnarok.Areas.Employee.Controllers
                     viewModel.ContactCel.UpdateDate = DateTime.Now;
                     viewModel.ContactFixo.UpdateDate = DateTime.Now;
                     _employeeRepository.UpdatePhone(new List<Models.Contact> { viewModel.ContactCel, viewModel.ContactFixo });
-                }
-                
-                //TODO trocar mensagem de Sucesso
-                TempData["MSG_S"] = Message.MSG_E_001;
+                }                               
+                TempData["MSG_S"] = Message.MSG_S_001;
                 _employeeLogin.Update(_employeeRepository.LoginUpdate(viewModel.Employee.Id));
                 return RedirectToAction(nameof(Profile));
             }
             viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);
+            return View(nameof(Profile), viewModel);
+        }
+
+        [HttpPost]
+        public IActionResult ProfileAddressUpdate(EmployeeFormViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                viewModel.Address.UpdateDate = DateTime.Now;
+                _employeeRepository.UpdateAddress(viewModel.Address);
+                TempData["MSG_S"] = TempData["MSG_S"] = Message.MSG_S_003;
+                return RedirectToAction(nameof(Profile));
+            }                       
+            viewModel.Employee = _employeeRepository.FindById(_employeeLogin.GetEmployee().Id);
+            foreach (var item in viewModel.Employee.Contacts)
+            {
+                if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
+                {
+                    viewModel.ContactCel = item;
+                }
+                if (item.TypeNumber == Models.Enums.TypeNumber.Residencial)
+                {
+                    viewModel.ContactFixo = item;
+                }
+            }
+            return View(nameof(Profile), viewModel);
+        }
+        [HttpPost]
+        public IActionResult ProfilePasswordUpdate(EmployeeFormViewModel viewModel, string informationPassword)
+        {
+            ModelState.Remove("Employee.Name");
+            ModelState.Remove("Employee.CPF");
+            ModelState.Remove("Employee.BirthDay");
+            ModelState.Remove("Employee.Email");
+            ModelState.Remove("Employee.Login");
+            ModelState.Remove("Employee.Sexo");
+            ModelState.Remove("Employee.Action");
+            if (informationPassword == _employeeLogin.GetEmployee().Password)
+            {
+                if (ModelState.IsValid)
+                {
+                    viewModel.Employee.UpdateDate = DateTime.Now;
+                    _employeeRepository.UpdatePassword(viewModel.Employee);
+                    _employeeLogin.Update(_employeeRepository.LoginUpdate(viewModel.Employee.Id));
+                    TempData["MSG_S"] = "Senha alterado com sucesso.";
+                    return RedirectToAction(nameof(Profile));
+                }
+            }
+            else
+            {
+                TempData["MSG_E"] = "Senha Invalida";
+            }            
+            viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);            
+            foreach (var item in _employeeRepository.FindById(viewModel.Employee.Id).Contacts)
+            {
+                if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
+                {
+                    viewModel.ContactCel = item;
+                }
+                if (item.TypeNumber == Models.Enums.TypeNumber.Residencial)
+                {
+                    viewModel.ContactFixo = item;
+                }
+            }
             return View(nameof(Profile), viewModel);
         }
     }

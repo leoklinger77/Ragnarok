@@ -68,5 +68,41 @@ namespace Ragnarok.Services.Lang {
                 return ResourceManager.GetString("MSG_E_001", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O campo {0} não confere com {1}.
+        /// </summary>
+        public static string MSG_E_002 {
+            get {
+                return ResourceManager.GetString("MSG_E_002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cadastro alterado com sucesso..
+        /// </summary>
+        public static string MSG_S_001 {
+            get {
+                return ResourceManager.GetString("MSG_S_001", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cadastro criado com sucesso..
+        /// </summary>
+        public static string MSG_S_002 {
+            get {
+                return ResourceManager.GetString("MSG_S_002", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Endereço alterado com sucesso..
+        /// </summary>
+        public static string MSG_S_003 {
+            get {
+                return ResourceManager.GetString("MSG_S_003", resourceCulture);
+            }
+        }
     }
 }

@@ -67,6 +67,20 @@ namespace Ragnarok.Repository
             }
         }
 
+        public City FindByNameAndState(string name, string stateSigle)
+        {
+            try
+            {
+                return _context.City.Where(x => x.Name == name && x.State.Sigle == stateSigle)
+                    .Include(x=>x.State)
+                    .FirstOrDefault();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public void Insert(City city)
         {
             try

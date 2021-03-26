@@ -11,6 +11,7 @@ using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Email;
 using Ragnarok.Services.Login;
 using Ragnarok.Services.Session;
+using Ragnarok.Services.WebService;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -67,6 +68,7 @@ namespace Ragnarok
             services.AddScoped<Session>();
             services.AddScoped<EmployeeLogin>();
             services.AddScoped<SendEmail>();
+            services.AddScoped<WSCorreiosAPI>();
 
             services.AddScoped<IBusinessRepository, BusinessRepository>();
             services.AddScoped<IStateRepository, StateRepository>();

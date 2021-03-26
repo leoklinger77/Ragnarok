@@ -42,7 +42,7 @@ namespace Ragnarok.Migrations
                         column: x => x.StateId,
                         principalTable: "TB_State",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -69,7 +69,7 @@ namespace Ragnarok.Migrations
                         column: x => x.CityId,
                         principalTable: "TB_City",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(
@@ -164,7 +164,7 @@ namespace Ragnarok.Migrations
                         column: x => x.PositionNameId,
                         principalTable: "TB_PositionName",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.NoAction);
                 });
 
             migrationBuilder.CreateTable(

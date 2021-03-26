@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ragnarok.Services.Lang;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
@@ -7,6 +9,7 @@ namespace Ragnarok.Models
     public class City
     {
         public int Id { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Name { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }

@@ -7,7 +7,7 @@
     <div class="col-sm-5 col-sm-offset-1 col-lg-4 col-lg-offset-2">
         <div class="content-box-bordered login-box box-with-help">
             <h1>Faça login na sua conta</h1>
-            <form class="form-horizontal" asp-action="Login" method="post">
+            <form class="form-horizontal" asp-action="Login" asp-controller="Home" asp-area="" method="post">
                 <div class="form-group">
                     <label for="inputEmail3b" class="control-label sr-only">Email</label>
                     <div class="col-sm-12">
@@ -42,7 +42,23 @@
                         <a asp-action="Forgot"><em>Esqueceu a senha?</em></a>
                     </div>
                 </div>
-            </form>          
+            </form>
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
         </div>
     </div>
     <div class="col-sm-5 col-lg-4">

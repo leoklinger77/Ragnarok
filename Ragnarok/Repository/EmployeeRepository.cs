@@ -169,6 +169,7 @@ namespace Ragnarok.Repository
             try
             {
                 _context.Address.Update(address);
+                _context.Entry(address).Property(x => x.InsertDate).IsModified = false;
                 _context.SaveChanges();
             }
             catch (Exception e)
@@ -201,7 +202,7 @@ namespace Ragnarok.Repository
             try
             {
                 _context.Employee.Update(employee);
-                _context.Entry(employee).Property(x => x.Address).IsModified = false;
+                
                 _context.Entry(employee).Property(x => x.Action).IsModified = false;
                 _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
                 _context.Entry(employee).Property(x => x.CPF).IsModified = false;
@@ -209,8 +210,7 @@ namespace Ragnarok.Repository
                 _context.Entry(employee).Property(x => x.BirthDay).IsModified = false;
                 _context.Entry(employee).Property(x => x.Email).IsModified = false;
                 _context.Entry(employee).Property(x => x.Sexo).IsModified = false;
-                _context.Entry(employee).Property(x => x.Login).IsModified = false;
-                _context.Entry(employee).Property(x => x.PositionName).IsModified = false;
+                _context.Entry(employee).Property(x => x.Login).IsModified = false;                
                 _context.SaveChanges();
             }
             catch (Exception e)

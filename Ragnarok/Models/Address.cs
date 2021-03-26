@@ -1,4 +1,6 @@
-﻿using System;
+﻿using Ragnarok.Services.Lang;
+using System;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
@@ -7,11 +9,15 @@ namespace Ragnarok.Models
     public class Address
     {
         public int Id { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string ZipCode { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Street { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public int Number { get; set; }
         public string Complement { get; set; }
         public string Reference { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Neighborhood { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }

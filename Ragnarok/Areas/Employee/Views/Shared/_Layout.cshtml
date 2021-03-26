@@ -252,13 +252,13 @@
                         </a>
                         <ul class="dropdown-menu" role="menu">
                             <li>
-                                <a asp-action="Profile" asp-controller="Employee" >
+                                <a asp-action="Profile" asp-controller="Employee">
                                     <i class="icon ion-ios-person"></i>
                                     <span class="text">Perfil</span>
                                 </a>
-                            </li>                            
+                            </li>
                             <li>
-                                <a asp-action="GetOut">
+                                <a asp-action="GetOut" asp-controller="Home" asp-area="Employee">
                                     <i class="icon ion-power"></i>
                                     <span class="text">Sair</span>
                                 </a>
@@ -288,7 +288,7 @@
                                 <li class="active"><a href="index.html"><span class="text">Dashboard v1</span></a></li>
                                 <li><a href="index2.html"><span class="text">Dashboard v2</span></a></li>
                             </ul>
-                        </li>                       
+                        </li>
                     </ul>
                     <h3>ESSENTIALS</h3>
                     <ul class="main-menu">
@@ -298,7 +298,7 @@
                                 <li class="active"><a href="charts-basic.html"><span class="text">Basic</span></a></li>
                                 <li><a href="charts-interactive.html"><span class="text">Interactive Charts</span></a></li>
                             </ul>
-                        </li>                        
+                        </li>
                     </ul>
                 </nav>
             </div>
@@ -332,6 +332,8 @@
     <script src="~/assets/js/queen-charts.js"></script>
     <script src="~/assets/js/queen-maps.js"></script>
     <script src="~/assets/js/queen-elements.js"></script>
+
+    <script src="~/Js/Utils/actionsUtils.js"></script>
 </body>
 
 </html>

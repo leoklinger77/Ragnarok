@@ -11,6 +11,7 @@ namespace Ragnarok.Repository.Interfaces
 
         City FindById(int id);        
         ICollection<City> FindByName(string name);
+        City FindByNameAndState(string name, string stateSigle);
         ICollection<City> FindAlls();
     }
 }

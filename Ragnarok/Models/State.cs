@@ -12,7 +12,7 @@ namespace Ragnarok.Models
         public string Sigle { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
-        public ICollection<City> Cities { get; set; } = new HashSet<City>();
+        //public ICollection<City> Cities { get; set; } = new HashSet<City>();
 
         public State()
         {
