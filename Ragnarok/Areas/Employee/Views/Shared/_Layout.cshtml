@@ -29,7 +29,7 @@
                 <a href="#" id="btn-nav-sidebar-minified" class="btn btn-link btn-nav-sidebar-minified pull-left"><i class="icon ion-arrow-swap"></i></a>
                 <a class="btn btn-link btn-off-canvas pull-left"><i class="icon ion-navicon"></i></a>
                 <div class="logo pull-left">
-                    <a href="index.html">
+                    <a asp-action="Index" asp-controller="Home" asp-area="Employee">
                         <img src="~/assets/img/queenadmin-logo.png" alt="QueenAdmin Logo" />
                     </a>
                 </div>
@@ -85,94 +85,6 @@
                                 </div>
                             </form>
                         </li>
-                        <!-- end skins -->
-                        <!-- notification: inbox -->
-                        <li class="action-item inbox">
-                            <div class="btn-group">
-                                <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-                                    <i class="icon ion-ios-email-outline"></i><span class="count">2</span>
-                                </a>
-                                <div class="arrow"></div>
-                                <ul class="dropdown-menu" role="menu">
-                                    <li class="menu-item-header">You have 2 unread messages</li>
-                                    <li class="inbox-item clearfix">
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="pull-left">
-                                                    <img class="media-object" src="~/assets/img/user1.png" alt="Antonio">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="media-heading name">Antonius</h5>
-                                                    <p class="text">The problem just happened this morning. I can't see ...</p>
-                                                    <span class="timestamp text-muted">4 minutes ago</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="inbox-item unread clearfix">
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="pull-left">
-                                                    <img class="media-object" src="~/assets/img/user2.png" alt="Antonio">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="media-heading name">Michael</h5>
-                                                    <p class="text">Hey dude, cool theme!</p>
-                                                    <span class="timestamp text-muted">2 hours ago</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="inbox-item unread clearfix">
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="pull-left">
-                                                    <img class="media-object" src="~/assets/img/user3.png" alt="Antonio">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="media-heading name">Stella</h5>
-                                                    <p class="text">Ok now I can see the status for each item. Thanks! :D</p>
-                                                    <span class="timestamp text-muted">Oct 6</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="inbox-item clearfix">
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="pull-left">
-                                                    <img class="media-object" src="~/assets/img/user4.png" alt="Antonio">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="media-heading name">Jane Doe</h5>
-                                                    <p class="text"><i class="icon ion-reply text-muted"></i> Please check the status of your ...</p>
-                                                    <span class="timestamp text-muted">Oct 2</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="inbox-item clearfix">
-                                        <a href="#">
-                                            <div class="media">
-                                                <div class="pull-left">
-                                                    <img class="media-object" src="~/assets/img/user5.png" alt="Antonio">
-                                                </div>
-                                                <div class="media-body">
-                                                    <h5 class="media-heading name">John Simmons</h5>
-                                                    <p class="text"><i class="icon ion-reply text-muted"></i> I've fixed the problem :)</p>
-                                                    <span class="timestamp text-muted">Sep 12</span>
-                                                </div>
-                                            </div>
-                                        </a>
-                                    </li>
-                                    <li class="menu-item-footer">
-                                        <a href="#">View All Messages</a>
-                                    </li>
-                                </ul>
-                            </div>
-                        </li>
-                        <!-- end notification: inbox -->
-                        <!-- notification: general -->
                         <li class="action-item general">
                             <div class="btn-group">
                                 <a href="#" class="dropdown-toggle" data-toggle="dropdown">
@@ -285,18 +197,20 @@
                         <li class="has-submenu active">
                             <a href="#" class="submenu-toggle"><i class="icon ion-ios-speedometer-outline"></i><span class="text">Dashboards</span></a>
                             <ul class="list-unstyled sub-menu collapse in">
-                                <li class="active"><a href="index.html"><span class="text">Dashboard v1</span></a></li>
-                                <li><a href="index2.html"><span class="text">Dashboard v2</span></a></li>
+                                <li class="active"><a asp-action="Index" asp-controller="Home" asp-area="Employee"><span class="text">Dashboard v1</span></a></li>
+                                @*<li><a href="index2.html"><span class="text">Dashboard v2</span></a></li>*@
                             </ul>
                         </li>
                     </ul>
                     <h3>ESSENTIALS</h3>
                     <ul class="main-menu">
                         <li class="has-submenu">
-                            <a href="#" class="submenu-toggle"><i class="icon ion-ios-pie-outline"></i><span class="text">Charts</span></a>
+                            <a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Cadastros</span></a>
                             <ul class="list-unstyled sub-menu collapse">
-                                <li class="active"><a href="charts-basic.html"><span class="text">Basic</span></a></li>
-                                <li><a href="charts-interactive.html"><span class="text">Interactive Charts</span></a></li>
+                                <li class="active"><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>
+                                <li><a href="charts-interactive.html"><span class="text">Cliente</span></a></li>
+                                <li><a href="charts-interactive.html"><span class="text">Categoria</span></a></li>
+                                <li><a href="charts-interactive.html"><span class="text">Produto</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -334,6 +248,13 @@
     <script src="~/assets/js/queen-elements.js"></script>
 
     <script src="~/Js/Utils/actionsUtils.js"></script>
+
+    <script src="~/assets/js/plugins/datatable/jquery.dataTables.min.js"></script>
+    <script src="~/assets/js/plugins/datatable/exts/dataTables.colVis.bootstrap.js"></script>
+    <script src="~/assets/js/plugins/datatable/exts/dataTables.colReorder.min.js"></script>
+    <script src="~/assets/js/plugins/datatable/exts/dataTables.tableTools.min.js"></script>
+    <script src="~/assets/js/plugins/datatable/dataTables.bootstrap.js"></script>
+    <script src="~/assets/js/queen-table.js"></script>
 </body>
 
 </html>

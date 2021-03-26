@@ -23,12 +23,11 @@ namespace Ragnarok.Areas.Employee.Controllers
             _employeeLogin = employeeLogin;
             _employeeRepository = employeeRepository;
         }
-
-        [Area("Employee")]
-        [EmployeeAuthorization]
+        
         public IActionResult Index()
         {
-            return View();
+            ICollection<Models.Employee> list = _employeeRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId);
+            return View(list);
         }
         [HttpGet]
         public IActionResult Profile()
@@ -163,5 +162,20 @@ namespace Ragnarok.Areas.Employee.Controllers
             }
             return View(nameof(Profile), viewModel);
         }
+        [HttpGet]
+        public IActionResult Insert()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Insert(Models.Employee employee)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return View();
+        }
+
     }
 }

@@ -1,0 +1,100 @@
+﻿@model ICollection<Employee>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>FUNCIONÁRIO</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Employee" asp-area="Employee">Funcionário</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <button asp-action="Insert" asp-controller="Employee" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-person-add"></i> Novo Cadastro</button>
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> Quick Task</button>
+        </div>
+        <!-- quick task modal -->
+        <div class="modal fade" id="quick-task-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Quick Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="task-title" class="control-label sr-only">Title</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="task-title" placeholder="Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label sr-only">Description</label>
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" name="task-description" rows="5" cols="30" placeholder="Description"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save Task</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS FUNCIONÁRIOS</span></h3>
+        </div>
+        <div class="widget-content">
+            <div class="alert alert-info fade in">
+                <button class="close" data-dismiss="alert">&times;</button>
+                <i class="icon ion-information-circled"></i> Try to show/hide column visibility and drag the column to another position to reorder it.
+            </div>
+            <div class="table-responsive">
+                <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>CPF</th>
+                            <th>Email</th>
+                            <th>Nascimento</th>
+                            <th>Idade</th>
+                            <th>Cargo</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.CPF</td>
+                                <td>@item.Email</td>
+                                <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
+                                <td>@item.Age()</td>
+                                <td>@item.PositionName.Name</td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
+

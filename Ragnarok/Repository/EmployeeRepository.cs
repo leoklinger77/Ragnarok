@@ -21,7 +21,9 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.Employee.Where(x => x.BusinessId == businessId).ToList();
+                return _context.Employee.Where(x => x.BusinessId == businessId)
+                    .Include(x => x.PositionName)
+                    .ToList();
 
             }
             catch (Exception e)
@@ -103,7 +105,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                _context.Contact.Add(contact);                
+                _context.Contact.Add(contact);
                 _context.SaveChanges();
             }
             catch (Exception e)
@@ -188,7 +190,7 @@ namespace Ragnarok.Repository
                 _context.Entry(employee).Property(x => x.Action).IsModified = false;
                 _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
                 _context.Entry(employee).Property(x => x.CPF).IsModified = false;
-                
+
                 _context.SaveChanges();
             }
             catch (Exception e)
@@ -202,7 +204,7 @@ namespace Ragnarok.Repository
             try
             {
                 _context.Employee.Update(employee);
-                
+
                 _context.Entry(employee).Property(x => x.Action).IsModified = false;
                 _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
                 _context.Entry(employee).Property(x => x.CPF).IsModified = false;
@@ -210,7 +212,7 @@ namespace Ragnarok.Repository
                 _context.Entry(employee).Property(x => x.BirthDay).IsModified = false;
                 _context.Entry(employee).Property(x => x.Email).IsModified = false;
                 _context.Entry(employee).Property(x => x.Sexo).IsModified = false;
-                _context.Entry(employee).Property(x => x.Login).IsModified = false;                
+                _context.Entry(employee).Property(x => x.Login).IsModified = false;
                 _context.SaveChanges();
             }
             catch (Exception e)
@@ -228,7 +230,7 @@ namespace Ragnarok.Repository
                 {
                     _context.Entry(item).Property(x => x.InsertDate).IsModified = false;
                 }
-                
+
                 _context.SaveChanges();
             }
             catch (Exception e)
