@@ -9,7 +9,6 @@ using Ragnarok.Services.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -27,7 +26,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             _employeeRepository = employeeRepository;
             _positionNameRepository = positionNameRepository;
         }
-
+        [HttpGet]
         public IActionResult Index()
         {
             ICollection<Models.Employee> list = _employeeRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId);
@@ -54,47 +53,40 @@ namespace Ragnarok.Areas.Employee.Controllers
 
             return View(viewModel);
         }
-
         [HttpPost]
         public IActionResult ProfileMainUpdate(EmployeeFormViewModel viewModel)
         {
-            ModelState.Remove("Employee.Action");
+            ModelState.Remove("Employee.Action");           
+
             ModelState.Remove("Employee.Login");
             ModelState.Remove("Employee.Password");
-            ModelState.Remove("ContactFixo.Id");            
+            ModelState.Remove("ContactFixo.Id");
+            ModelState.Remove("ContactFixo.InsertDate");
             if (ModelState.IsValid)
             {
                 viewModel.Employee.UpdateDate = DateTime.Now;
                 viewModel.Employee.Login = viewModel.Employee.Email;
-                _employeeRepository.UpdateMain(viewModel.Employee);
+                viewModel.ContactCel.UpdateDate = DateTime.Now;
+                viewModel.Employee.Contacts.Add(viewModel.ContactCel);
 
-                if (viewModel.ContactFixo.Id == 0 && viewModel.ContactFixo.DDD is null && viewModel.ContactFixo.Number is null)
+                if (viewModel.ContactFixo.Id > 0 && viewModel.ContactFixo.DDD is null && viewModel.ContactFixo.Number is null)
                 {
-                    viewModel.ContactCel.UpdateDate = DateTime.Now;
-                    _employeeRepository.UpdatePhone(new List<Models.Contact> { viewModel.ContactCel });
-                }
-                else if(viewModel.ContactFixo.Id == 0 && viewModel.ContactFixo.DDD != null && viewModel.ContactFixo.Number !=null)
-                {   
-                    
-                    viewModel.ContactFixo.InsertDate = DateTime.Now;
-                    viewModel.ContactFixo.EmployeeId = viewModel.Employee.Id;
-                    viewModel.ContactCel.UpdateDate = DateTime.Now;
-
-                    _employeeRepository.InsertPhone(viewModel.ContactFixo);
-                    _employeeRepository.UpdatePhone(new List<Models.Contact> { viewModel.ContactCel});
-                }
-                else if (viewModel.ContactFixo.Id > 0 && viewModel.ContactFixo.DDD is null && viewModel.ContactFixo.Number is null)
-                {
-                    viewModel.ContactCel.UpdateDate = DateTime.Now;
                     _employeeRepository.RemoveContact(viewModel.ContactFixo.Id);
-                    _employeeRepository.UpdatePhone(new List<Models.Contact> { viewModel.ContactCel });
                 }
                 else
                 {
-                    viewModel.ContactCel.UpdateDate = DateTime.Now;
-                    viewModel.ContactFixo.UpdateDate = DateTime.Now;
-                    _employeeRepository.UpdatePhone(new List<Models.Contact> { viewModel.ContactCel, viewModel.ContactFixo });
-                }                               
+                    if (viewModel.ContactFixo.InsertDate != null)
+                    {
+                        viewModel.ContactFixo.InsertDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        viewModel.ContactFixo.UpdateDate = DateTime.Now;
+                    }
+                    viewModel.Employee.Contacts.Add(viewModel.ContactFixo);
+                }
+                _employeeRepository.UpdateMain(viewModel.Employee);                             
+                
                 TempData["MSG_S"] = Message.MSG_S_001;
                 _employeeLogin.Update(_employeeRepository.LoginUpdate(viewModel.Employee.Id));
                 return RedirectToAction(nameof(Profile));
@@ -102,7 +94,6 @@ namespace Ragnarok.Areas.Employee.Controllers
             viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);
             return View(nameof(Profile), viewModel);
         }
-
         [HttpPost]
         public IActionResult ProfileAddressUpdate(EmployeeFormViewModel viewModel)
         {
@@ -195,7 +186,67 @@ namespace Ragnarok.Areas.Employee.Controllers
                 return Json("Ok");
 
             }
+            //TODO Implementar Regra de Validação no Front
             return Json(employee);
+        }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {           
+            EmployeeFormViewModel viewModel = new EmployeeFormViewModel();
+            Models.Employee employee = _employeeRepository.FindById(id);
+            viewModel.Employee = employee;
+            viewModel.Address = employee.Address;
+            foreach (var item in employee.Contacts)
+            {
+                if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
+                {
+                    viewModel.ContactCel = item;
+                }
+                if (item.TypeNumber == Models.Enums.TypeNumber.Residencial)
+                {
+                    viewModel.ContactFixo = item;
+                }
+            }
+            ViewBag.PositionName = _positionNameRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            return View(viewModel);
+        }
+        [HttpPost]
+        public IActionResult Update(EmployeeFormViewModel viewModel)
+        {
+            ModelState.Remove("Employee.Login");
+            ModelState.Remove("Employee.Password");
+            ModelState.Remove("ContactFixo.Id");
+            ModelState.Remove("ContactFixo.InsertDate");
+            if (ModelState.IsValid)
+            {
+                viewModel.Employee.UpdateDate = DateTime.Now;
+                viewModel.Employee.Login = viewModel.Employee.Email;
+                viewModel.ContactCel.UpdateDate = DateTime.Now;
+                viewModel.Employee.Contacts.Add(viewModel.ContactCel);
+
+                if (viewModel.ContactFixo.Id > 0 && viewModel.ContactFixo.DDD is null && viewModel.ContactFixo.Number is null)
+                {                    
+                    _employeeRepository.RemoveContact(viewModel.ContactFixo.Id);
+                }
+                else
+                {                    
+                    if(viewModel.ContactFixo.InsertDate != null)
+                    {
+                        viewModel.ContactFixo.InsertDate = DateTime.Now;
+                    }
+                    else
+                    {
+                        viewModel.ContactFixo.UpdateDate = DateTime.Now;
+                    }
+                    viewModel.Employee.Contacts.Add(viewModel.ContactFixo);
+                }
+                _employeeRepository.UpdateMain(viewModel.Employee);
+                TempData["MSG_S"] = Message.MSG_S_001;
+                return RedirectToAction(nameof(Details), new { id = viewModel.Employee.Id });
+            }
+            viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);
+            ViewBag.PositionName = _positionNameRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            return View(nameof(Details), viewModel);
         }
 
     }

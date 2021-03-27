@@ -132,12 +132,12 @@
                         </div>
                         <div class="row">
                             <div class="col-sm-3">
-                                <label >Celular</label>
+                                <label>Celular</label>
                                 <input name="phone" type="tel" class="form-control" id="employeePhone" required />
                             </div>
                             <div class="col-sm-3">
-                                <label >Telefone</label>
-                                <input name="telePhone" type="tel" class="form-control" id="employeeTelePhone"/>
+                                <label>Telefone</label>
+                                <input name="telePhone" type="tel" class="form-control" id="employeeTelePhone" />
                             </div>
                         </div>
                     </fieldset>
@@ -145,7 +145,7 @@
             </div>
             <div class="tab-pane" id="tab2">
                 <form id="form-circle-wizard2" data-parsley-validate novalidate>
-                    <input asp-for="Address.CityId" type="hidden" id="cityId" />                    
+                    <input asp-for="Address.CityId" type="hidden" id="cityId" />
 
                     <fieldset>
                         <legend>Endereço</legend>
@@ -191,7 +191,7 @@
                             </div>
                             <div class="col-sm-2">
                                 <label>Estado</label>
-                                <input asp-for="Address.City.State.Name" type="text" class="form-control" id="state"required />
+                                <input asp-for="Address.City.State.Name" type="text" class="form-control" id="state" required />
                                 <span class="text-danger"></span>
                             </div>
                         </div>
@@ -247,9 +247,9 @@
                             <dd><span id="confirmState"></span></dd>
                         </dl>
                     </div>
-                   
+
                 </div>
-                
+
 
             </div>
             <ul class="pager wizard">
@@ -257,6 +257,7 @@
                 <li class="next last"><a>Create Account</a></li>
                 <li class="next"><a>Next</a></li>
             </ul>
+            <a asp-action="Index" asp-controller="Employee" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task" ><i class="icon ion-arrow-return-left"></i> Voltar</a>
         </div>
     </div>
 </div>

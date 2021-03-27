@@ -210,10 +210,8 @@ namespace Ragnarok.Repository
         {
             try
             {
-                _context.Employee.Update(employee);
-                //_context.Entry(employee).Property(x => x.AddressId).IsModified = false;
-                _context.Entry(employee).Property(x => x.Password).IsModified = false;
-                _context.Entry(employee).Property(x => x.Action).IsModified = false;
+                _context.Employee.Update(employee);                
+                _context.Entry(employee).Property(x => x.Password).IsModified = false;                
                 _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
                 _context.Entry(employee).Property(x => x.CPF).IsModified = false;
 

@@ -95,19 +95,19 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                        <tr>
-                            <td>@item.Name</td>
-                            <td>@item.CPF</td>
-                            <td>@item.Email</td>
-                            <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
-                            <td>@item.Age()</td>
-                            <td>@item.PositionName.Name</td>
-                            <td>@item.HomeTime() anos</td>
-                            <td style="text-align:center">
-                                <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-edit"></i> Editar</a>
-                                <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-email"></i> Reenviar Senha</a>
-                            </td>
-                        </tr>
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>@item.CPF</td>
+                                <td>@item.Email</td>
+                                <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
+                                <td>@item.Age()</td>
+                                <td>@item.PositionName.Name</td>
+                                <td>@item.HomeTime() anos</td>
+                                <td style="text-align:center">
+                                    <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-edit"></i> Editar</a>
+                                    <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-email"></i> Reenviar Senha</a>
+                                </td>
+                            </tr>
                         }
 
                     </tbody>
