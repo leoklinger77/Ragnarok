@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
+using Ragnarok.Services.KeyGenerator;
 using Ragnarok.Services.Lang;
 using Ragnarok.Services.Login;
 using System;
@@ -17,13 +19,15 @@ namespace Ragnarok.Areas.Employee.Controllers
     {
         private readonly EmployeeLogin _employeeLogin;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IPositionNameRepository _positionNameRepository;
 
-        public EmployeeController(EmployeeLogin employeeLogin, IEmployeeRepository employeeRepository)
+        public EmployeeController(EmployeeLogin employeeLogin, IEmployeeRepository employeeRepository, IPositionNameRepository positionNameRepository)
         {
             _employeeLogin = employeeLogin;
             _employeeRepository = employeeRepository;
+            _positionNameRepository = positionNameRepository;
         }
-        
+
         public IActionResult Index()
         {
             ICollection<Models.Employee> list = _employeeRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId);
@@ -165,16 +169,33 @@ namespace Ragnarok.Areas.Employee.Controllers
         [HttpGet]
         public IActionResult Insert()
         {
+            ViewBag.PositionName = _positionNameRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x=> new SelectListItem(x.Name, x.Id.ToString()));
             return View();
         }
         [HttpPost]
         public IActionResult Insert(Models.Employee employee)
         {
+            ModelState.Remove("Employee.Login");
+            ModelState.Remove("Employee.Password");
             if (ModelState.IsValid)
             {
+                employee.BusinessId = _employeeLogin.GetEmployee().BusinessId;
+                employee.InsertDate = DateTime.Now;
+                employee.Login = employee.Email;
+                employee.Password = KeyGenerator.GetUniqueKey(8);
+
+                employee.Address.InsertDate = DateTime.Now;
+
+                foreach (var item in employee.Contacts)
+                {
+                    item.InsertDate = DateTime.Now;
+                }
+                TempData["MSG_S"] = Message.MSG_S_002;
+                _employeeRepository.Insert(employee);
+                return Json("Ok");
 
             }
-            return View();
+            return Json(employee);
         }
 
     }

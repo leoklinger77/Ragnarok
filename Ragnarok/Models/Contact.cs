@@ -40,12 +40,15 @@ namespace Ragnarok.Models
         public override bool Equals(object obj)
         {
             return obj is Contact contact &&
-                   Id == contact.Id;
+                   Id == contact.Id &&
+                   TypeNumber == contact.TypeNumber &&
+                   DDD == contact.DDD &&
+                   Number == contact.Number;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(Id);
+            return HashCode.Combine(Id, TypeNumber, DDD, Number);
         }
     }
 }

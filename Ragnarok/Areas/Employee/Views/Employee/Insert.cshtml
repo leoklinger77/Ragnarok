@@ -1,0 +1,264 @@
+﻿@model Employee
+@{
+    ViewData["Title"] = "Insert";
+}
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>NOVO FUNCIONÁRIO</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Employee" asp-area="Employee">Funcionário</a></li>
+            <li><a asp-action="Insert" asp-controller="Employee" asp-area="Employee">Novo Funcionário</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <button asp-action="Insert" asp-controller="Employee" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-person-add"></i> Novo Cadastro</button>
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> Quick Task</button>
+        </div>
+        <!-- quick task modal -->
+        <div class="modal fade" id="quick-task-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Quick Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="task-title" class="control-label sr-only">Title</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="task-title" placeholder="Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label sr-only">Description</label>
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" name="task-description" rows="5" cols="30" placeholder="Description"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save Task</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <div id="insertEmployee" class="wizard-circle">
+        <ul>
+            <li><a href="#tab1" data-toggle="tab">1</a><span>Informações Principais</span></li>
+            <li><a href="#tab2" data-toggle="tab">2</a><span>Endereço</span></li>
+            <li><a href="#tab3" data-toggle="tab">3</a><span>Confirmação</span></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="tab1">
+                <form id="form-circle-wizard1" data-parsley-validate novalidate>
+                    <fieldset>
+                        <legend>Informações Principais</legend>
+                        <div class="row">
+                            <div class="col-sm-6">
+                                <label asp-for="Name">Nome</label>
+                                <input asp-for="Name" type="text" class="form-control" id="employeeName" required />
+                            </div>
+                            <div class="col-sm-3">
+                                <label asp-for="BirthDay">Nascimento</label>
+                                <input asp-for="BirthDay" type="date" class="form-control" id="employeeBirthDay" required />
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label asp-for="CPF">CPF</label>
+                                <input asp-for="CPF" type="text" class="form-control" id="employeeCpf" required />
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-horizontal" style="margin-top:15px">
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label">Sexo</label>
+                                        <div class="col-md-10">
+                                            <label class="radio radio-inline radioLeft">
+                                                <input asp-for="Sexo" type="radio" value="Masculino" id="employeeSexo" required /> Masculino
+                                                <span class="text-danger"></span>
+                                            </label>
+                                            <label class="radio radio-inline">
+                                                <input asp-for="Sexo" type="radio" value="Feminino"> Feminino
+                                            </label>
+                                        </div>
+                                        <span class="text-danger"></span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label asp-for="Email">Email</label>
+                                <input asp-for="Email" type="email" class="form-control" id="employeeEmail" required>
+                            </div>
+                            <div class="col-sm-3">
+                                <label asp-for="PositionName.Name">Cargo</label>
+                                <select asp-for="PositionNameId" type="text" class="form-control" asp-items="@ViewBag.PositionName" id="positionNameId" required>
+                                    <option value="">Selecione</option>
+                                </select>
+                            </div>
+                            <div class="col-sm-5">
+                                <div class="form-horizontal" style="margin-top:15px">
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label">Ativo</label>
+                                        <div class="col-md-4">
+                                            <label class="radio radio-inline radioLeft">
+                                                <input asp-for="Action" type="radio" value="true" required id="employeeAction" /> Sim
+                                                <span class="text-danger"></span>
+                                            </label>
+                                            <label class="radio radio-inline" style="float:left">
+                                                <input asp-for="Action" type="radio" value="false" /> Não
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label >Celular</label>
+                                <input name="phone" type="tel" class="form-control" id="employeePhone" required />
+                            </div>
+                            <div class="col-sm-3">
+                                <label >Telefone</label>
+                                <input name="telePhone" type="tel" class="form-control" id="employeeTelePhone"/>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="tab-pane" id="tab2">
+                <form id="form-circle-wizard2" data-parsley-validate novalidate>
+                    <input asp-for="Address.CityId" type="hidden" id="cityId" />                    
+
+                    <fieldset>
+                        <legend>Endereço</legend>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Cep</label>
+                                <input asp-for="Address.ZipCode" type="text" class="form-control cep" id="zipCode" required />
+                                <span class="text-danger span-cep"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Rua</label>
+                                <input asp-for="Address.Street" type="text" class="form-control" id="street" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Número</label>
+                                <input asp-for="Address.Number" type="text" class="form-control" id="number" required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Referencia</label>
+                                <input asp-for="Address.Reference" type="text" class="form-control" id="complement" />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Complemento</label>
+                                <input asp-for="Address.Complement" type="text" class="form-control" id="reference" />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Bairro</label>
+                                <input asp-for="Address.Neighborhood" type="text" class="form-control" id="neighborhood" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Cidade</label>
+                                <input asp-for="Address.City.Name" type="text" class="form-control" id="city" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Estado</label>
+                                <input asp-for="Address.City.State.Name" type="text" class="form-control" id="state"required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="tab-pane" id="tab3">
+
+                <h4>Confirmação</h4>
+                <p>Please review you information first, if everything's ok you can click "Create Account" button.</p>
+
+                <div class="row">
+                    <div class="col-sm-3">
+                        <dl class="dl-horizontal">
+                            <dt>Nome:</dt>
+                            <dd><span id="confirmName"></span></dd>
+                            <dt>Nacimento:</dt>
+                            <dd><span id="confirmBirthDay"></span></dd>
+                            <dt>CPF:</dt>
+                            <dd><span id="confirmCpf"></span></dd>
+                            <dt>Sexo:</dt>
+                            <dd><span id="confirmSexo"></span></dd>
+                            <dt>E-mail:</dt>
+                            <dd><span id="confirmEmail"></span></dd>
+                            <dt>cargo:</dt>
+                            <dd><span id="confirmPositionName"></span></dd>
+                            <dt>Ativo:</dt>
+                            <dd><span id="confirmAction"></span></dd>
+
+                            <dt>Celular:</dt>
+                            <dd><span id="confirmPhone"></span></dd>
+                            <dt>Telefone:</dt>
+                            <dd><span id="confirmTel"></span></dd>
+                        </dl>
+                    </div>
+                    <div class="col-sm-3">
+                        <dl class="dl-horizontal">
+                            <dt>Cep:</dt>
+                            <dd><span id="confirmZipCode"></span></dd>
+                            <dt>Rua:</dt>
+                            <dd><span id="confirmStreet"></span></dd>
+                            <dt>Número:</dt>
+                            <dd><span id="confirmNumber"></span></dd>
+                            <dt>Complemento:</dt>
+                            <dd><span id="confirmComplement"></span></dd>
+                            <dt>Referencia:</dt>
+                            <dd><span id="confirmReference"></span></dd>
+                            <dt>Bairro:</dt>
+                            <dd><span id="confirmNeighborhood"></span></dd>
+                            <dt>Cidade:</dt>
+                            <dd><span id="confirmCity"></span></dd>
+                            <dt>Estado:</dt>
+                            <dd><span id="confirmState"></span></dd>
+                        </dl>
+                    </div>
+                   
+                </div>
+                
+
+            </div>
+            <ul class="pager wizard">
+                <li class="previous"><a>Previous</a></li>
+                <li class="next last"><a>Create Account</a></li>
+                <li class="next"><a>Next</a></li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
