@@ -32,6 +32,32 @@ namespace Ragnarok.Repository
             }
         }
 
+        public ICollection<Employee> FindByCpf(string cpf, int businessId)
+        {
+            try
+            {
+                return _context.Employee.Where(x => x.BusinessId == businessId && x.CPF == cpf).AsNoTracking().ToList();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public ICollection<Employee> FindByEmail(string email, int businessId)
+        {
+            try
+            {
+                return _context.Employee.Where(x => x.BusinessId == businessId && x.Email == email).AsNoTracking().ToList();
+
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         public Employee FindById(int id)
         {
             try

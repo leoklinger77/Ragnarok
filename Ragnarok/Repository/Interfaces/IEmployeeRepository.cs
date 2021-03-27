@@ -20,6 +20,9 @@ namespace Ragnarok.Repository.Interfaces
         Address FindByIdAddress(int id);
         Contact FindByIdContacts(int id);
         ICollection<Employee> FindAlls(int businessId);
+        ICollection<Employee> FindByEmail(string email, int businessId);
+        ICollection<Employee> FindByCpf(string cpf, int businessId);
+
 
     }
 }

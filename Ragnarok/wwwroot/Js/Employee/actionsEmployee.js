@@ -96,8 +96,12 @@
                     data: { employee: employee },
                     success: function (message) {
 
-                        if ("Sucess") {
+                        if (message == "Ok") {
                             window.location.href = "/Employee/Employee/Index";
+                        }
+
+                        if (message == "Error") {
+                            //TODO Implementar regra de erro
                         }
                     }
                 });

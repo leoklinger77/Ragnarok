@@ -62,10 +62,22 @@
             <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS FUNCIONÁRIOS</span></h3>
         </div>
         <div class="widget-content">
-            <div class="alert alert-info fade in">
-                <button class="close" data-dismiss="alert">&times;</button>
-                <i class="icon ion-information-circled"></i> Try to show/hide column visibility and drag the column to another position to reorder it.
-            </div>
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
             <div class="table-responsive">
                 <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable">
                     <thead>
@@ -76,19 +88,26 @@
                             <th>Nascimento</th>
                             <th>Idade</th>
                             <th>Cargo</th>
+                            <th>Tempo de Casa</th>
+                            <th>Ação</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@item.Name</td>
-                                <td>@item.CPF</td>
-                                <td>@item.Email</td>
-                                <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
-                                <td>@item.Age()</td>
-                                <td>@item.PositionName.Name</td>
-                            </tr>
+                        <tr>
+                            <td>@item.Name</td>
+                            <td>@item.CPF</td>
+                            <td>@item.Email</td>
+                            <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
+                            <td>@item.Age()</td>
+                            <td>@item.PositionName.Name</td>
+                            <td>@item.HomeTime() anos</td>
+                            <td style="text-align:center">
+                                <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-edit"></i> Editar</a>
+                                <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-email"></i> Reenviar Senha</a>
+                            </td>
+                        </tr>
                         }
 
                     </tbody>

@@ -24,9 +24,9 @@ namespace Ragnarok.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Login(Employee employee)
+        public IActionResult Login(string Login, string Password )
         {
-            Employee model = _employeeRepository.Login(employee.Login, employee.Password);
+            Employee model = _employeeRepository.Login(Login, Password);
 
             if (model != null)
             {
