@@ -36,6 +36,7 @@ namespace Ragnarok.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Neighborhood")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("Number")
@@ -45,12 +46,14 @@ namespace Ragnarok.Migrations
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Street")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("ZipCode")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.HasKey("Id");
@@ -103,6 +106,7 @@ namespace Ragnarok.Migrations
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("StateId")
@@ -175,24 +179,32 @@ namespace Ragnarok.Migrations
                         .HasColumnType("int");
 
                     b.Property<string>("CPF")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Email")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("InsertDate")
                         .HasColumnType("datetime2");
 
                     b.Property<string>("Login")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Name")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("Password")
+                        .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("PositionNameId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("RegisterEmployeeId")
                         .HasColumnType("int");
 
                     b.Property<int>("Sexo")
@@ -208,6 +220,8 @@ namespace Ragnarok.Migrations
                     b.HasIndex("BusinessId");
 
                     b.HasIndex("PositionNameId");
+
+                    b.HasIndex("RegisterEmployeeId");
 
                     b.ToTable("TB_Employee");
                 });
@@ -322,7 +336,7 @@ namespace Ragnarok.Migrations
             modelBuilder.Entity("Ragnarok.Models.City", b =>
                 {
                     b.HasOne("Ragnarok.Models.State", "State")
-                        .WithMany("Cities")
+                        .WithMany()
                         .HasForeignKey("StateId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -335,7 +349,7 @@ namespace Ragnarok.Migrations
                         .HasForeignKey("BusinessId");
 
                     b.HasOne("Ragnarok.Models.Employee", "Employee")
-                        .WithMany()
+                        .WithMany("Contacts")
                         .HasForeignKey("EmployeeId");
                 });
 
@@ -358,6 +372,10 @@ namespace Ragnarok.Migrations
                         .HasForeignKey("PositionNameId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.HasOne("Ragnarok.Models.Employee", "RegisterEmployee")
+                        .WithMany()
+                        .HasForeignKey("RegisterEmployeeId");
                 });
 
             modelBuilder.Entity("Ragnarok.Models.PositionName", b =>

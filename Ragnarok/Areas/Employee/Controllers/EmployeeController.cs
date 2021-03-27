@@ -2,6 +2,7 @@
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
+using Ragnarok.Services.Email;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.KeyGenerator;
 using Ragnarok.Services.Lang;
@@ -19,12 +20,14 @@ namespace Ragnarok.Areas.Employee.Controllers
         private readonly EmployeeLogin _employeeLogin;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IPositionNameRepository _positionNameRepository;
+        private readonly SendEmail _sendEmail;
 
-        public EmployeeController(EmployeeLogin employeeLogin, IEmployeeRepository employeeRepository, IPositionNameRepository positionNameRepository)
+        public EmployeeController(EmployeeLogin employeeLogin, IEmployeeRepository employeeRepository, IPositionNameRepository positionNameRepository, SendEmail sendEmail)
         {
             _employeeLogin = employeeLogin;
             _employeeRepository = employeeRepository;
             _positionNameRepository = positionNameRepository;
+            _sendEmail = sendEmail;
         }
         [HttpGet]
         public IActionResult Index()
@@ -170,6 +173,8 @@ namespace Ragnarok.Areas.Employee.Controllers
             ModelState.Remove("Employee.Password");
             if (ModelState.IsValid)
             {
+                
+                employee.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;
                 employee.BusinessId = _employeeLogin.GetEmployee().BusinessId;
                 employee.InsertDate = DateTime.Now;
                 employee.Login = employee.Email;
@@ -247,6 +252,15 @@ namespace Ragnarok.Areas.Employee.Controllers
             viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);
             ViewBag.PositionName = _positionNameRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(nameof(Details), viewModel);
+        }
+        [HttpGet]
+        public IActionResult ResendPassword(int id)
+        {
+            Models.Employee employee = _employeeRepository.FindById(id);
+                        
+            _sendEmail.SendPasswordEmployee(employee);
+            TempData["MSG_S"] = Message.MSG_S_004;            
+            return RedirectToAction(nameof(Index));
         }
 
     }

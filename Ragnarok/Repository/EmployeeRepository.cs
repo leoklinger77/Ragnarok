@@ -125,20 +125,7 @@ namespace Ragnarok.Repository
             {
                 throw new Exception(e.Message);
             }
-        }
-
-        public void InsertPhone(Contact contact)
-        {
-            try
-            {
-                _context.Contact.Add(contact);
-                _context.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
+        }        
 
         public Employee Login(string login, string password)
         {
@@ -244,23 +231,6 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
-
-        public void UpdatePhone(List<Contact> contacts)
-        {
-            try
-            {
-                _context.Contact.UpdateRange(contacts);
-                foreach (var item in contacts)
-                {
-                    _context.Entry(item).Property(x => x.InsertDate).IsModified = false;
-                }
-
-                _context.SaveChanges();
-            }
-            catch (Exception e)
-            {
-                throw new Exception(e.Message);
-            }
-        }
+                
     }
 }

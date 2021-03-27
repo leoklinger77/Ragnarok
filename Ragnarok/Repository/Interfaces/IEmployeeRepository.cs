@@ -8,12 +8,11 @@ namespace Ragnarok.Repository.Interfaces
         Employee Login(string login, string password);
         Employee LoginUpdate(int id);
         Employee Forgot(string login);
-        void Insert(Employee employee);
-        void InsertPhone(Contact contact);
+
+        void Insert(Employee employee);        
         void UpdateMain(Employee employee);
         void UpdateAddress(Address address);
-        void UpdatePassword(Employee employee);
-        void UpdatePhone(List<Contact> contacts);
+        void UpdatePassword(Employee employee);        
         void Remove(int id);
         void RemoveContact(int id);
         Employee FindById(int id);

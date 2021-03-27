@@ -132,4 +132,7 @@
   <data name="MSG_S_003" xml:space="preserve">
     <value>Endereço alterado com sucesso.</value>
   </data>
+  <data name="MSG_S_004" xml:space="preserve">
+    <value>Senha reenviada para o funcionário(a).</value>
+  </data>
 </root>

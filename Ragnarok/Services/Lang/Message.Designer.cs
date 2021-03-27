@@ -104,5 +104,14 @@ namespace Ragnarok.Services.Lang {
                 return ResourceManager.GetString("MSG_S_003", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Senha reenviada para o funcionário(a)..
+        /// </summary>
+        public static string MSG_S_004 {
+            get {
+                return ResourceManager.GetString("MSG_S_004", resourceCulture);
+            }
+        }
     }
 }

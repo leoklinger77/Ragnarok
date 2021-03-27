@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ragnarok.Migrations
 {
-    public partial class initial : Migration
+    public partial class Initial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -29,7 +29,7 @@ namespace Ragnarok.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     StateId = table.Column<int>(nullable: false)
@@ -42,7 +42,7 @@ namespace Ragnarok.Migrations
                         column: x => x.StateId,
                         principalTable: "TB_State",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -51,12 +51,12 @@ namespace Ragnarok.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ZipCode = table.Column<string>(nullable: true),
-                    Street = table.Column<string>(nullable: true),
+                    ZipCode = table.Column<string>(nullable: false),
+                    Street = table.Column<string>(nullable: false),
                     Number = table.Column<int>(nullable: false),
                     Complement = table.Column<string>(nullable: true),
                     Reference = table.Column<string>(nullable: true),
-                    Neighborhood = table.Column<string>(nullable: true),
+                    Neighborhood = table.Column<string>(nullable: false),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     CityId = table.Column<int>(nullable: false)
@@ -69,7 +69,7 @@ namespace Ragnarok.Migrations
                         column: x => x.CityId,
                         principalTable: "TB_City",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -121,7 +121,7 @@ namespace Ragnarok.Migrations
                         column: x => x.BusinessId,
                         principalTable: "TB_Business",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -130,19 +130,20 @@ namespace Ragnarok.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    Name = table.Column<string>(nullable: true),
-                    CPF = table.Column<string>(nullable: true),
+                    Name = table.Column<string>(nullable: false),
+                    CPF = table.Column<string>(nullable: false),
                     BirthDay = table.Column<DateTime>(nullable: false),
                     Sexo = table.Column<int>(nullable: false),
                     Action = table.Column<bool>(nullable: false),
-                    Email = table.Column<string>(nullable: true),
-                    Login = table.Column<string>(nullable: true),
-                    Password = table.Column<string>(nullable: true),
+                    Email = table.Column<string>(nullable: false),
+                    Login = table.Column<string>(nullable: false),
+                    Password = table.Column<string>(nullable: false),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     BusinessId = table.Column<int>(nullable: false),
                     PositionNameId = table.Column<int>(nullable: false),
-                    AddressId = table.Column<int>(nullable: false)
+                    AddressId = table.Column<int>(nullable: false),
+                    RegisterEmployeeId = table.Column<int>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -158,13 +159,19 @@ namespace Ragnarok.Migrations
                         column: x => x.BusinessId,
                         principalTable: "TB_Business",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TB_Employee_TB_PositionName_PositionNameId",
                         column: x => x.PositionNameId,
                         principalTable: "TB_PositionName",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.NoAction);
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TB_Employee_TB_Employee_RegisterEmployeeId",
+                        column: x => x.RegisterEmployeeId,
+                        principalTable: "TB_Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateTable(
@@ -237,6 +244,11 @@ namespace Ragnarok.Migrations
                 name: "IX_TB_Employee_PositionNameId",
                 table: "TB_Employee",
                 column: "PositionNameId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_Employee_RegisterEmployeeId",
+                table: "TB_Employee",
+                column: "RegisterEmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_PositionName_BusinessId",

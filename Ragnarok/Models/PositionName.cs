@@ -13,6 +13,7 @@ namespace Ragnarok.Models
         public DateTime? UpdateDate { get; set; }
         public Business Business { get; set; }
         public int BusinessId { get; set; }
+        
         public ICollection<Employee> Employee { get; set; } = new HashSet<Employee>();
 
         public PositionName()

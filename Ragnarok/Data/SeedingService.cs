@@ -79,7 +79,9 @@ namespace Ragnarok.Data
                 Action = true,
                 BirthDay = DateTime.Parse("11/09/1995"),
                 PositionName = positionName,
-                Business = business1
+                Business = business1,
+                RegisterEmployee = null
+                
             };
 
             Contact contact2 = new Contact
