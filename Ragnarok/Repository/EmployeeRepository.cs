@@ -156,7 +156,9 @@ namespace Ragnarok.Repository
             try
             {
                 Employee employee = FindById(id);
-                _context.Employee.Remove(employee);
+                _context.RemoveRange(employee.Address);
+                _context.RemoveRange(employee);                
+                _context.RemoveRange(employee.Contacts);
                 _context.SaveChanges();
             }
             catch (Exception e)

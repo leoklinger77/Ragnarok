@@ -108,7 +108,7 @@
                 model += "Contacts:[{TypeNumber:'Celular',DDD:'" + phone.substr(0, 2) + "',Number:'" + phone.substr(2) + "'}";
 
                 var numberFixo = $('#employeeTelePhone').cleanVal();
-                if (typeof numberFixo !== 'undefined') {
+                if (numberFixo !== '') {
 
                     model += ",{TypeNumber:'Residencial',DDD:'" + numberFixo.substr(0, 2) + "',Number:'" + numberFixo.substr(2) + "'}";
                 }
