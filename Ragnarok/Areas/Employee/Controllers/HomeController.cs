@@ -1,10 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Login;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {

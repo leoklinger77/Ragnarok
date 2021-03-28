@@ -1,0 +1,147 @@
+﻿@model PositionName
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>DETALHES DO CARGO</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Employee" asp-area="Employee">Funcionário</a></li>
+            <li><a asp-action="Details" asp-controller="PositionName" asp-area="Employee" asp-route-id="@Model.Id">Detalhes do Cargo</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+            <button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#quick-task-modal"><i class="icon ion-edit"></i> Quick Task</button>
+        </div>
+        <!-- quick task modal -->
+        <div class="modal fade" id="quick-task-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Quick Task</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal" role="form">
+                            <div class="form-group">
+                                <label for="task-title" class="control-label sr-only">Title</label>
+                                <div class="col-sm-12">
+                                    <input type="text" class="form-control" id="task-title" placeholder="Title">
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label class="control-label sr-only">Description</label>
+                                <div class="col-sm-12">
+                                    <textarea class="form-control" name="task-description" rows="5" cols="30" placeholder="Description"></textarea>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save Task</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    @if (TempData["MSG_S"] != null)
+    {
+        <div class="alert alert-success fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Feito!</strong> @TempData["MSG_S"]
+        </div>
+    }
+    @if (TempData["MSG_E"] != null)
+    {
+        <div class="alert alert-danger fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Erro!</strong> @TempData["MSG_E"]
+        </div>
+    }
+
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-person"></i> Cargos<span></span></h3>
+        </div>
+        <div class="widget-content">
+            <ul class="nav nav-tabs tabs-iconized" role="tablist">
+                <li class="active"><a href="#home2" role="tab" data-toggle="tab"><i class="icon ion-home"></i> Principal</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home2">
+                    <div class="row">
+                        <div class="col-md-12">
+                            <form method="post" asp-action="Update" asp-area="Employee" asp-controller="PositionName">
+                                <input asp-for="Id" type="hidden" />
+                                <input asp-for="InsertDate" type="hidden" />
+                                <input asp-for="BusinessId" type="hidden" />
+                                <div class="row">
+                                    <div class="col-sm-6">
+                                        <label asp-for="Name"></label>
+                                        <input asp-for="Name" type="text" class="form-control" id="employeeName" required />
+                                    </div>
+                                </div>
+                                <br />
+                                <a asp-action="Index" asp-controller="PositionName" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> Alterar</a>
+                                <button type="submit" class="btn btn-success btn-sm btn-quick-task"><i class="icon io"></i> Alterar</button>
+                            </form>
+                            <br />
+
+                            <div class="widget">
+                                <div class="widget-header clearfix">
+                                    <h3><i class="icon ion-person-stalker"></i> <span>Lista de Funcionários</span></h3>
+                                </div>
+                                <div class="widget-content">
+                                    <div class="table-responsive">
+                                        <table id="datatable-column-filter" class="table table-sorting table-striped table-hover datatable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Nome</th>
+                                                    <th>CPF</th>
+                                                    <th>E-mail</th>
+                                                    <th>Nascimento</th>
+                                                    <th>Idade</th>
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                @foreach (var item in Model.Employee)
+                                                {
+                                                    <tr>
+                                                        <td><a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" type="Button">@item.Name</a></td>
+                                                        <td>@item.CPF</td>
+                                                        <td>@item.Email</td>
+                                                        <td>@item.BirthDay</td>
+                                                        <td>@item.Age()</td>
+                                                    </tr>
+
+                                                }
+
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+

@@ -1,6 +1,6 @@
 ﻿@inject Ragnarok.Services.Login.EmployeeLogin _employeeLogin
 <!DOCTYPE html>
-<html lang="en" class="no-js">
+<html lang="pt-br" class="no-js">
 <head>
     <title>@ViewBag.Title</title>
     <meta charset="utf-8">
@@ -207,10 +207,11 @@
                         <li class="has-submenu">
                             <a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Cadastros</span></a>
                             <ul class="list-unstyled sub-menu collapse">
-                                <li class="active"><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>
                                 <li><a href="charts-interactive.html"><span class="text">Cliente</span></a></li>
                                 <li><a href="charts-interactive.html"><span class="text">Categoria</span></a></li>
                                 <li><a href="charts-interactive.html"><span class="text">Produto</span></a></li>
+                                <li class="active"><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>
+                                <li class="active"><a asp-action="Index" asp-controller="PositionName" asp-area="Employee"><span class="text">Departamentos</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -249,6 +250,7 @@
 
     <script src="~/Js/Utils/actionsUtils.js"></script>
     <script src="~/Js/Employee/actionsEmployee.js"></script>
+    <script src="~/Js/PositionName/actionsPositionName.js"></script>
 
     <script src="~/assets/js/plugins/datatable/jquery.dataTables.min.js"></script>
     <script src="~/assets/js/plugins/datatable/exts/dataTables.colVis.bootstrap.js"></script>

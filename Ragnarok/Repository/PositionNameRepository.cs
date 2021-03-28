@@ -1,4 +1,5 @@
-﻿using Ragnarok.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Ragnarok.Data;
 using Ragnarok.Models;
 using Ragnarok.Repository.Interfaces;
 using System;
@@ -20,7 +21,9 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.PositionName.Where(x => x.BusinessId == businessId).ToList();
+                return _context.PositionName.Where(x => x.BusinessId == businessId)
+                    .Include(x=>x.Employee)
+                    .ToList();
             }
             catch (Exception e)
             {
@@ -32,7 +35,9 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.PositionName.FirstOrDefault(x => x.Id == id);
+                return _context.PositionName
+                    .Include(x=>x.Employee)
+                    .FirstOrDefault(x => x.Id == id);
             }
             catch (Exception e)
             {
@@ -72,6 +77,7 @@ namespace Ragnarok.Repository
             try
             {
                 _context.PositionName.Update(positionName);
+                _context.Entry(positionName).Property(x => x.InsertDate).IsModified = false;
                 _context.SaveChanges();
             }
             catch (Exception e)

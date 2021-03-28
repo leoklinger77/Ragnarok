@@ -1,4 +1,4 @@
-﻿@model ICollection<Employee>
+﻿@model ICollection<PositionName>
 @{
     ViewData["Title"] = "Index";
 }
@@ -6,13 +6,13 @@
 <div class="container-fluid primary-content">
     <!-- PRIMARY CONTENT HEADING -->
     <div class="primary-content-heading clearfix">
-        <h2>FUNCIONÁRIO</h2>
+        <h2>CARGOS DE FUNCIONÁRIOS</h2>
         <ul class="breadcrumb pull-left">
             <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
-            <li><a asp-action="Index" asp-controller="Employee" asp-area="Employee">Funcionário</a></li>
+            <li><a asp-action="Index" asp-controller="PositionName" asp-area="Employee">Cargos</a></li>
         </ul>
         <div class="sticky-content pull-right">
-            <a asp-action="Insert" asp-controller="Employee" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Novo Funcionário</a>
+            <button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#insertPositionName-modal"><i class="icon ion-person-add"></i> Novo Cargo</button>
             <div class="btn-group btn-dropdown">
                 <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
                 <ul class="dropdown-menu dropdown-menu-right list-inline">
@@ -59,7 +59,7 @@
 
     <div class="widget">
         <div class="widget-header clearfix">
-            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS FUNCIONÁRIOS</span></h3>
+            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS CARGOS</span></h3>
         </div>
         <div class="widget-content">
             @if (TempData["MSG_S"] != null)
@@ -82,15 +82,10 @@
                 <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable">
                     <thead>
                         <tr>
-                            <th>Nome</th>
-                            <th>CPF</th>
-                            <th>Email</th>
-                            <th>Nascimento</th>
-                            <th>Idade</th>
                             <th>Cargo</th>
-                            
-                            <th>Ativado</th>
+                            <th>Qtd Func</th>
                             <th>Ação</th>
+
                         </tr>
                     </thead>
                     <tbody>
@@ -98,24 +93,9 @@
                         {
                             <tr>
                                 <td>@item.Name</td>
-                                <td>@item.CPF</td>
-                                <td>@item.Email</td>
-                                <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
-                                <td>@item.Age()</td>
-                                
-                                <td>@item.HomeTime() anos</td>
-                                @if (@item.Action)
-                                {
-                                <td><span class="label label-success">Ativado</span></td>
-                                }
-                                else
-                                {
-                            <td><span class="label label-danger">Desativado</span></td>
-                                }
-
-                                <td style="text-align:center">
-                                    <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" ><i class="icon ion-edit"></i> Editar</a>
-                                    <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" ><i class="icon ion-email"></i> Reenviar Senha</a>
+                                <td>@item.ToalEmployees()</td>
+                                <td>
+                                    <a asp-action="Details" asp-controller="PositionName" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
                                 </td>
                             </tr>
                         }
@@ -127,3 +107,26 @@
     </div>
 </div>
 
+<!--Insert-->
+<div class="modal fade" id="insertPositionName-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Cadastro de Cargos</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="task-title" class="control-label sr-only">Title</label>
+                        <div class="col-sm-12">
+                            <input type="text" class="form-control" id="positionName" placeholder="Novo Cargo">
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success" id="btnSalvePositionName">Salvar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>

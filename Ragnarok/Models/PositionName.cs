@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
@@ -9,6 +10,8 @@ namespace Ragnarok.Models
     {
         public int Id { get; set; }
         public string Name { get; set; }
+        [Display(Name = "Cadastro")]
+        [DisplayFormat(DataFormatString = "dd/MM/yyyy")]
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public Business Business { get; set; }
@@ -38,6 +41,10 @@ namespace Ragnarok.Models
         public override int GetHashCode()
         {
             return HashCode.Combine(Id);
+        }
+        public int ToalEmployees()
+        {
+            return Employee.Count;
         }
     }
 }

@@ -68,26 +68,26 @@
                                 <input asp-for="Employee.BirthDay" type="hidden" />
                                 <input asp-for="Employee.Action" type="hidden" />
                                 <div class="row">
-                                    <div class="col-sm-8">
+                                    <div class="col-sm-10">
                                         <label asp-for="Employee.Name"></label>
                                         <input asp-for="Employee.Name" type="text" class="form-control" required>
                                         <span asp-validation-for="Employee.Name" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
                                         <label asp-for="Employee.CPF"></label>
                                         <input asp-for="Employee.CPF" type="text" class="form-control" required disabled style="background-color:white">
                                         <span asp-validation-for="Employee.CPF" class="text-danger"></span>
                                     </div>
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
                                         <label asp-for="Employee.BirthDay"></label>
                                         <input asp-for="Employee.BirthDay" type="date" class="form-control" required disabled style="background-color:white">
                                         <span asp-validation-for="Employee.BirthDay" class="text-danger"></span>
                                     </div>
                                 </div>
                                 <div class="row">
-                                    <div class="col-sm-4">
+                                    <div class="col-sm-5">
                                         <label asp-for="Employee.Email"></label>
                                         <input asp-for="Employee.Email" type="text" class="form-control" required />
                                         <span asp-validation-for="Employee.Email" class="text-danger"></span>
@@ -122,7 +122,7 @@
 
                                     <input asp-for="ContactCel.InsertDate" type="hidden">
                                     <input asp-for="ContactFixo.InsertDate" type="hidden" />
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <label asp-for="ContactCel.DDD "></label>
                                         <input asp-for="ContactCel.DDD" type="tel" class="form-control" required>
                                         <span asp-validation-for="ContactCel.DDD" class="text-danger"></span>
@@ -132,7 +132,7 @@
                                         <input asp-for="ContactCel.Number" type="tel" class="form-control" required>
                                         <span asp-validation-for="ContactCel.Number" class="text-danger"></span>
                                     </div>
-                                    <div class="col-sm-1">
+                                    <div class="col-sm-2">
                                         <label asp-for="ContactFixo.DDD"></label>
                                         <input asp-for="ContactFixo.DDD" type="tel" class="form-control">
                                         <span asp-validation-for="ContactFixo.DDD" class="text-danger"></span>
