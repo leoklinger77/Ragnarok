@@ -103,7 +103,7 @@
                                 <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
                                 <td>@item.Age()</td>
                                 
-                                <td>@item.HomeTime() anos</td>
+                                <td>@item.PositionName.Name</td>
                                 @if (@item.Action)
                                 {
                                 <td><span class="label label-success">Ativado</span></td>
@@ -113,10 +113,13 @@
                             <td><span class="label label-danger">Desativado</span></td>
                                 }
 
-                                <td style="text-align:center">
-                                    <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" ><i class="icon ion-edit"></i> Editar</a>
-                                    <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" ><i class="icon ion-email"></i> Reenviar Senha</a>
-                                </td>
+                            <td style="text-align:center">
+                                <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
+                                |
+                                <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-email"></i> Reenviar Senha</a>
+                                |
+                                <a asp-action="Remove" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                            </td>
                             </tr>
                         }
 

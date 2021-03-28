@@ -72,7 +72,8 @@
                         <div class="row">
                             <div class="col-sm-6">
                                 <label asp-for="Name">Nome</label>
-                                <input asp-for="Name" type="text" class="form-control" id="employeeName" required />
+                                <input asp-for="Name" type="text" class="form-control fullName" id="employeeName" required />
+                                <span asp-validation-for="Name" class="text-danger span-nameCompleto"></span>
                             </div>
                             <div class="col-sm-3">
                                 <label asp-for="BirthDay">Nascimento</label>
@@ -82,7 +83,8 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <label asp-for="CPF">CPF</label>
-                                <input asp-for="CPF" type="text" class="form-control" id="employeeCpf" required />
+                                <input asp-for="CPF" type="text" class="form-control cpf" id="employeeCpf" required />
+                                <span asp-validation-for="CPF" class="text-danger validationCpf"></span>
                             </div>
                             <div class="col-sm-5">
                                 <div class="form-horizontal" style="margin-top:15px">
@@ -105,7 +107,8 @@
                         <div class="row">
                             <div class="col-sm-4">
                                 <label asp-for="Email">Email</label>
-                                <input asp-for="Email" type="email" class="form-control" id="employeeEmail" required>
+                                <input asp-for="Email" type="email" class="form-control email" id="employeeEmail" required>
+                                <span asp-validation-for="Email" class="text-danger span-validationEmail"></span>
                             </div>
                             <div class="col-sm-3">
                                 <label asp-for="PositionName.Name">Cargo</label>
@@ -133,11 +136,13 @@
                         <div class="row">
                             <div class="col-sm-3">
                                 <label>Celular</label>
-                                <input name="phone" type="tel" class="form-control" id="employeePhone" required />
+                                <input name="phone" type="tel" class="form-control phone_with_ddd celValidity" id="employeePhone" required />
+                                <span class="text-danger span-celValidity"></span>
                             </div>
                             <div class="col-sm-3">
                                 <label>Telefone</label>
-                                <input name="telePhone" type="tel" class="form-control" id="employeeTelePhone" />
+                                <input name="telePhone" type="tel" class="form-control tel_with_ddd telValidity" id="employeeTelePhone" />
+                                <span class="text-danger span-telValidity"></span>
                             </div>
                         </div>
                     </fieldset>

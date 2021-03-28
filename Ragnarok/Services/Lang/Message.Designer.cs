@@ -79,6 +79,24 @@ namespace Ragnarok.Services.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registro possui vinculos com outros registro, não pode ser excluído!.
+        /// </summary>
+        public static string MSG_E_003 {
+            get {
+                return ResourceManager.GetString("MSG_E_003", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Não é possivel excluir um usúario que está logado..
+        /// </summary>
+        public static string MSG_E_004 {
+            get {
+                return ResourceManager.GetString("MSG_E_004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cadastro alterado com sucesso..
         /// </summary>
         public static string MSG_S_001 {
@@ -111,6 +129,15 @@ namespace Ragnarok.Services.Lang {
         public static string MSG_S_004 {
             get {
                 return ResourceManager.GetString("MSG_S_004", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Registro excluido com sucesso..
+        /// </summary>
+        public static string MSG_S_005 {
+            get {
+                return ResourceManager.GetString("MSG_S_005", resourceCulture);
             }
         }
     }

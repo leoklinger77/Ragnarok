@@ -1,4 +1,34 @@
 ﻿$(document).ready(function () {
+
+
+    function validityMan() {
+        var name = $('.span-nameCompleto').html();
+        var cpf = $('.validationCpf').html();;
+        var cel = $('.span-celValidity').html();
+        var tel = $('.span-telValidity').html();
+        var email = $('.span-validationEmail').html();
+
+        var result = 0;
+        if (name == '') {
+            result += 10;
+        }
+        if (cpf == '') {
+            result += 10;
+        }
+        if (cel == '') {
+            result += 10;
+        }
+        if (tel == '') {
+            result += 10;
+        }
+        if (email == '') {
+            result += 10;
+        }
+
+        return result;
+    }
+
+
     if ($('#insertEmployee').length > 0) {
         $('#insertEmployee').bootstrapWizard({
             'tabClass': 'nav nav-pills',
@@ -14,9 +44,14 @@
                 if (current <= total) {
                     tab.addClass('done');
 
+                    var man = validityMan();
+
                     // form validation
                     parsleyForm.validate();
 
+                    if (man != 50) {
+                        return false;
+                    }
                     if (!parsleyForm.isValid())
                         return false;
                 }
@@ -62,24 +97,24 @@
 
                 var model = "{Name:'" + $('#employeeName').val() +
                     "',BirthDay:'" + $('#employeeBirthDay').val() +
-                    "',CPF:'" + $('#employeeCpf').val() +
+                    "',CPF:'" + $('#employeeCpf').cleanVal() +
                     "',Email:'" + $('#employeeEmail').val() +
                     "', Sexo:'" + $('#employeeSexo').val() +
                     "', Action:'" + $('#employeeAction').val() +
                     "', PositionNameId:'" + $('#positionNameId').val() + "',";
 
-                var phone = $('#employeePhone').val()
+                var phone = $('#employeePhone').cleanVal()
 
                 model += "Contacts:[{TypeNumber:'Celular',DDD:'" + phone.substr(0, 2) + "',Number:'" + phone.substr(2) + "'}";
 
-                var numberFixo = $('#employeeTelePhone').val();
+                var numberFixo = $('#employeeTelePhone').cleanVal();
                 if (typeof numberFixo !== 'undefined') {
 
                     model += ",{TypeNumber:'Residencial',DDD:'" + numberFixo.substr(0, 2) + "',Number:'" + numberFixo.substr(2) + "'}";
                 }
                 model += "],";
 
-                model += "Address:{ZipCode:'" + $('#zipCode').val() +
+                model += "Address:{ZipCode:'" + $('#zipCode').cleanVal() +
                     "',Street:'" + $('#street').val() + 
                     "',Number:'" + $('#number').val() +
                     "',Complement:'" + $('#complement').val() +

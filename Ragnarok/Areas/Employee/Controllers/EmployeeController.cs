@@ -262,6 +262,26 @@ namespace Ragnarok.Areas.Employee.Controllers
             TempData["MSG_S"] = Message.MSG_S_004;            
             return RedirectToAction(nameof(Index));
         }
+        [HttpGet]
+        public IActionResult Remove(int id)
+        {
+            try
+            {
+                if (_employeeLogin.GetEmployee().Id == id)
+                {
+                    TempData["MSG_E"] = Message.MSG_E_004;
+                    return RedirectToAction(nameof(Index));
+                }
+                _employeeRepository.Remove(id);
+                TempData["MSG_S"] = Message.MSG_S_005;
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception e)
+            {
+                TempData["MSG_E"] = Message.MSG_E_003;
+                return RedirectToAction(nameof(Index));
+            }
+        }
 
     }
 }

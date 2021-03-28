@@ -96,6 +96,8 @@
                                 <td>@item.ToalEmployees()</td>
                                 <td>
                                     <a asp-action="Details" asp-controller="PositionName" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
+                                    |
+                                    <a asp-action="Remove" asp-controller="PositionName" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
                                 </td>
                             </tr>
                         }
