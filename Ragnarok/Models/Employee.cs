@@ -10,13 +10,12 @@ namespace Ragnarok.Models
 {
     [Table("TB_Employee")]
     public class Employee
-    {        
+    {
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Name { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
-        [CPFValidationEmployee]
-        public string CPF { get; set; }
+
+        private string _CPF;
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime BirthDay { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
@@ -40,17 +39,26 @@ namespace Ragnarok.Models
         public PositionName PositionName { get; set; }
         public int PositionNameId { get; set; }
         public Address Address { get; set; }
-        public int AddressId { get; set; }        
+        public int AddressId { get; set; }
         public Employee RegisterEmployee { get; set; }
         public int? RegisterEmployeeId { get; set; }
         public ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
-
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [CPFValidationEmployee]
+        public string CPF
+        {
+            get { return _CPF; }
+            set
+            {
+                _CPF = value.Replace(".", "").Replace("-", "");
+            }
+        }
         public Employee()
         {
         }
 
-        public Employee(int id, string name, string cPF, DateTime birthDay, Sexo sexo, bool action, 
-            string email, string login, string password, string confirmePasswor, DateTime insertDate, 
+        public Employee(int id, string name, string cPF, DateTime birthDay, Sexo sexo, bool action,
+            string email, string login, string password, string confirmePasswor, DateTime insertDate,
             DateTime? updateDate, Business business, PositionName positionName, Address address, Employee registerEmployee)
         {
             Id = id;

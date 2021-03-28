@@ -8,9 +8,8 @@ namespace Ragnarok.Models
     [Table("TB_Address")]
     public class Address
     {
-        public int Id { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
-        public string ZipCode { get; set; }
+        public int Id { get; set; }        
+        private string _zipCode;
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Street { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
@@ -23,7 +22,12 @@ namespace Ragnarok.Models
         public DateTime? UpdateDate { get; set; }
         public City City{ get; set; }
         public int CityId { get; set; }
-
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        public string ZipCode
+        {
+            get { return _zipCode; }
+            set { _zipCode = value.Replace("-", ""); }
+        }
         public Address()
         {
         }

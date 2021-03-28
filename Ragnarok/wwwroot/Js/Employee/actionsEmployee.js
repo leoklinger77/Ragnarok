@@ -97,7 +97,7 @@
 
                 var model = "{Name:'" + $('#employeeName').val() +
                     "',BirthDay:'" + $('#employeeBirthDay').val() +
-                    "',CPF:'" + $('#employeeCpf').cleanVal() +
+                    "',CPF:'" + $('#employeeCpf').val() +
                     "',Email:'" + $('#employeeEmail').val() +
                     "', Sexo:'" + $('#employeeSexo').val() +
                     "', Action:'" + $('#employeeAction').val() +

@@ -10,9 +10,8 @@ namespace Ragnarok.Models
     {
         public int Id { get; set; }
         public TypeNumber TypeNumber { get; set; }
-        public string DDD { get; set; }
-        [NumberValidation]
-        public string Number { get; set; }
+        private string _ddd;        
+        private string _number;
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
@@ -21,6 +20,17 @@ namespace Ragnarok.Models
         public Employee Employee { get; set; }
         public int? EmployeeId { get; set; }
 
+        public string DDD
+        {
+            get{ return _ddd; }
+            set { _ddd = value.Replace("(", "").Replace(")", ""); }
+        }
+        [NumberValidation]
+        public string Number
+        {
+            get { return _number; }
+            set { _number = value.Replace(".", "").Replace("-", ""); }
+        }
         public Contact()
         {
         }

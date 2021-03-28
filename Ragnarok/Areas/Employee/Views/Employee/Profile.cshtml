@@ -77,7 +77,7 @@
                                 <div class="row">
                                     <div class="col-sm-5">
                                         <label asp-for="Employee.CPF"></label>
-                                        <input asp-for="Employee.CPF" type="text" class="form-control" required disabled style="background-color:white">
+                                        <input asp-for="Employee.CPF" type="text" class="form-control cpf" required disabled style="background-color:white">
                                         <span asp-validation-for="Employee.CPF" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-5">
@@ -124,22 +124,22 @@
                                     <input asp-for="ContactFixo.InsertDate" type="hidden" />
                                     <div class="col-sm-2">
                                         <label asp-for="ContactCel.DDD "></label>
-                                        <input asp-for="ContactCel.DDD" type="tel" class="form-control" required>
+                                        <input asp-for="ContactCel.DDD" type="tel" class="form-control ddd" required>
                                         <span asp-validation-for="ContactCel.DDD" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-3">
                                         <label asp-for="ContactCel.Number "></label>
-                                        <input asp-for="ContactCel.Number" type="tel" class="form-control" required>
+                                        <input asp-for="ContactCel.Number" type="tel" class="form-control cel" required>
                                         <span asp-validation-for="ContactCel.Number" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-2">
                                         <label asp-for="ContactFixo.DDD"></label>
-                                        <input asp-for="ContactFixo.DDD" type="tel" class="form-control">
+                                        <input asp-for="ContactFixo.DDD" type="tel" class="form-control ddd">
                                         <span asp-validation-for="ContactFixo.DDD" class="text-danger"></span>
                                     </div>
                                     <div class="col-sm-3">
                                         <label asp-for="ContactFixo.Number"></label>
-                                        <input asp-for="ContactFixo.Number" type="tel" class="form-control">
+                                        <input asp-for="ContactFixo.Number" type="tel" class="form-control tel">
                                         <span asp-validation-for="ContactFixo.Number" class="text-danger"></span>
                                     </div>
                                 </div>

@@ -9,8 +9,13 @@ namespace Ragnarok.Services.Validation.Employee
     public class CPFValidationEmployeeAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
-        {         
-            string cpf = (value as string).Trim();
+        {
+            
+            string cpf = (value as string).Trim();            
+
+            if (!ValidationCpfOrCnpj.ValidationCpfOrCnpj.IsCpf(cpf)) {
+                return new ValidationResult("CPF inválido");
+            }
 
             IEmployeeRepository repository = (IEmployeeRepository)validationContext.GetService(typeof(IEmployeeRepository));
             EmployeeLogin login = (EmployeeLogin)validationContext.GetService(typeof(EmployeeLogin));
