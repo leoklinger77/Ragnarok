@@ -122,6 +122,40 @@ namespace Ragnarok.Migrations
                     b.ToTable("TB_City");
                 });
 
+            modelBuilder.Entity("Ragnarok.Models.Client", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RegisterEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("RegisterEmployeeId");
+
+                    b.ToTable("TB_Client");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Client");
+                });
+
             modelBuilder.Entity("Ragnarok.Models.Contact", b =>
                 {
                     b.Property<int>("Id")
@@ -130,6 +164,9 @@ namespace Ragnarok.Migrations
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
 
                     b.Property<int?>("BusinessId")
+                        .HasColumnType("int");
+
+                    b.Property<int?>("ClientId")
                         .HasColumnType("int");
 
                     b.Property<string>("DDD")
@@ -144,6 +181,9 @@ namespace Ragnarok.Migrations
                     b.Property<string>("Number")
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<int?>("SupplierId")
+                        .HasColumnType("int");
+
                     b.Property<int>("TypeNumber")
                         .HasColumnType("int");
 
@@ -154,7 +194,11 @@ namespace Ragnarok.Migrations
 
                     b.HasIndex("BusinessId");
 
+                    b.HasIndex("ClientId");
+
                     b.HasIndex("EmployeeId");
+
+                    b.HasIndex("SupplierId");
 
                     b.ToTable("TB_Contact");
                 });
@@ -276,6 +320,40 @@ namespace Ragnarok.Migrations
                     b.ToTable("TB_State");
                 });
 
+            modelBuilder.Entity("Ragnarok.Models.Supplier", b =>
+                {
+                    b.Property<int>("id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<int>("AddressId")
+                        .HasColumnType("int");
+
+                    b.Property<string>("Discriminator")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<int>("RegisterEmployeeId")
+                        .HasColumnType("int");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("id");
+
+                    b.HasIndex("AddressId");
+
+                    b.HasIndex("RegisterEmployeeId");
+
+                    b.ToTable("TB_Supplier");
+
+                    b.HasDiscriminator<string>("Discriminator").HasValue("Supplier");
+                });
+
             modelBuilder.Entity("Ragnarok.Models.BusinessJuridical", b =>
                 {
                     b.HasBaseType("Ragnarok.Models.Business");
@@ -315,6 +393,96 @@ namespace Ragnarok.Migrations
                     b.HasDiscriminator().HasValue("BusinessPhysical");
                 });
 
+            modelBuilder.Entity("Ragnarok.Models.ClientJuridical", b =>
+                {
+                    b.HasBaseType("Ragnarok.Models.Client");
+
+                    b.Property<string>("CNPJ")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("CompanyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FantasyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OpeningDate")
+                        .HasColumnType("datetime2");
+
+                    b.ToTable("TB_ClientJuridical");
+
+                    b.HasDiscriminator().HasValue("ClientJuridical");
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.ClientPhysical", b =>
+                {
+                    b.HasBaseType("Ragnarok.Models.Client");
+
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("TB_ClientPhysical");
+
+                    b.HasDiscriminator().HasValue("ClientPhysical");
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.SupplierJuridical", b =>
+                {
+                    b.HasBaseType("Ragnarok.Models.Supplier");
+
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.ToTable("TB_Supplierjuridical");
+
+                    b.HasDiscriminator().HasValue("SupplierJuridical");
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.SupplierPhysical", b =>
+                {
+                    b.HasBaseType("Ragnarok.Models.Supplier");
+
+                    b.Property<string>("CPF")
+                        .IsRequired()
+                        .HasColumnName("SupplierPhysical_CPF")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FantasyName")
+                        .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FullName")
+                        .IsRequired()
+                        .HasColumnName("SupplierPhysical_FullName")
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OpeningDate")
+                        .HasColumnType("datetime2");
+
+                    b.ToTable("TB_SupplierPhysical");
+
+                    b.HasDiscriminator().HasValue("SupplierPhysical");
+                });
+
             modelBuilder.Entity("Ragnarok.Models.Address", b =>
                 {
                     b.HasOne("Ragnarok.Models.City", "City")
@@ -342,15 +510,38 @@ namespace Ragnarok.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("Ragnarok.Models.Client", b =>
+                {
+                    b.HasOne("Ragnarok.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ragnarok.Models.Employee", "RegisterEmployee")
+                        .WithMany()
+                        .HasForeignKey("RegisterEmployeeId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
             modelBuilder.Entity("Ragnarok.Models.Contact", b =>
                 {
                     b.HasOne("Ragnarok.Models.Business", "Business")
                         .WithMany("Contacts")
                         .HasForeignKey("BusinessId");
 
+                    b.HasOne("Ragnarok.Models.Client", "Client")
+                        .WithMany("Contacts")
+                        .HasForeignKey("ClientId");
+
                     b.HasOne("Ragnarok.Models.Employee", "Employee")
                         .WithMany("Contacts")
                         .HasForeignKey("EmployeeId");
+
+                    b.HasOne("Ragnarok.Models.Supplier", "Supplier")
+                        .WithMany("Contacts")
+                        .HasForeignKey("SupplierId");
                 });
 
             modelBuilder.Entity("Ragnarok.Models.Employee", b =>
@@ -383,6 +574,21 @@ namespace Ragnarok.Migrations
                     b.HasOne("Ragnarok.Models.Business", "Business")
                         .WithMany()
                         .HasForeignKey("BusinessId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.Supplier", b =>
+                {
+                    b.HasOne("Ragnarok.Models.Address", "Address")
+                        .WithMany()
+                        .HasForeignKey("AddressId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ragnarok.Models.Employee", "RegisterEmployee")
+                        .WithMany()
+                        .HasForeignKey("RegisterEmployeeId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

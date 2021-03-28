@@ -51,7 +51,6 @@ namespace Ragnarok.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    ZipCode = table.Column<string>(nullable: false),
                     Street = table.Column<string>(nullable: false),
                     Number = table.Column<int>(nullable: false),
                     Complement = table.Column<string>(nullable: true),
@@ -59,7 +58,8 @@ namespace Ragnarok.Migrations
                     Neighborhood = table.Column<string>(nullable: false),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
-                    CityId = table.Column<int>(nullable: false)
+                    CityId = table.Column<int>(nullable: false),
+                    ZipCode = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -131,7 +131,6 @@ namespace Ragnarok.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Name = table.Column<string>(nullable: false),
-                    CPF = table.Column<string>(nullable: false),
                     BirthDay = table.Column<DateTime>(nullable: false),
                     Sexo = table.Column<int>(nullable: false),
                     Action = table.Column<bool>(nullable: false),
@@ -143,7 +142,8 @@ namespace Ragnarok.Migrations
                     BusinessId = table.Column<int>(nullable: false),
                     PositionNameId = table.Column<int>(nullable: false),
                     AddressId = table.Column<int>(nullable: false),
-                    RegisterEmployeeId = table.Column<int>(nullable: true)
+                    RegisterEmployeeId = table.Column<int>(nullable: true),
+                    CPF = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
                 {
@@ -175,18 +175,92 @@ namespace Ragnarok.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TB_Client",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InsertDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    AddressId = table.Column<int>(nullable: false),
+                    RegisterEmployeeId = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    CompanyName = table.Column<string>(nullable: true),
+                    FantasyName = table.Column<string>(nullable: true),
+                    OpeningDate = table.Column<DateTime>(nullable: true),
+                    CNPJ = table.Column<string>(nullable: true),
+                    FullName = table.Column<string>(nullable: true),
+                    BirthDay = table.Column<DateTime>(nullable: true),
+                    CPF = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_Client", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TB_Client_TB_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "TB_Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TB_Client_TB_Employee_RegisterEmployeeId",
+                        column: x => x.RegisterEmployeeId,
+                        principalTable: "TB_Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_Supplier",
+                columns: table => new
+                {
+                    id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    InsertDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    AddressId = table.Column<int>(nullable: false),
+                    RegisterEmployeeId = table.Column<int>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    FullName = table.Column<string>(nullable: true),
+                    BirthDay = table.Column<DateTime>(nullable: true),
+                    CPF = table.Column<string>(nullable: true),
+                    SupplierPhysical_FullName = table.Column<string>(nullable: true),
+                    FantasyName = table.Column<string>(nullable: true),
+                    OpeningDate = table.Column<DateTime>(nullable: true),
+                    SupplierPhysical_CPF = table.Column<string>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_Supplier", x => x.id);
+                    table.ForeignKey(
+                        name: "FK_TB_Supplier_TB_Address_AddressId",
+                        column: x => x.AddressId,
+                        principalTable: "TB_Address",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TB_Supplier_TB_Employee_RegisterEmployeeId",
+                        column: x => x.RegisterEmployeeId,
+                        principalTable: "TB_Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_Contact",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     TypeNumber = table.Column<int>(nullable: false),
-                    DDD = table.Column<string>(nullable: true),
-                    Number = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     BusinessId = table.Column<int>(nullable: true),
-                    EmployeeId = table.Column<int>(nullable: true)
+                    EmployeeId = table.Column<int>(nullable: true),
+                    ClientId = table.Column<int>(nullable: true),
+                    SupplierId = table.Column<int>(nullable: true),
+                    DDD = table.Column<string>(nullable: true),
+                    Number = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -198,10 +272,22 @@ namespace Ragnarok.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
+                        name: "FK_TB_Contact_TB_Client_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "TB_Client",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
                         name: "FK_TB_Contact_TB_Employee_EmployeeId",
                         column: x => x.EmployeeId,
                         principalTable: "TB_Employee",
                         principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TB_Contact_TB_Supplier_SupplierId",
+                        column: x => x.SupplierId,
+                        principalTable: "TB_Supplier",
+                        principalColumn: "id",
                         onDelete: ReferentialAction.Restrict);
                 });
 
@@ -221,14 +307,34 @@ namespace Ragnarok.Migrations
                 column: "StateId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_Client_AddressId",
+                table: "TB_Client",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_Client_RegisterEmployeeId",
+                table: "TB_Client",
+                column: "RegisterEmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_Contact_BusinessId",
                 table: "TB_Contact",
                 column: "BusinessId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_Contact_ClientId",
+                table: "TB_Contact",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_Contact_EmployeeId",
                 table: "TB_Contact",
                 column: "EmployeeId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_Contact_SupplierId",
+                table: "TB_Contact",
+                column: "SupplierId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_Employee_AddressId",
@@ -254,12 +360,28 @@ namespace Ragnarok.Migrations
                 name: "IX_TB_PositionName_BusinessId",
                 table: "TB_PositionName",
                 column: "BusinessId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_Supplier_AddressId",
+                table: "TB_Supplier",
+                column: "AddressId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_Supplier_RegisterEmployeeId",
+                table: "TB_Supplier",
+                column: "RegisterEmployeeId");
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropTable(
                 name: "TB_Contact");
+
+            migrationBuilder.DropTable(
+                name: "TB_Client");
+
+            migrationBuilder.DropTable(
+                name: "TB_Supplier");
 
             migrationBuilder.DropTable(
                 name: "TB_Employee");

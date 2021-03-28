@@ -19,5 +19,13 @@ namespace Ragnarok.Data
 
         public DbSet<Employee> Employee { get; set; }
         public DbSet<PositionName> PositionName { get; set; }
+
+        public DbSet<Client> Client { get; set; }
+        public DbSet<ClientJuridical> ClientJuridical { get; set; }
+        public DbSet<ClientPhysical> ClientPhysical { get; set; }
+
+        public DbSet<Supplier> Supplier { get; set; }
+        public DbSet<SupplierJuridical> SupplierJuridical { get; set; }
+        public DbSet<SupplierPhysical> SupplierPhysical { get; set; }
     }
 }

@@ -14,7 +14,6 @@ namespace Ragnarok.Models
         public int Id { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string Name { get; set; }
-
         private string _CPF;
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime BirthDay { get; set; }
@@ -43,6 +42,7 @@ namespace Ragnarok.Models
         public Employee RegisterEmployee { get; set; }
         public int? RegisterEmployeeId { get; set; }
         public ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
+
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         [CPFValidationEmployee]
         public string CPF

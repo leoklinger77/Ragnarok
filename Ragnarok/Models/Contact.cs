@@ -19,6 +19,10 @@ namespace Ragnarok.Models
         public int? BusinessId { get; set; }
         public Employee Employee { get; set; }
         public int? EmployeeId { get; set; }
+        public Client Client { get; set; }
+        public int? ClientId { get; set; }
+        public Supplier Supplier { get; set; }
+        public int? SupplierId { get; set; }
 
         public string DDD
         {
@@ -35,7 +39,9 @@ namespace Ragnarok.Models
         {
         }
 
-        public Contact(int id, TypeNumber typeNumber, string dDD, string number, DateTime insertDate, DateTime? updateDate, Business business, Employee employee)
+        public Contact(int id, TypeNumber typeNumber, string dDD, string number, 
+            DateTime insertDate, DateTime? updateDate, Business business, Employee employee, 
+            Client client, Supplier supplier)
         {
             Id = id;
             TypeNumber = typeNumber;
@@ -45,6 +51,8 @@ namespace Ragnarok.Models
             UpdateDate = updateDate;
             Business = business;
             Employee = employee;
+            Client = client;
+            Supplier = supplier;
         }
 
         public override bool Equals(object obj)
