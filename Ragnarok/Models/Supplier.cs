@@ -7,7 +7,8 @@ namespace Ragnarok.Models
     [Table("TB_Supplier")]
     public abstract class Supplier
     {
-        public int id { get; set; }
+        public int Id { get; set; }
+        public string Email { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public Address Address { get; set; }
@@ -20,9 +21,10 @@ namespace Ragnarok.Models
         {
         }
 
-        protected Supplier(int id, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
+        protected Supplier(int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
         {
-            this.id = id;
+            Id = id;
+            Email = email;
             InsertDate = insertDate;
             UpdateDate = updateDate;
             Address = address;

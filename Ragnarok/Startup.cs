@@ -79,6 +79,9 @@ namespace Ragnarok
 
             services.AddScoped<IEmployeeRepository, EmployeeRepository>();
             services.AddScoped<IPositionNameRepository, PositionNameRepository>();
+            services.AddScoped<ISupplierRepository, SupplierRepository>();
+            services.AddScoped<IClientRepository, ClientRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
@@ -115,3 +118,4 @@ namespace Ragnarok
         }
     }
 }
+

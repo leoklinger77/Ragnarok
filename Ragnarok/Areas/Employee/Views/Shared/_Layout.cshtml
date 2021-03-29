@@ -194,11 +194,11 @@
                 <nav id="main-nav" class="main-nav">
                     <h3>MAIN</h3>
                     <ul class="main-menu">
-                        <li class="has-submenu active">
+                        <li class="has-submenu">
                             <a href="#" class="submenu-toggle"><i class="icon ion-ios-speedometer-outline"></i><span class="text">Dashboards</span></a>
-                            <ul class="list-unstyled sub-menu collapse in">
-                                <li class="active"><a asp-action="Index" asp-controller="Home" asp-area="Employee"><span class="text">Dashboard v1</span></a></li>
-                                @*<li><a href="index2.html"><span class="text">Dashboard v2</span></a></li>*@
+                            <ul class="list-unstyled sub-menu collapse">
+                                <li><a asp-action="Index" asp-controller="Home" asp-area="Employee"><span class="text">Dashboard v1</span></a></li>
+                                <li><a href="index2.html"><span class="text">Dashboard v2</span></a></li>
                             </ul>
                         </li>
                     </ul>
@@ -207,8 +207,8 @@
                         <li class="has-submenu">
                             <a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Cadastros</span></a>
                             <ul class="list-unstyled sub-menu collapse">
-                                <li><a href="charts-interactive.html"><span class="text">Cliente</span></a></li>
-                                <li><a href="charts-interactive.html"><span class="text">Fornecedor</span></a></li>
+                                <li><a asp-action="Index" asp-controller="Client" asp-area="Employee"><span class="text">Cliente</span></a></li>
+                                <li><a asp-action="Index" asp-controller="Supplier" asp-area="Employee"><span class="text">Fornecedor</span></a></li>
                                 <li><a href="charts-interactive.html"><span class="text">Categoria</span></a></li>
                                 <li><a href="charts-interactive.html"><span class="text">Produto</span></a></li>
                                 <li class="active"><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>

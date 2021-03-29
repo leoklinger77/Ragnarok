@@ -27,8 +27,8 @@ namespace Ragnarok.Models
         }
 
         public ClientJuridical(string companyName, string fantasyName, DateTime openingDate, string cNPJ,
-            int id, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
-            : base(id, insertDate, updateDate, address, registerEmployee)
+            int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
+            : base(id, email, insertDate, updateDate, address, registerEmployee)
         {
             CompanyName = companyName;
             FantasyName = fantasyName;

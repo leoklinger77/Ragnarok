@@ -3,7 +3,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace Ragnarok.Migrations
 {
-    public partial class Initial : Migration
+    public partial class Intial : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -180,6 +180,7 @@ namespace Ragnarok.Migrations
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     AddressId = table.Column<int>(nullable: false),
@@ -214,24 +215,25 @@ namespace Ragnarok.Migrations
                 name: "TB_Supplier",
                 columns: table => new
                 {
-                    id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
+                    Email = table.Column<string>(nullable: true),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     AddressId = table.Column<int>(nullable: false),
                     RegisterEmployeeId = table.Column<int>(nullable: false),
                     Discriminator = table.Column<string>(nullable: false),
                     FullName = table.Column<string>(nullable: true),
-                    BirthDay = table.Column<DateTime>(nullable: true),
-                    CPF = table.Column<string>(nullable: true),
+                    OpeningDate = table.Column<DateTime>(nullable: true),
+                    CNPJ = table.Column<string>(nullable: true),
                     SupplierPhysical_FullName = table.Column<string>(nullable: true),
                     FantasyName = table.Column<string>(nullable: true),
-                    OpeningDate = table.Column<DateTime>(nullable: true),
-                    SupplierPhysical_CPF = table.Column<string>(nullable: true)
+                    BirthDay = table.Column<DateTime>(nullable: true),
+                    CPF = table.Column<string>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_Supplier", x => x.id);
+                    table.PrimaryKey("PK_TB_Supplier", x => x.Id);
                     table.ForeignKey(
                         name: "FK_TB_Supplier_TB_Address_AddressId",
                         column: x => x.AddressId,
@@ -287,7 +289,7 @@ namespace Ragnarok.Migrations
                         name: "FK_TB_Contact_TB_Supplier_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "TB_Supplier",
-                        principalColumn: "id",
+                        principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
 

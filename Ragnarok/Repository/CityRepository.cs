@@ -99,6 +99,7 @@ namespace Ragnarok.Repository
             try
             {
                 _context.City.Update(city);
+                _context.Entry(city).Property(x => x.InsertDate).IsModified = false;
                 _context.SaveChanges();
             }
             catch (Exception e)

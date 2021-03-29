@@ -11,44 +11,45 @@ namespace Ragnarok.Models
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
         public string FullName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
-        public DateTime BirthDay { get; set; }
-        private string _cpf;
+        public DateTime OpeningDate { get; set; }
+        private string _cnpj;
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
-        public string CPF
+        public string CNPJ
         {
-            get { return _cpf; }
-            set { _cpf = value.Replace(".", "").Replace("-", ""); }
+            get { return _cnpj; }
+            set { _cnpj = value.Replace(".", "").Replace("-", ""); }
         }
 
         public SupplierJuridical()
         {
         }
 
-        public SupplierJuridical(string fullName, DateTime birthDay, string cPF,
-            int id, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
-            : base(id, insertDate, updateDate, address, registerEmployee)
+        public SupplierJuridical(int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee,
+            string fullName, DateTime openingDate, string cNPJ)
+            : base(id, email, insertDate, updateDate, address, registerEmployee)
         {
             FullName = fullName;
-            BirthDay = birthDay;
-            CPF = cPF;
+            OpeningDate = openingDate;
+            CNPJ = cNPJ;
         }
+
         public override bool Equals(object obj)
         {
             return obj is SupplierJuridical supplierjuridical &&
-                   id == supplierjuridical.id;
+                   Id == supplierjuridical.Id;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(id);
+            return HashCode.Combine(Id);
         }
 
         public override int Age()
         {
-            int age = DateTime.Now.Year - BirthDay.Year;
+            int age = DateTime.Now.Year - OpeningDate.Year;
 
-            if (DateTime.Now.DayOfWeek < BirthDay.DayOfWeek)
+            if (DateTime.Now.DayOfWeek < OpeningDate.DayOfWeek)
             {
                 age += 1;
             }

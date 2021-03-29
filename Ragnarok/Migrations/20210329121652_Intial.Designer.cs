@@ -10,8 +10,8 @@ using Ragnarok.Data;
 namespace Ragnarok.Migrations
 {
     [DbContext(typeof(RagnarokContext))]
-    [Migration("20210328235236_Initial")]
-    partial class Initial
+    [Migration("20210329121652_Intial")]
+    partial class Intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -136,6 +136,9 @@ namespace Ragnarok.Migrations
 
                     b.Property<string>("Discriminator")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("Email")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<DateTime>("InsertDate")
@@ -324,7 +327,7 @@ namespace Ragnarok.Migrations
 
             modelBuilder.Entity("Ragnarok.Models.Supplier", b =>
                 {
-                    b.Property<int>("id")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
@@ -336,6 +339,9 @@ namespace Ragnarok.Migrations
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("nvarchar(max)");
+
                     b.Property<DateTime>("InsertDate")
                         .HasColumnType("datetime2");
 
@@ -345,7 +351,7 @@ namespace Ragnarok.Migrations
                     b.Property<DateTime?>("UpdateDate")
                         .HasColumnType("datetime2");
 
-                    b.HasKey("id");
+                    b.HasKey("Id");
 
                     b.HasIndex("AddressId");
 
@@ -443,16 +449,16 @@ namespace Ragnarok.Migrations
                 {
                     b.HasBaseType("Ragnarok.Models.Supplier");
 
-                    b.Property<DateTime>("BirthDay")
-                        .HasColumnType("datetime2");
-
-                    b.Property<string>("CPF")
+                    b.Property<string>("CNPJ")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<DateTime>("OpeningDate")
+                        .HasColumnType("datetime2");
 
                     b.ToTable("TB_Supplierjuridical");
 
@@ -463,9 +469,11 @@ namespace Ragnarok.Migrations
                 {
                     b.HasBaseType("Ragnarok.Models.Supplier");
 
+                    b.Property<DateTime>("BirthDay")
+                        .HasColumnType("datetime2");
+
                     b.Property<string>("CPF")
                         .IsRequired()
-                        .HasColumnName("SupplierPhysical_CPF")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FantasyName")
@@ -476,9 +484,6 @@ namespace Ragnarok.Migrations
                         .IsRequired()
                         .HasColumnName("SupplierPhysical_FullName")
                         .HasColumnType("nvarchar(max)");
-
-                    b.Property<DateTime>("OpeningDate")
-                        .HasColumnType("datetime2");
 
                     b.ToTable("TB_SupplierPhysical");
 

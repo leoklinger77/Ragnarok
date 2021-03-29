@@ -25,15 +25,13 @@ namespace Ragnarok.Models
         {
         }
 
-        public ClientPhysical(string fullName, string cpf, DateTime birthDay, string cPF,
-            int id, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
-            : base(id, insertDate, updateDate, address, registerEmployee)
+        public ClientPhysical(string fullName, DateTime birthDay, string cPF,
+            int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
+            : base(id, email, insertDate, updateDate, address, registerEmployee)
         {
             FullName = fullName;
-            _cpf = cpf;
             BirthDay = birthDay;
             CPF = cPF;
-            RegisterEmployee = registerEmployee;
         }
 
         public override bool Equals(object obj)

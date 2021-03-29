@@ -8,6 +8,7 @@ namespace Ragnarok.Models
     public abstract class Client
     {
         public int Id { get; set; }
+        public string Email { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public Address Address { get; set; }
@@ -20,9 +21,10 @@ namespace Ragnarok.Models
         {
         }
 
-        protected Client(int id, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
+        protected Client(int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
         {
             Id = id;
+            Email = email;
             InsertDate = insertDate;
             UpdateDate = updateDate;
             Address = address;
