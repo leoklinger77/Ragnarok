@@ -27,6 +27,9 @@ namespace Ragnarok.Services.Validation.Employee
             {
                 return new ValidationResult("E-mail já cadastrado");
             }
+
+
+
             return ValidationResult.Success;
         }
     }

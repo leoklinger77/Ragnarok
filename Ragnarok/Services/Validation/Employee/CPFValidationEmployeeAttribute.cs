@@ -10,10 +10,11 @@ namespace Ragnarok.Services.Validation.Employee
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {
-            
-            string cpf = (value as string).Trim();            
 
-            if (!ValidationCpfOrCnpj.ValidationCpfOrCnpj.IsCpf(cpf)) {
+            string cpf = (value as string).Trim();
+
+            if (!ValidationCpfOrCnpj.ValidationCpfOrCnpj.IsCpf(cpf))
+            {
                 return new ValidationResult("CPF inválido");
             }
 
@@ -32,6 +33,8 @@ namespace Ragnarok.Services.Validation.Employee
             {
                 return new ValidationResult("CPF já cadastrado");
             }
+
+
             return ValidationResult.Success;
         }
     }

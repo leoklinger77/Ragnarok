@@ -67,17 +67,28 @@
                         $('#confirmBirthDay').html($('#clientBirthDay').val());
                         $('#confirmCpf').html($('#clientCpf').val());
                         $('#confirmSexo').html($('#clientSexo').val());
-                        $('#confirmEmail').html($('#clientEmail').val());                        
+                        $('#confirmEmail').html($('#clientEmail').val());
                         $('#confirmAction').html($('#clientAction').val());
 
                         $('#confirmPhone').html($('#clienPhysicalPhone').val());
                         $('#confirmTel').html($('#clientTelePhone').val());
 
                     } else {
-                        $('#confirmeJuridical').show();
-                        $('#confirmePhysical').hide();
+                        $('.confirmeJuridical').show();
+                        $('.confirmePhysical').hide();
+
+                        $('#confirmCompanyName').html($('#clientCompanyName').val());
+                        $('#confirmeFantansy').html($('#clientFantasyName').val());
+                        $('#confirmOpeningDate').html($('#clientOpeningDate').val());
+                        $('#confirmeCnpj').html($('#clientCnpj').val());
+
+                        $('#confirmJuridicalEmail').html($('#ClientJuridicalEmail').val());
+                        $('#confirmJuridicalAction').html($('#clientJuridicalActive').val());
+
+                        $('#confirmJuridicalPhone').html($('#clientJurificalPhone').val());
+                        $('#confirmJuridicalTel').html($('#clientComercial').val());
                     }
-                    
+
 
                     $('#confirmZipCode').html($('#zipCode').val());
                     $('#confirmStreet').html($('#street').val());
@@ -96,22 +107,42 @@
             },
             onLast: function (tab, navigation, index) {
 
-                var model = "{Name:'" + $('#employeeName').val() +
-                    "',BirthDay:'" + $('#employeeBirthDay').val() +
-                    "',CPF:'" + $('#employeeCpf').val() +
-                    "',Email:'" + $('#employeeEmail').val() +
-                    "', Sexo:'" + $('#employeeSexo').val() +
-                    "', Action:'" + $('#employeeAction').val() +
-                    "', PositionNameId:'" + $('#positionNameId').val() + "',";
+                var model = '{';
 
+                if (type == "Physical") {
+                    model += "Email:'" + $('#clientEmail').val() +
+                        "',Active:'" + $('#clientAction').val() +
+                        "',CPF:'" + $('#clientCpf').val() +
+                        "',FullName:'" + $('#clientName').val() +
+                        "', BirthDay:'" + $('#clientBirthDay').val() +
+                        "', Sexo:'" + $('#clientSexo').val() + "',";
+                    var phone = $('#clienPhysicalPhone').cleanVal()
+                    model += "Contacts:[{TypeNumber:'Celular',DDD:'" + phone.substr(0, 2) + "',Number:'" + phone.substr(2) + "'}";
 
-                model += "Contacts:[{TypeNumber:'Celular',DDD:'" + phone.substr(0, 2) + "',Number:'" + phone.substr(2) + "'}";
+                    var numberFixo = $('#clientTelePhone').cleanVal();
+                    if (numberFixo !== '') {
 
-                var numberFixo = $('#employeeTelePhone').cleanVal();
-                if (numberFixo !== '') {
+                        model += ",{TypeNumber:'Residencial',DDD:'" + numberFixo.substr(0, 2) + "',Number:'" + numberFixo.substr(2) + "'}";
+                    }
+                } else {
+                    model += "Email:'" + $('#ClientJuridicalEmail').val() +
+                        "',Active:'" + $('#clientJuridicalActive').val() +
+                        "',CNPJ:'" + $('#clientCnpj').val() +
+                        "',CompanyName:'" + $('#clientCompanyName').val() +
+                        "',FantasyName:'" + $('#clientFantasyName').val() +
+                        "', OpeningDate:'" + $('#clientOpeningDate').val() + "',";
 
-                    model += ",{TypeNumber:'Residencial',DDD:'" + numberFixo.substr(0, 2) + "',Number:'" + numberFixo.substr(2) + "'}";
+                    var phone = $('#clientJurificalPhone').cleanVal();
+                    model += "Contacts:[{TypeNumber:'Celular',DDD:'" + phone.substr(0, 2) + "',Number:'" + phone.substr(2) + "'}";
+
+                    var numberFixo = $('#clientComercial').cleanVal();
+                    if (numberFixo !== '') {
+
+                        model += ",{TypeNumber:'Residencial',DDD:'" + numberFixo.substr(0, 2) + "',Number:'" + numberFixo.substr(2) + "'}";
+                    }
                 }
+
+                
                 model += "],";
 
                 model += "Address:{ZipCode:'" + $('#zipCode').cleanVal() +
@@ -122,17 +153,22 @@
                     "',Neighborhood:'" + $('#neighborhood').val() +
                     "',CityId:'" + $('#cityId').val() + "'}}"
 
-                var employee = eval("(" + model + ")");
-
+                var clientJuridical;
+                var clientPhysical;
+                if (type == "Physical") {
+                    clientPhysical = eval("(" + model + ")");
+                } else {
+                    clientJuridical = eval("(" + model + ")");
+                }
 
                 $.ajax({
                     type: "POST",
-                    url: "/Employee/Employee/Insert",
-                    data: { employee: employee },
+                    url: "/Employee/Client/Insert",
+                    data: { clientJuridical: clientJuridical, clientPhysical: clientPhysical },
                     success: function (message) {
 
                         if (message == "Ok") {
-                            window.location.href = "/Employee/Employee/Index";
+                            window.location.href = "/Employee/Client/Index";
                         }
 
                         if (message == "Error") {
@@ -285,7 +321,7 @@ $('#clientCnpj').change(function () {
     if (cnpj == '') {
         $('.validationCnpj').html("Inválido");
         return false;
-    } 
+    }
 
     if (cnpj.length != 14) {
         $('.validationCnpj').html("Inválido");

@@ -1,7 +1,9 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ragnarok.Models;
+using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
+using Ragnarok.Services.Lang;
 using Ragnarok.Services.Login;
 using System;
 using System.Collections.Generic;
@@ -34,10 +36,34 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Insert(ClientJuridical juridical, ClientPhysical physical)
+        public IActionResult Insert(ClientFormViewModel client)
         {
             if (ModelState.IsValid)
             {
+                if (client.ClientJuridical != null)
+                {
+                    client.ClientJuridical.InsertDate = DateTime.Now;
+                    client.ClientJuridical.Address.InsertDate = DateTime.Now;
+                    foreach (var item in client.ClientJuridical.Contacts)
+                    {
+                        item.InsertDate = DateTime.Now;
+                    }
+                    client.ClientJuridical.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;
+                    _clientRepository.Insert(client.ClientJuridical);
+                }
+                else
+                {
+                    client.ClientPhysical.InsertDate = DateTime.Now;
+                    client.ClientPhysical.Address.InsertDate = DateTime.Now;
+                    foreach (var item in client.ClientPhysical.Contacts)
+                    {
+                        item.InsertDate = DateTime.Now;
+                    }
+                    client.ClientPhysical.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;
+                    _clientRepository.Insert(client.ClientPhysical);
+                }
+                TempData["MSG_S"] = Message.MSG_S_002;
+                return Json("Ok");
 
             }
             return Json("Error");

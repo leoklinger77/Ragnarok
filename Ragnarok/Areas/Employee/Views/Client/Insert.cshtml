@@ -85,7 +85,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <label asp-for="ClientJuridical.Email"></label>
-                                    <input asp-for="ClientJuridical.Email" type="email" class="form-control" id="ClientEmail"/>
+                                    <input asp-for="ClientJuridical.Email" type="email" class="form-control" id="ClientJuridicalEmail"/>
                                     <span asp-validation-for="ClientJuridical.Email" class="text-danger"></span>
                                 </div>
                                 <div class="col-sm-5">
@@ -94,7 +94,7 @@
                                             <label class="col-md-1 control-label">Ativo</label>
                                             <div class="col-md-4">
                                                 <label class="radio radio-inline radioLeft">
-                                                    <input asp-for="ClientJuridical.Active" type="radio" value="true" id="clientActive" /> Sim
+                                                    <input asp-for="ClientJuridical.Active" type="radio" value="true" id="clientJuridicalActive" /> Sim
                                                     <span class="text-danger"></span>
                                                 </label>
                                                 <label class="radio radio-inline" style="float:left">
@@ -256,7 +256,7 @@
                 
                 <div class="row">
                     <div class="confirmePhysical">
-                        <div class="col-sm-3">
+                        <div class="col-md-6">
                             <dl class="dl-horizontal">
                                 <dt>Nome:</dt>
                                 <dd><span id="confirmName"></span></dd>
@@ -279,7 +279,7 @@
                         </div>
                     </div>
                     <div class="confirmeJuridical">
-                        <div class="col-sm-6">
+                        <div class="col-md-6">
                             <dl class="dl-horizontal">
                                 <dt>Razão Social:</dt>
                                 <dd><span id="confirmCompanyName"></span></dd>
@@ -301,7 +301,7 @@
                             </dl>
                         </div>
                     </div>                    
-                    <div class="col-md-offset-3 col-sm-6">
+                    <div class="col-md-6">
                         <dl class="dl-horizontal">
                             <dt>Cep:</dt>
                             <dd><span id="confirmZipCode"></span></dd>
