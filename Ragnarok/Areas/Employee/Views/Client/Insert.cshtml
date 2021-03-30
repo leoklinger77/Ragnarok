@@ -1,0 +1,335 @@
+﻿@model ClientFormViewModel
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>NOVO CLIENTE</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Client" asp-area="Employee">Clientes</a></li>
+            <li><a asp-action="Insert" asp-controller="Client" asp-area="Employee">Novo Clientes</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <button asp-action="Insert" asp-controller="Employee" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Novo Cliente</button>
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div id="insertClient" class="wizard-circle">
+        <ul>
+            <li><a href="#tab1" data-toggle="tab">1</a><span>Tipo de Cliente</span></li>
+            <li><a href="#tab2" data-toggle="tab">2</a><span>Informações Principais</span></li>
+            <li><a href="#tab3" data-toggle="tab">3</a><span>Endereço</span></li>
+            <li><a href="#tab4" data-toggle="tab">4</a><span>Confirmação</span></li>
+        </ul>
+        <div class="tab-content">
+            <div class="tab-pane" id="tab1">
+                <form id="form-circle-wizard1" data-parsley-validate novalidate>
+                    <fieldset>
+                        <legend>Tipo de Cliente</legend>
+                        <p>Selecione o tipo do cliente para avançar:</p>
+                        <label class="fancy-radio">
+                            <input type="radio" name="client-type" id="typeClientPhysical" value="Physical" required data-parsley-errors-container="#error-step1">
+                            <span><i></i>Físico</span>
+                        </label>
+                        <label class="fancy-radio">
+                            <input type="radio" name="client-type" id="typeClientJuridical" value="Juridical">
+                            <span><i></i>Jurídico</span>
+                        </label>
+                        <p id="error-step1"></p>
+
+                    </fieldset>
+                </form>
+            </div>
+            <div class="tab-pane" id="tab2">
+                <form id="form-circle-wizard2" data-parsley-validate novalidate>
+                    <fieldset>
+                        <legend>Informações Principais</legend>
+                        <div id="mainJuridical">
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.CompanyName"></label>
+                                    <input asp-for="ClientJuridical.CompanyName" class="form-control fullCpmpanyName" id="clientCompanyName" />
+                                    <span asp-validation-for="ClientJuridical.CompanyName" class="text-danger span-fullCpmpanyName"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.FantasyName"></label>
+                                    <input asp-for="ClientJuridical.FantasyName" type="text" class="form-control" id="clientFantasyName" />
+                                    <span asp-validation-for="ClientJuridical.FantasyName" class="text-danger span-FantasyName"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.CNPJ"></label>
+                                    <input asp-for="ClientJuridical.CNPJ" type="text" class="form-control cnpj" id="clientCnpj" />
+                                    <span asp-validation-for="ClientJuridical.CNPJ" class="text-danger validationCnpj"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.OpeningDate"></label>
+                                    <input asp-for="ClientJuridical.OpeningDate" type="date" class="form-control" id="clientOpeningDate" />
+                                    <span asp-validation-for="ClientJuridical.OpeningDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.Email"></label>
+                                    <input asp-for="ClientJuridical.Email" type="email" class="form-control" id="ClientEmail"/>
+                                    <span asp-validation-for="ClientJuridical.Email" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-horizontal" style="margin-top:15px">
+                                        <div class="form-group">
+                                            <label class="col-md-1 control-label">Ativo</label>
+                                            <div class="col-md-4">
+                                                <label class="radio radio-inline radioLeft">
+                                                    <input asp-for="ClientJuridical.Active" type="radio" value="true" id="clientActive" /> Sim
+                                                    <span class="text-danger"></span>
+                                                </label>
+                                                <label class="radio radio-inline" style="float:left">
+                                                    <input asp-for="ClientJuridical.Active" type="radio" value="false" /> Não
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Celular</label>
+                                    <input name="phone" type="tel" class="form-control phone_with_ddd celValidity" id="clientJurificalPhone" />
+                                    <span class="text-danger span-celValidity"></span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Comercial</label>
+                                    <input name="telePhone" type="tel" class="form-control tel_with_ddd telValidity" id="clientComercial" />
+                                    <span class="text-danger span-telValidity"></span>
+                                </div>
+                            </div>
+                        </div>
+
+
+                        <div id="mainPhysical">
+                            <div class="row">
+                                <div class="col-sm-6">
+                                    <label asp-for="ClientPhysical.FullName">Nome</label>
+                                    <input asp-for="ClientPhysical.FullName" type="text" class="form-control fullName" id="clientName" />
+                                    <span asp-validation-for="ClientPhysical.FullName" class="text-danger span-nameCompleto"></span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label asp-for="ClientPhysical.BirthDay">Nascimento</label>
+                                    <input asp-for="ClientPhysical.BirthDay" type="date" class="form-control" id="clientBirthDay" />
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label asp-for="ClientPhysical.CPF">CPF</label>
+                                    <input asp-for="ClientPhysical.CPF" type="text" class="form-control cpf" id="clientCpf" />
+                                    <span asp-validation-for="ClientPhysical.CPF" class="text-danger validationCpf"></span>
+                                </div>
+                                <div class="col-sm-5">
+                                    <div class="form-horizontal" style="margin-top:15px">
+                                        <div class="form-group">
+                                            <label class="col-md-1 control-label">Sexo</label>
+                                            <div class="col-md-10">
+                                                <label class="radio radio-inline radioLeft">
+                                                    <input asp-for="ClientPhysical.Sexo" type="radio" value="Masculino" id="clientSexo" /> Masculino
+                                                    <span class="text-danger"></span>
+                                                </label>
+                                                <label class="radio radio-inline">
+                                                    <input asp-for="ClientPhysical.Sexo" type="radio" value="Feminino"> Feminino
+                                                </label>
+                                            </div>
+                                            <span class="text-danger"></span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientPhysical.Email">Email</label>
+                                    <input asp-for="ClientPhysical.Email" type="email" class="form-control email" id="clientEmail">
+                                    <span asp-validation-for="ClientPhysical.Email" class="text-danger span-validationEmail"></span>
+                                </div>                                
+                                <div class="col-sm-5">
+                                    <div class="form-horizontal" style="margin-top:15px">
+                                        <div class="form-group">
+                                            <label class="col-md-1 control-label">Ativo</label>
+                                            <div class="col-md-4">
+                                                <label class="radio radio-inline radioLeft">
+                                                    <input asp-for="ClientPhysical.Active" type="radio" value="true" id="clientAction" /> Sim
+                                                    <span class="text-danger"></span>
+                                                </label>
+                                                <label class="radio radio-inline" style="float:left">
+                                                    <input asp-for="ClientPhysical.Active" type="radio" value="false" /> Não
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label>Celular</label>
+                                    <input name="phone" type="tel" class="form-control phone_with_ddd celValidity" id="clienPhysicalPhone" />
+                                    <span class="text-danger span-celValidity"></span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label>Telefone</label>
+                                    <input name="telePhone" type="tel" class="form-control tel_with_ddd telValidity" id="clientTelePhone" />
+                                    <span class="text-danger span-telValidity"></span>
+                                </div>
+                            </div>
+                        </div>                        
+                    </fieldset>
+                </form>
+            </div>
+            <div class="tab-pane" id="tab3">
+                <form id="form-circle-wizard3" data-parsley-validate novalidate>
+                    <input asp-for="Address.CityId" type="hidden" id="cityId" />
+                    <fieldset>
+                        <legend>Endereço</legend>
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Cep</label>
+                                <input asp-for="Address.ZipCode" type="text" class="form-control cep" id="zipCode" required />
+                                <span class="text-danger span-cep"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Rua</label>
+                                <input asp-for="Address.Street" type="text" class="form-control" id="street" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Número</label>
+                                <input asp-for="Address.Number" type="text" class="form-control" id="number" required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Referencia</label>
+                                <input asp-for="Address.Reference" type="text" class="form-control" id="complement" />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Complemento</label>
+                                <input asp-for="Address.Complement" type="text" class="form-control" id="reference" />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Bairro</label>
+                                <input asp-for="Address.Neighborhood" type="text" class="form-control" id="neighborhood" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Cidade</label>
+                                <input asp-for="Address.City.Name" type="text" class="form-control" id="city" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Estado</label>
+                                <input asp-for="Address.City.State.Name" type="text" class="form-control" id="state" required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                    </fieldset>
+                </form>
+            </div>
+            <div class="tab-pane" id="tab4">
+
+                <h4>Confirmação</h4>
+                <p>Reveja as suas informações primeiro, se estiver tudo certo, pode clicar no botão "Criar conta".</p>
+                
+                <div class="row">
+                    <div class="confirmePhysical">
+                        <div class="col-sm-3">
+                            <dl class="dl-horizontal">
+                                <dt>Nome:</dt>
+                                <dd><span id="confirmName"></span></dd>
+                                <dt>Nacimento:</dt>
+                                <dd><span id="confirmBirthDay"></span></dd>
+                                <dt>CPF:</dt>
+                                <dd><span id="confirmCpf"></span></dd>
+                                <dt>Sexo:</dt>
+                                <dd><span id="confirmSexo"></span></dd>
+                                <dt>E-mail:</dt>
+                                <dd><span id="confirmEmail"></span></dd>
+                                <dt>Ativo:</dt>
+                                <dd><span id="confirmAction"></span></dd>
+
+                                <dt>Celular:</dt>
+                                <dd><span id="confirmPhone"></span></dd>
+                                <dt>Telefone:</dt>
+                                <dd><span id="confirmTel"></span></dd>
+                            </dl>
+                        </div>
+                    </div>
+                    <div class="confirmeJuridical">
+                        <div class="col-sm-6">
+                            <dl class="dl-horizontal">
+                                <dt>Razão Social:</dt>
+                                <dd><span id="confirmCompanyName"></span></dd>
+                                <dt>Nome Fantasia:</dt>
+                                <dd><span id="confirmeFantansy"></span></dd>
+                                <dt>Data de Abertura:</dt>
+                                <dd><span id="confirmOpeningDate"></span></dd>
+                                <dt>CNPJ:</dt>
+                                <dd><span id="confirmeCnpj"></span></dd>                                
+                                <dt>E-mail:</dt>
+                                <dd><span id="confirmJuridicalEmail"></span></dd>                                
+                                <dt>Ativo:</dt>
+                                <dd><span id="confirmJuridicalAction"></span></dd>
+
+                                <dt>Celular:</dt>
+                                <dd><span id="confirmJuridicalPhone"></span></dd>
+                                <dt>Telefone:</dt>
+                                <dd><span id="confirmJuridicalTel"></span></dd>
+                            </dl>
+                        </div>
+                    </div>                    
+                    <div class="col-md-offset-3 col-sm-6">
+                        <dl class="dl-horizontal">
+                            <dt>Cep:</dt>
+                            <dd><span id="confirmZipCode"></span></dd>
+                            <dt>Rua:</dt>
+                            <dd><span id="confirmStreet"></span></dd>
+                            <dt>Número:</dt>
+                            <dd><span id="confirmNumber"></span></dd>
+                            <dt>Complemento:</dt>
+                            <dd><span id="confirmComplement"></span></dd>
+                            <dt>Referencia:</dt>
+                            <dd><span id="confirmReference"></span></dd>
+                            <dt>Bairro:</dt>
+                            <dd><span id="confirmNeighborhood"></span></dd>
+                            <dt>Cidade:</dt>
+                            <dd><span id="confirmCity"></span></dd>
+                            <dt>Estado:</dt>
+                            <dd><span id="confirmState"></span></dd>
+                        </dl>
+                    </div>
+                </div>
+            </div>
+            <ul class="pager wizard">
+                <li class="previous"><a>Previous</a></li>
+                <li class="next last"><a>Create Account</a></li>
+                <li class="next"><a>Next</a></li>
+            </ul>
+            <a asp-action="Index" asp-controller="Client" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> Voltar</a>
+        </div>
+    </div>
+</div>
+

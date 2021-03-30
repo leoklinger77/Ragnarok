@@ -9,10 +9,10 @@
         <h2>CLIENTES</h2>
         <ul class="breadcrumb pull-left">
             <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
-            <li><a asp-action="Index" asp-controller="PositionName" asp-area="Employee">Cargos</a></li>
+            <li><a asp-action="Index" asp-controller="Client" asp-area="Employee">Clientes</a></li>
         </ul>
         <div class="sticky-content pull-right">
-            <button type="button" class="btn btn-default btn-sm btn-quick-task" data-toggle="modal" data-target="#insertPositionName-modal"><i class="icon ion-person-add"></i> Novo Cargo</button>
+            <a asp-action="Insert" asp-controller="Client" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Novo Cliente</a>
             <div class="btn-group btn-dropdown">
                 <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
                 <ul class="dropdown-menu dropdown-menu-right list-inline">
@@ -30,7 +30,7 @@
 
     <div class="widget">
         <div class="widget-header clearfix">
-            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS CARGOS</span></h3>
+            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS CLIENTES</span></h3>
         </div>
         <div class="widget-content">
             @if (TempData["MSG_S"] != null)

@@ -14,13 +14,15 @@ namespace Ragnarok.Controllers
     {
         private readonly WSCorreiosAPI _correiosAPI;
         private readonly IEmployeeRepository _employeeRepository;
+        private readonly IClientRepository _clientRepository;
         private readonly EmployeeLogin _employeeLogin;
 
-        public ServiceController(WSCorreiosAPI correiosAPI, IEmployeeRepository employeeRepository, EmployeeLogin employeeLogin)
+        public ServiceController(WSCorreiosAPI correiosAPI, IEmployeeRepository employeeRepository, EmployeeLogin employeeLogin, IClientRepository clientRepository)
         {
             _correiosAPI = correiosAPI;
             _employeeRepository = employeeRepository;
             _employeeLogin = employeeLogin;
+            _clientRepository = clientRepository;
         }
 
         public IActionResult SearchByZipCode(string zipCode)
@@ -47,7 +49,6 @@ namespace Ragnarok.Controllers
             }
             return Json("Ok");
         }
-
         [HttpPost]
         public IActionResult ValidityInsertEmailEmployee(string email)
         {
@@ -59,5 +60,40 @@ namespace Ragnarok.Controllers
             }
             return Json("Ok");
         }
+        [HttpPost]
+        public IActionResult ValidityInsertCPFClient(string cpf)
+        {
+            ICollection<ClientPhysical> list = _clientRepository.FindByCpf(cpf, _employeeLogin.GetEmployee().BusinessId);
+
+            if (list.Count >= 1)
+            {
+                return Json("Cpf já cadastrado");
+            }
+            return Json("Ok");
+        }
+        [HttpPost]
+        public IActionResult ValidityInsertCNPJClient(string cnpj)
+        {
+            ICollection<ClientJuridical> list = _clientRepository.FindByCnpj(cnpj, _employeeLogin.GetEmployee().BusinessId);
+
+            if (list.Count >= 1)
+            {
+                return Json("Cnpj já cadastrado");
+            }
+            return Json("Ok");
+        }
+        [HttpPost]
+        public IActionResult ValidityInsertEmailClient(string email)
+        {
+            ICollection<Client> list = _clientRepository.FindByEmail(email, _employeeLogin.GetEmployee().BusinessId);
+
+            if (list.Count >= 1)
+            {
+                return Json("E-mail já cadastrado");
+            }
+            return Json("Ok");
+        }
+        
+
     }
 }

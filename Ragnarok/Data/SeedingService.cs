@@ -76,7 +76,7 @@ namespace Ragnarok.Data
                 Password = "123",
                 Address = ad2,
                 InsertDate = DateTime.Now,
-                Action = true,
+                Active = true,
                 BirthDay = DateTime.Parse("11/09/1995"),
                 PositionName = positionName,
                 Business = business1,

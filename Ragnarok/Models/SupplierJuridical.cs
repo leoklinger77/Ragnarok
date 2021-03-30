@@ -8,13 +8,13 @@ namespace Ragnarok.Models
     [Table("TB_Supplierjuridical")]
     public class SupplierJuridical : Supplier
     {
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string FullName { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime OpeningDate { get; set; }
         private string _cnpj;
 
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string CNPJ
         {
             get { return _cnpj; }

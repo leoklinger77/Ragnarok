@@ -181,6 +181,7 @@ namespace Ragnarok.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     Email = table.Column<string>(nullable: true),
+                    Active = table.Column<bool>(nullable: false),
                     InsertDate = table.Column<DateTime>(nullable: false),
                     UpdateDate = table.Column<DateTime>(nullable: true),
                     AddressId = table.Column<int>(nullable: false),
@@ -191,6 +192,7 @@ namespace Ragnarok.Migrations
                     OpeningDate = table.Column<DateTime>(nullable: true),
                     CNPJ = table.Column<string>(nullable: true),
                     FullName = table.Column<string>(nullable: true),
+                    Sexo = table.Column<int>(nullable: true),
                     BirthDay = table.Column<DateTime>(nullable: true),
                     CPF = table.Column<string>(nullable: true)
                 },

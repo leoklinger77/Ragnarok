@@ -1,35 +1,40 @@
-﻿using System;
+﻿using Ragnarok.Models.Enums;
+using Ragnarok.Services.Lang;
+using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
-using System.ServiceModel.Channels;
+
 
 namespace Ragnarok.Models
 {
     [Table("TB_ClientPhysical")]
     public class ClientPhysical : Client
     {
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string FullName { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        public Sexo Sexo { get; set; }                
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        public DateTime BirthDay { get; set; }
 
         private string _cpf;
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
-        public DateTime BirthDay { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string CPF
         {
             get { return _cpf; }
             set { _cpf = value.Replace(".", "").Replace("-", ""); }
         }
 
-        public ClientPhysical()
+        public ClientPhysical() : base()
         {
         }
 
-        public ClientPhysical(string fullName, DateTime birthDay, string cPF,
-            int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
-            : base(id, email, insertDate, updateDate, address, registerEmployee)
+        public ClientPhysical(int id, string email, bool active, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee,
+            string fullName, Sexo sexo, DateTime birthDay, string cPF)
+            : base(id, email, active, insertDate, updateDate, address, registerEmployee)
         {
             FullName = fullName;
+            Sexo = sexo;
             BirthDay = birthDay;
             CPF = cPF;
         }

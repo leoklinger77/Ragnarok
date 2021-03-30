@@ -218,7 +218,7 @@ namespace Ragnarok.Repository
             {
                 _context.Employee.Update(employee);
 
-                _context.Entry(employee).Property(x => x.Action).IsModified = false;
+                _context.Entry(employee).Property(x => x.Active).IsModified = false;
                 _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
                 _context.Entry(employee).Property(x => x.CPF).IsModified = false;
                 _context.Entry(employee).Property(x => x.Name).IsModified = false;

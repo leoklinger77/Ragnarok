@@ -10,7 +10,7 @@ using Ragnarok.Data;
 namespace Ragnarok.Migrations
 {
     [DbContext(typeof(RagnarokContext))]
-    [Migration("20210329121652_Intial")]
+    [Migration("20210329134426_Intial")]
     partial class Intial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -130,6 +130,9 @@ namespace Ragnarok.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int")
                         .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
 
                     b.Property<int>("AddressId")
                         .HasColumnType("int");
@@ -439,6 +442,9 @@ namespace Ragnarok.Migrations
                     b.Property<string>("FullName")
                         .IsRequired()
                         .HasColumnType("nvarchar(max)");
+
+                    b.Property<int>("Sexo")
+                        .HasColumnType("int");
 
                     b.ToTable("TB_ClientPhysical");
 

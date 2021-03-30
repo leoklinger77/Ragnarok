@@ -36,87 +36,11 @@ $(document).ready(function () {
     });
 });
 
-$('.cpf').change(function () {
-
-    var cpf = $('.cpf').val();
-
-    cpf = cpf.replace(/[^\d]+/g, '');
-    if (cpf == '') {
-        //retorno
-        $('.validationCpf').html("Inválido");
-        return false;
-    }
-    // Elimina CPFs invalidos conhecidos	
-    if (cpf.length != 11 ||
-        cpf == "00000000000" ||
-        cpf == "11111111111" ||
-        cpf == "22222222222" ||
-        cpf == "33333333333" ||
-        cpf == "44444444444" ||
-        cpf == "55555555555" ||
-        cpf == "66666666666" ||
-        cpf == "77777777777" ||
-        cpf == "88888888888" ||
-        cpf == "99999999999") {
-        //retorno
-        $('.validationCpf').html("Inválido");
-        return false;
-    }
-
-    // Valida 1o digito	
-    add = 0;
-    for (i = 0; i < 9; i++)
-        add += parseInt(cpf.charAt(i)) * (10 - i);
-    rev = 11 - (add % 11);
-    if (rev == 10 || rev == 11)
-        rev = 0;
-    if (rev != parseInt(cpf.charAt(9))) {
-        //retorno
-        $('.validationCpf').html("Inválido");
-        return false;
-    }
-
-    // Valida 2o digito	
-    add = 0;
-    for (i = 0; i < 10; i++)
-        add += parseInt(cpf.charAt(i)) * (11 - i);
-    rev = 11 - (add % 11);
-    if (rev == 10 || rev == 11) {
-        rev = 0;
-    }
-    if (rev != parseInt(cpf.charAt(10))) {
-        //retorno
-        $('.validationCpf').html("Inválido");
-        return false;
-
-    }
-
-
-    if ($('.validationCpf').html() != '') {
-        $('.validationCpf').html('');
-    }
-
-
-    $.ajax({
-        type: "POST",
-        url: "/Service/ValidityInsertCPFEmployee",
-        data: { cpf },
-        success: function (response) {
-            if (response != "Ok") {
-                $('.validationCpf').html(response);
-                return false;
-            }
-
-            $('.validationCpf').html('');
-            return true;
-        },
-    });
-
-});
+$
 
 $('.fullName').change(function () {
 
-    var name = $('.fullName').val();
+    var name = $(this).val();
     let regex = /[@!#$%^&*()/\\1-9]/;
 
     if (regex.test(name)) {
@@ -134,9 +58,24 @@ $('.fullName').change(function () {
 
 });
 
+$('.fullCpmpanyName').change(function () {
+
+    var name = $(this).val();
+
+    if (name.length > 20 && name.match(" ")) {
+        $(".span-fullCpmpanyName").html('');
+        return;
+    } else {
+        $(".span-fullCpmpanyName").html('Razão Social incompleto');
+        return;
+    }
+
+});
+
+
 $('.celValidity').change(function () {
 
-    var cel = $('.celValidity').cleanVal();
+    var cel = $(this).cleanVal();
 
     if (cel.length != 11 ||
         cel == "00000000000" ||
@@ -166,7 +105,7 @@ $('.celValidity').change(function () {
 
 $('.telValidity').change(function () {
 
-    var cel = $('.telValidity').cleanVal();
+    var cel = $(this).cleanVal();
 
     if (cel.length == 0) {
         $(".span-telValidity").html('');
@@ -185,7 +124,7 @@ $('.telValidity').change(function () {
         cel == "8888888888" ||
         cel == "9999999999") {
         //retorno
-        $('.span-telValidity').html("Celular inválido");
+        $('.span-telValidity').html("Telefone inválido");
         return false;
     }
 
@@ -193,37 +132,12 @@ $('.telValidity').change(function () {
         $(".span-telValidity").html('');
         return;
     } else {
-        $(".span-telValidity").html('Celular inválido');
+        $(".span-telValidity").html('Telefone inválido');
         return;
     }
 
 });
 
-$('#employeeEmail').change(function () {
-    var email = $('#employeeEmail').val();
 
-
-    if (email.includes("@")) {
-
-
-        $.ajax({
-            type: "POST",
-            url: "/Service/ValidityInsertEmailEmployee",
-            data: { email },
-            success: function (response) {
-                if (response != "Ok") {
-                    $('.span-validationEmail').html(response);
-                    return false;
-                }
-
-                $('.span-validationEmail').html('');
-                return true;
-            },
-        });
-
-    }
-
-
-});
 
 

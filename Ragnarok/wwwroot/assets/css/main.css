@@ -8411,6 +8411,24 @@ div[class*="col-"] > .form-group {
         margin-bottom: 10px;
     }
 
+#insertClient fieldset,
+#insertClient #tab4 {
+    min-height: 386px;
+    background: #fff;
+}
+
+#insertClient #tab4 {
+    padding: 15px;
+}
+
+#insertClient .dl-horizontal {
+    margin-top: 30px;
+}
+
+    #insertClient .dl-horizontal dt {
+        margin-bottom: 10px;
+    }
+
 /*------------------------------------------------*/
 /*	Top
 /*------------------------------------------------*/

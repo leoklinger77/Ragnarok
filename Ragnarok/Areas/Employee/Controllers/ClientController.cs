@@ -28,5 +28,19 @@ namespace Ragnarok.Areas.Employee.Controllers
             ICollection<Client> list = _clientRepository.FIndAlls(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
+        [HttpGet]
+        public IActionResult Insert()
+        {
+            return View();
+        }
+        [HttpPost]
+        public IActionResult Insert(ClientJuridical juridical, ClientPhysical physical)
+        {
+            if (ModelState.IsValid)
+            {
+
+            }
+            return Json("Error");
+        }
     }
 }

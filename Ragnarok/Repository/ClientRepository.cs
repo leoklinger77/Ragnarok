@@ -35,7 +35,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.ClientJuridical.Where(x => x.RegisterEmployee.BusinessId == businessId && x.CNPJ == cnpj).ToList();
+                return _context.ClientJuridical.Where(x => x.RegisterEmployee.BusinessId == businessId && x.CNPJ == cnpj).AsNoTracking().ToList();
             }
             catch (Exception e)
             {
@@ -48,7 +48,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.ClientPhysical.Where(x => x.RegisterEmployee.BusinessId == businessId && x.CPF == cpf).ToList();
+                return _context.ClientPhysical.Where(x => x.RegisterEmployee.BusinessId == businessId && x.CPF == cpf).AsNoTracking().ToList();
             }
             catch (Exception e)
             {
@@ -61,7 +61,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.Client.Where(x => x.RegisterEmployee.BusinessId == businessId && x.Email == email).ToList();
+                return _context.Client.Where(x => x.RegisterEmployee.BusinessId == businessId && x.Email == email).AsNoTracking().ToList();
             }
             catch (Exception e)
             {

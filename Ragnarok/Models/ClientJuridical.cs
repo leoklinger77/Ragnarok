@@ -8,27 +8,28 @@ namespace Ragnarok.Models
     [Table("TB_ClientJuridical")]
     public class ClientJuridical : Client
     {
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string CompanyName { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string FantasyName { get; set; }
-
-        private string _CNPJ;
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime OpeningDate { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = ("MSG_E_002"))]
+        
+        private string _cnpj;
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string CNPJ
         {
-            get { return _CNPJ; }
-            set { _CNPJ = value.Replace(".", "").Replace("\\", "").Replace("-", ""); }
+            get { return _cnpj; }
+            set { _cnpj = value.Replace(".", "").Replace("\\", "").Replace("-", ""); }
         }
 
         public ClientJuridical() : base()
         {
         }
 
-        public ClientJuridical(string companyName, string fantasyName, DateTime openingDate, string cNPJ,
-            int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
-            : base(id, email, insertDate, updateDate, address, registerEmployee)
+        public ClientJuridical(int id, string email, bool active, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee,
+            string companyName, string fantasyName, DateTime openingDate, string cNPJ)
+             : base(id, email, active, insertDate, updateDate, address, registerEmployee)
         {
             CompanyName = companyName;
             FantasyName = fantasyName;

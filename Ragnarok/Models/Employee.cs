@@ -20,7 +20,7 @@ namespace Ragnarok.Models
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public Sexo Sexo { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
-        public Boolean Action { get; set; }
+        public Boolean Active { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         [EmailValidationEmployee]
         public string Email { get; set; }
@@ -57,7 +57,7 @@ namespace Ragnarok.Models
         {
         }
 
-        public Employee(int id, string name, string cPF, DateTime birthDay, Sexo sexo, bool action,
+        public Employee(int id, string name, string cPF, DateTime birthDay, Sexo sexo, bool active,
             string email, string login, string password, string confirmePasswor, DateTime insertDate,
             DateTime? updateDate, Business business, PositionName positionName, Address address, Employee registerEmployee)
         {
@@ -66,7 +66,7 @@ namespace Ragnarok.Models
             CPF = cPF;
             BirthDay = birthDay;
             Sexo = sexo;
-            Action = action;
+            Active = active;
             Email = email;
             Login = login;
             Password = password;
