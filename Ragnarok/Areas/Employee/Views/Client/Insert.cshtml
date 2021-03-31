@@ -85,8 +85,8 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <label asp-for="ClientJuridical.Email"></label>
-                                    <input asp-for="ClientJuridical.Email" type="email" class="form-control" id="ClientJuridicalEmail"/>
-                                    <span asp-validation-for="ClientJuridical.Email" class="text-danger"></span>
+                                    <input asp-for="ClientJuridical.Email" type="email" class="form-control email" id="ClientJuridicalEmail"/>
+                                    <span asp-validation-for="ClientJuridical.Email" class="text-danger span-validationEmail" id="validationClientJurEmail"></span>
                                 </div>
                                 <div class="col-sm-5">
                                     <div class="form-horizontal" style="margin-top:15px">
@@ -109,12 +109,12 @@
                                 <div class="col-sm-3">
                                     <label>Celular</label>
                                     <input name="phone" type="tel" class="form-control phone_with_ddd celValidity" id="clientJurificalPhone" />
-                                    <span class="text-danger span-celValidity"></span>
+                                    <span class="text-danger span-celValidity" id="span-clientJurCel"></span>
                                 </div>
                                 <div class="col-sm-3">
                                     <label>Comercial</label>
                                     <input name="telePhone" type="tel" class="form-control tel_with_ddd telValidity" id="clientComercial" />
-                                    <span class="text-danger span-telValidity"></span>
+                                    <span class="text-danger span-telValidity" id="span-clientJurTel"></span>
                                 </div>
                             </div>
                         </div>

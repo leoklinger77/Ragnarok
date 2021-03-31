@@ -26,8 +26,42 @@
         return result;
     }
 
-    function validationAddress() {
+    function validityManJuridical() {
+        var companyName = $('.span-fullCpmpanyName').html();
+        var cnpj = $('.validationCnpj').html();;
+        var email = $('#validationClientJurEmail').html();
+        var cel = $('#span-clientJurCel').html();
+        var tel = $('#span-clientJurTel').html();
+        
 
+        var result = 0;
+        if (companyName == '') {
+            result += 10;
+        }
+        if (cnpj == '') {
+            result += 10;
+        }
+        if (cel == '') {
+            result += 10;
+        }
+        if (tel == '') {
+            result += 10;
+        }
+        if (email == '') {
+            result += 10;
+        }
+
+        return result;
+    }
+
+    function validationAddress() {
+        var zipcode = $('.span-cep').html();
+
+        var result = 0;
+        if (zipcode == '') {
+            result += 10;
+        }
+        return result;
     }
     if ($('#insertClient').length > 0) {
         $('#insertClient').bootstrapWizard({
@@ -46,16 +80,25 @@
 
 
                     var mainPhysical = validityManPhysical();
+                    var mainJuridical = validityManJuridical();
+                    var address = validationAddress();
                     // form validation
                     parsleyForm.validate();
 
 
+                    if (!parsleyForm.isValid())
+                        return false;
+
                     if (mainPhysical != 50) {
                         return false;
                     }
-
-                    if (!parsleyForm.isValid())
+                    if (mainJuridical != 50) {
                         return false;
+                    }
+                    if (address != 10) {
+                        return false;
+                    }
+
                 }
             },
             onTabShow: function (tab, navigation, index) {
@@ -201,8 +244,8 @@ $('#typeClientPhysical').click(function () {
         document.getElementById("clientFantasyName").removeAttribute("required");
         document.getElementById("clientCnpj").removeAttribute("required");
         document.getElementById("clientOpeningDate").removeAttribute("required");
-        document.getElementById("ClientEmail").removeAttribute("required");
-        document.getElementById("clientActive").removeAttribute("required");
+        document.getElementById("ClientJuridicalEmail").removeAttribute("required");
+        document.getElementById("clientJuridicalActive").removeAttribute("required");
         document.getElementById("clientJurificalPhone").removeAttribute("required");
 
         document.getElementById("clientName").required = true;
@@ -237,8 +280,8 @@ $('#typeClientJuridical').click(function () {
         document.getElementById("clientFantasyName").required = true;
         document.getElementById("clientCnpj").required = true;
         document.getElementById("clientOpeningDate").required = true;
-        document.getElementById("ClientEmail").required = true;
-        document.getElementById("clientActive").required = true;
+        document.getElementById("ClientJuridicalEmail").required = true;
+        document.getElementById("clientJuridicalActive").required = true;
         document.getElementById("clientJurificalPhone").required = true;
     }
 })
@@ -404,8 +447,8 @@ $('#clientCnpj').change(function () {
 
 });
 
-$('#clientEmail').change(function () {
-    var email = $('#clientEmail').val();
+$('.email').change(function () {
+    var email = $(this).val();
 
 
     if (email.includes("@")) {
