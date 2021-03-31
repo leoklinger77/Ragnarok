@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Ragnarok.Services.Validation.Client;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
@@ -8,6 +9,7 @@ namespace Ragnarok.Models
     public abstract class Client
     {
         public int Id { get; set; }
+        [EmailValidationClient]
         public string Email { get; set; }
         public Boolean Active { get; set; }
         public DateTime InsertDate { get; set; }

@@ -61,6 +61,42 @@ namespace Ragnarok.Services.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Este Cnpj já está cadastrado..
+        /// </summary>
+        public static string MSG_CNPJ_Cadastrado {
+            get {
+                return ResourceManager.GetString("MSG_CNPJ_Cadastrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cnpj não é valido..
+        /// </summary>
+        public static string MSG_CNPJ_Invalido {
+            get {
+                return ResourceManager.GetString("MSG_CNPJ_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Este Cpf já está cadastrado..
+        /// </summary>
+        public static string MSG_CPF_Cadastrado {
+            get {
+                return ResourceManager.GetString("MSG_CPF_Cadastrado", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Cpf não é valido..
+        /// </summary>
+        public static string MSG_CPF_Invalido {
+            get {
+                return ResourceManager.GetString("MSG_CPF_Invalido", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to O campo {0} é obrigatório..
         /// </summary>
         public static string MSG_E_001 {

@@ -1,5 +1,6 @@
 ﻿using Ragnarok.Models.Enums;
 using Ragnarok.Services.Lang;
+using Ragnarok.Services.Validation.Client;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -12,12 +13,16 @@ namespace Ragnarok.Models
     {
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string FullName { get; set; }
+
+        private string _cpf;
+
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public Sexo Sexo { get; set; }                
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime BirthDay { get; set; }
 
-        private string _cpf;
+        
+        [CPFValidationClient]
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string CPF
         {
@@ -41,7 +46,7 @@ namespace Ragnarok.Models
 
         public override bool Equals(object obj)
         {
-            return obj is ClientPhysical physical &&
+            return obj is ClientJuridical physical &&
                    Id == physical.Id;
         }
 

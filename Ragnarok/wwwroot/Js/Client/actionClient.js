@@ -1,5 +1,5 @@
 ﻿$(document).ready(function () {
-    function validityMan() {
+    function validityManPhysical() {
         var name = $('.span-nameCompleto').html();
         var cpf = $('.validationCpf').html();;
         var cel = $('.span-celValidity').html();
@@ -41,7 +41,7 @@
                     tab.addClass('done');
 
 
-
+                    var mainPhysical = validityManPhysical();
                     // form validation
                     parsleyForm.validate();
 
