@@ -160,7 +160,7 @@
                                 <div class="col-sm-4">
                                     <label asp-for="ClientPhysical.Email">Email</label>
                                     <input asp-for="ClientPhysical.Email" type="email" class="form-control email" id="clientEmail">
-                                    <span asp-validation-for="ClientPhysical.Email" class="text-danger span-validationEmail"></span>
+                                    <span asp-validation-for="ClientPhysical.Email" class="text-danger span-validationEmail" id="validationClientPhyEmail"></span>
                                 </div>                                
                                 <div class="col-sm-5">
                                     <div class="form-horizontal" style="margin-top:15px">
@@ -183,12 +183,12 @@
                                 <div class="col-sm-3">
                                     <label>Celular</label>
                                     <input name="phone" type="tel" class="form-control phone_with_ddd celValidity" id="clienPhysicalPhone" />
-                                    <span class="text-danger span-celValidity"></span>
+                                    <span class="text-danger span-celValidity" id="span-clientPhyCel"></span>
                                 </div>
                                 <div class="col-sm-3">
                                     <label>Telefone</label>
                                     <input name="telePhone" type="tel" class="form-control tel_with_ddd telValidity" id="clientTelePhone" />
-                                    <span class="text-danger span-telValidity"></span>
+                                    <span class="text-danger span-telValidity" id="span-clientPhyTel"></span>
                                 </div>
                             </div>
                         </div>                        

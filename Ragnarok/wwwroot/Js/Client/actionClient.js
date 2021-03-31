@@ -2,9 +2,9 @@
     function validityManPhysical() {
         var name = $('.span-nameCompleto').html();
         var cpf = $('.validationCpf').html();;
-        var cel = $('.span-celValidity').html();
-        var tel = $('.span-telValidity').html();
-        var email = $('.span-validationEmail').html();
+        var cel = $('#span-clientPhyCel').html();
+        var tel = $('#span-clientPhyTel').html();
+        var email = $('#validationClientPhyEmail').html();
 
         var result = 0;
         if (name == '') {
@@ -24,6 +24,10 @@
         }
 
         return result;
+    }
+
+    function validationAddress() {
+
     }
     if ($('#insertClient').length > 0) {
         $('#insertClient').bootstrapWizard({
@@ -45,6 +49,10 @@
                     // form validation
                     parsleyForm.validate();
 
+
+                    if (mainPhysical != 50) {
+                        return false;
+                    }
 
                     if (!parsleyForm.isValid())
                         return false;
