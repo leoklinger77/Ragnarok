@@ -164,5 +164,20 @@ namespace Ragnarok.Areas.Employee.Controllers
             }
             return View(nameof(Details), client);
         }
+        [HttpGet]
+        public IActionResult Remove(int id)
+        {
+            try
+            {
+                _clientRepository.Remove(id, _employeeLogin.GetEmployee().BusinessId);
+                TempData["MSG_S"] = Message.MSG_S_005;
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                TempData["MSG_E"] = Message.MSG_E_003;
+                return RedirectToAction(nameof(Index));
+            }            
+        }
     }
 }

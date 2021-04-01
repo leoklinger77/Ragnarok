@@ -90,11 +90,8 @@ namespace Ragnarok.Repository
 
         public int FindTheClientIdByAddress(int addressId)
         {
-            return _context.Client.Where(x => x.AddressId == addressId)
-                    .Include(x => x.Address)
-                    .Include(x => x.Address.City)
-                    .Include(x => x.Address.City.State)
-                    .Include(x => x.Contacts)
+            return _context.Client.Where(x => x.AddressId == addressId)     
+                    .AsNoTracking()
                     .First().Id;
         }
 
@@ -119,7 +116,7 @@ namespace Ragnarok.Repository
                 Client client = FindById(id, businessId);
                 _context.Remove(client.Address);
                 _context.Remove(client);
-                _context.Remove(client.Contacts);
+                _context.RemoveRange(client.Contacts);
 
                 _context.SaveChanges();
             }
