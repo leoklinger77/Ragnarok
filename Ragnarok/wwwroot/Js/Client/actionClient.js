@@ -27,7 +27,7 @@
     }
 
     function validityManJuridical() {
-        var companyName = $('.span-fullCpmpanyName').html();
+        var companyName = $('.span-fullCompanyName').html();
         var cnpj = $('.validationCnpj').html();;
         var email = $('#validationClientJurEmail').html();
         var cel = $('#span-clientJurCel').html();
@@ -436,8 +436,8 @@ $('#clientCnpj').change(function () {
         url: "/Service/ValidityInsertCNPJClient",
         data: { cnpj },
         success: function (message) {
-            if (response != "Ok") {
-                $('.validationCnpj').html(response);
+            if (message != "Ok") {
+                $('.validationCnpj').html(message);
                 return false;
             }
 

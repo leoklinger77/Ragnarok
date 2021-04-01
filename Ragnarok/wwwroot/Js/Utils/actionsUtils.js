@@ -63,10 +63,10 @@ $('.fullCompanyName').change(function () {
     var name = $(this).val();
 
     if (name.length > 20 && name.match(" ")) {
-        $(".span-fullCpmpanyName").html('');
+        $(".span-fullCompanyName").html('');
         return;
     } else {
-        $(".span-fullCpmpanyName").html('Razão Social incompleto');
+        $(".span-fullCompanyName").html('Razão Social incompleto');
         return;
     }
 

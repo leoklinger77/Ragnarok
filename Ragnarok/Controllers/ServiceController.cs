@@ -15,13 +15,15 @@ namespace Ragnarok.Controllers
         private readonly WSCorreiosAPI _correiosAPI;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IClientRepository _clientRepository;
+        private readonly ISupplierRepository _supplierRepository;
         private readonly EmployeeLogin _employeeLogin;
 
-        public ServiceController(WSCorreiosAPI correiosAPI, IEmployeeRepository employeeRepository, EmployeeLogin employeeLogin, IClientRepository clientRepository)
+        public ServiceController(WSCorreiosAPI correiosAPI, IEmployeeRepository employeeRepository, EmployeeLogin employeeLogin, IClientRepository clientRepository, ISupplierRepository supplierRepository)
         {
             _correiosAPI = correiosAPI;
             _employeeRepository = employeeRepository;
             _employeeLogin = employeeLogin;
+            _supplierRepository = supplierRepository;
             _clientRepository = clientRepository;
         }
 
@@ -93,7 +95,39 @@ namespace Ragnarok.Controllers
             }
             return Json("Ok");
         }
-        
+        [HttpPost]
+        public IActionResult ValidityInsertCPFSupplier(string cpf)
+        {
+            ICollection<SupplierPhysical> list = _supplierRepository.FindByCpf(cpf, _employeeLogin.GetEmployee().BusinessId);
+
+            if (list.Count >= 1)
+            {
+                return Json("Cpf já cadastrado");
+            }
+            return Json("Ok");
+        }
+        [HttpPost]
+        public IActionResult ValidityInsertCNPJSupplier(string cnpj)
+        {
+            ICollection<SupplierJuridical> list = _supplierRepository.FindByCnpj(cnpj, _employeeLogin.GetEmployee().BusinessId);
+
+            if (list.Count >= 1)
+            {
+                return Json("Cnpj já cadastrado");
+            }
+            return Json("Ok");
+        }
+        [HttpPost]
+        public IActionResult ValidityInsertEmailSupplier(string email)
+        {
+            ICollection<Supplier> list = _supplierRepository.FindByEmail(email, _employeeLogin.GetEmployee().BusinessId);
+
+            if (list.Count >= 1)
+            {
+                return Json("E-mail já cadastrado");
+            }
+            return Json("Ok");
+        }
 
     }
 }

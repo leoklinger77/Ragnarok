@@ -2,9 +2,9 @@
     function validityManPhysical() {
         var name = $('.span-nameCompleto').html();
         var cpf = $('.validationCpf').html();;
-        var cel = $('#span-clientPhyCel').html();
-        var tel = $('#span-clientPhyTel').html();
-        var email = $('#validationClientPhyEmail').html();
+        var cel = $('#span-supplierPhyCel').html();
+        var tel = $('#span-supplierPhyTel').html();
+        var email = $('#supplierEmailPhysycal').html();
 
         var result = 0;
         if (name == '') {
@@ -27,11 +27,11 @@
     }
 
     function validityManJuridical() {
-        var companyName = $('.span-fullCpmpanyName').html();
+        var companyName = $('.span-fullCompanyName').html();
         var cnpj = $('.validationCnpj').html();;
-        var email = $('#validationClientJurEmail').html();
-        var cel = $('#span-clientJurCel').html();
-        var tel = $('#span-clientJurTel').html();
+        var email = $('#supplierEmailjuridical').html();
+        var cel = $('#span-supplierJurCel').html();
+        var tel = $('#span-supplierJurTel').html();
 
 
         var result = 0;
@@ -90,12 +90,12 @@
                     if (!parsleyForm.isValid())
                         return false;
 
-                    //if (mainPhysical != 50) {
-                    //    return false;
-                    //}
-                    //if (mainJuridical != 50) {
-                    //    return false;
-                    //}
+                    if (mainPhysical != 50) {
+                        return false;
+                    }
+                    if (mainJuridical != 50) {
+                        return false;
+                    }
                     //if (address != 10) {
                     //    return false;
                     //}
@@ -367,7 +367,7 @@ $('#supplierCpf').change(function () {
 
 $('#supplierCnpj').change(function () {
 
-    var cnpj = $(this).val();
+        var cnpj = $(this).val();
     cnpj = cnpj.replace(/[^\d]+/g, '');
 
     if (cnpj == '') {
@@ -433,11 +433,11 @@ $('#supplierCnpj').change(function () {
 
     $.ajax({
         type: "POST",
-        url: "/Service/ValidityInsertCNPJClient",
+        url: "/Service/ValidityInsertCNPJSupplier",
         data: { cnpj },
         success: function (message) {
-            if (response != "Ok") {
-                $('.validationCnpj').html(response);
+            if (message != "Ok") {
+                $('.validationCnpj').html(message);
                 return false;
             }
 
@@ -457,7 +457,7 @@ $('.emailSupplier').change(function () {
 
         $.ajax({
             type: "POST",
-            url: "/Service/ValidityInsertEmailClient",
+            url: "/Service/ValidityInsertEmailSupplier",
             data: { email },
             success: function (response) {
                 if (response != "Ok") {

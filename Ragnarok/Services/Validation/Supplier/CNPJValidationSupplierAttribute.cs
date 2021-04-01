@@ -5,7 +5,7 @@ using Ragnarok.Services.Login;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ragnarok.Services.Validation.Client
+namespace Ragnarok.Services.Validation.Supplier
 {
     public class CNPJValidationSupplierAttribute : ValidationAttribute
     {
@@ -18,11 +18,11 @@ namespace Ragnarok.Services.Validation.Client
                 return new ValidationResult(Message.MSG_CNPJ_Invalido);
             }
 
-            IClientRepository repository = (IClientRepository)validationContext.GetService(typeof(IClientRepository));
+            ISupplierRepository repository = (ISupplierRepository)validationContext.GetService(typeof(ISupplierRepository));
             EmployeeLogin login = (EmployeeLogin)validationContext.GetService(typeof(EmployeeLogin));
 
-            List<ClientJuridical> list = (List<ClientJuridical>)repository.FindByCnpj(cnpj, login.GetEmployee().BusinessId);
-            ClientJuridical client = (ClientJuridical)validationContext.ObjectInstance;
+            List<SupplierJuridical> list = (List<SupplierJuridical>)repository.FindByCnpj(cnpj, login.GetEmployee().BusinessId);
+            SupplierJuridical client = (SupplierJuridical)validationContext.ObjectInstance;
 
             if (list.Count > 1)
             {

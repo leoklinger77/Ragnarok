@@ -1,4 +1,5 @@
 ﻿using Ragnarok.Services.Lang;
+using Ragnarok.Services.Validation.Client;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -16,10 +17,11 @@ namespace Ragnarok.Models
         private string _cnpj;
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [CNPJValidationSupplier]
         public string CNPJ
         {
             get { return _cnpj; }
-            set { _cnpj = value.Replace(".", "").Replace("-", ""); }
+            set { _cnpj = value.Replace(".", "").Replace("-", "").Replace("/",""); }
         }
 
         public SupplierJuridical()

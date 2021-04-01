@@ -24,7 +24,7 @@
                     <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
                 </ul>
             </div>
-           
+
         </div>
 
     </div>
@@ -60,7 +60,7 @@
                             <th>Nascimento</th>
                             <th>Idade</th>
                             <th>Cargo</th>
-                            
+
                             <th>Ativado</th>
                             <th>Ação</th>
                         </tr>
@@ -74,24 +74,24 @@
                                 <td>@item.Email</td>
                                 <td>@item.BirthDay.Date.ToString("dd/MM/yyyy")</td>
                                 <td>@item.Age()</td>
-                                
+
                                 <td>@item.PositionName.Name</td>
                                 @if (@item.Active)
                                 {
-                                <td><span class="label label-success">Ativado</span></td>
+                                    <td><span class="label label-success">Ativado</span></td>
                                 }
                                 else
                                 {
-                            <td><span class="label label-danger">Desativado</span></td>
+                                    <td><span class="label label-danger">Desativado</span></td>
                                 }
 
-                            <td style="text-align:center">
-                                <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
-                                |
-                                <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-email"></i> Reenviar Senha</a>
-                                |
-                                <a asp-action="Remove" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
-                            </td>
+                                <td style="text-align:center">
+                                    <a asp-action="Details" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
+                                    |
+                                    <a asp-action="ResendPassword" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-email"></i> Reenviar Senha</a>
+                                    |
+                                    <a asp-action="Remove" asp-controller="Employee" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                </td>
                             </tr>
                         }
 

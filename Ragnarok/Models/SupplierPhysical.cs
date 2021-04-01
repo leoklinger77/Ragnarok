@@ -1,5 +1,6 @@
 ﻿using Ragnarok.Models.Enums;
 using Ragnarok.Services.Lang;
+using Ragnarok.Services.Validation.Client;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -18,6 +19,7 @@ namespace Ragnarok.Models
         private string _cpf;
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [CPFValidationSupplier]
         public string CPF
         {
             get { return _cpf; }

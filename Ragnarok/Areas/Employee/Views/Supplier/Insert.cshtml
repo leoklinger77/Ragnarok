@@ -63,7 +63,7 @@
                                 <div class="col-sm-4">
                                     <label asp-for="SupplierJuridical.CompanyName"></label>
                                     <input asp-for="SupplierJuridical.CompanyName" class="form-control fullCompanyName" id="supplierCompanyName" />
-                                    <span asp-validation-for="SupplierJuridical.CompanyName" class="text-danger span-fullCpmpanyName"></span>
+                                    <span asp-validation-for="SupplierJuridical.CompanyName" class="text-danger span-fullCompanyName"></span>
                                 </div>
                                 <div class="col-sm-4">
                                     <label asp-for="SupplierJuridical.FantasyName"></label>
@@ -86,7 +86,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <label asp-for="SupplierJuridical.Email"></label>
-                                    <input asp-for="SupplierJuridical.Email" type="email" class="form-control email" id="supplierEmailjuridical" />
+                                    <input asp-for="SupplierJuridical.Email" type="email" class="form-control email emailSupplier" id="supplierEmailjuridical" />
                                     <span asp-validation-for="SupplierJuridical.Email" class="text-danger span-validationEmail" id="validationSupplierJurEmail"></span>
                                 </div>
                                 <div class="col-sm-5">
@@ -110,12 +110,12 @@
                                 <div class="col-sm-3">
                                     <label>Celular</label>
                                     <input name="phone" type="tel" class="form-control phone_with_ddd celValidity" id="supplierCelJuridical" />
-                                    <span class="text-danger span-celValidity" id="span-clientJurCel"></span>
+                                    <span class="text-danger span-celValidity" id="span-supplierJurCel"></span>
                                 </div>
                                 <div class="col-sm-3">
                                     <label>Comercial</label>
                                     <input name="telePhone" type="tel" class="form-control tel_with_ddd telValidity" id="supplierTelJuridical" />
-                                    <span class="text-danger span-telValidity" id="span-clientJurTel"></span>
+                                    <span class="text-danger span-telValidity" id="span-supplierJurTel"></span>
                                 </div>
                             </div>
                         </div>
@@ -160,7 +160,7 @@
                             <div class="row">
                                 <div class="col-sm-4">
                                     <label asp-for="SupplierPhysical.Email">Email</label>
-                                    <input asp-for="SupplierPhysical.Email" type="email" class="form-control email" id="supplierEmailPhysycal">
+                                    <input asp-for="SupplierPhysical.Email" type="email" class="form-control email emailSupplier" id="supplierEmailPhysycal">
                                     <span asp-validation-for="SupplierPhysical.Email" class="text-danger span-validationEmail"></span>
                                 </div>
                                 <div class="col-sm-5">
@@ -184,12 +184,12 @@
                                 <div class="col-sm-3">
                                     <label>Celular</label>
                                     <input name="phone" type="tel" class="form-control phone_with_ddd celValidity" id="supplierCelPhysical" />
-                                    <span class="text-danger span-celValidity" id="span-clientPhyCel"></span>
+                                    <span class="text-danger span-celValidity" id="span-supplierPhyCel"></span>
                                 </div>
                                 <div class="col-sm-3">
                                     <label>Telefone</label>
                                     <input name="telePhone" type="tel" class="form-control tel_with_ddd telValidity" id="supplierTelPhysical" />
-                                    <span class="text-danger span-telValidity" id="span-clientPhyTel"></span>
+                                    <span class="text-danger span-telValidity" id="span-supplierPhyTel"></span>
                                 </div>
                             </div>
                         </div>
@@ -329,7 +329,7 @@
                 <li class="next last"><a>Create Account</a></li>
                 <li class="next"><a>Next</a></li>
             </ul>
-            <a asp-action="Index" asp-controller="Client" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> Voltar</a>
+            <a asp-action="Index" asp-controller="Supplier" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> Voltar</a>
         </div>
     </div>
 </div>

@@ -24,7 +24,7 @@
                 </ul>
             </div>
         </div>
-       
+
     </div>
 
     <div class="widget">
@@ -55,7 +55,7 @@
                             <th>Nome</th>
                             <th>CNPJ/CPF</th>
                             <th>E-mail</th>
-
+                            <th>Ativo</th>
                             <th>Tipo Cliente</th>
                             <th>Ação</th>
 
@@ -72,7 +72,14 @@
                                     <td>@supplier.CNPJ</td>
                                     <td>@supplier.Email</td>
 
-
+                                    @if (supplier.Active)
+                                    {
+                                        <td><span class="label label-success">Ativado</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span class="label label-danger">Desativado</span></td>
+                                    }
                                     <td>Pessoa Jurídica</td>
                                     <td>
                                         <a asp-action="Details" asp-controller="Supplier" asp-area="Employee" asp-route-id="@supplier.Id"><i class="icon ion-edit"></i> Editar</a>
@@ -88,7 +95,14 @@
                                     <td>@supplier.FullName</td>
                                     <td>@supplier.CPF</td>
                                     <td>@supplier.Email</td>
-
+                                    @if (supplier.Active)
+                                    {
+                                        <td><span class="label label-success">Ativado</span></td>
+                                    }
+                                    else
+                                    {
+                                        <td><span class="label label-danger">Desativado</span></td>
+                                    }
 
                                     <td>Pessoa Física</td>
                                     <td>

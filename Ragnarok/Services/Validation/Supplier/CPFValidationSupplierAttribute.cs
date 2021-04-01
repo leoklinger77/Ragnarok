@@ -5,7 +5,7 @@ using Ragnarok.Services.Login;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 
-namespace Ragnarok.Services.Validation.Client
+namespace Ragnarok.Services.Validation.Supplier
 {
     public class CPFValidationSupplierAttribute : ValidationAttribute
     {
@@ -18,11 +18,11 @@ namespace Ragnarok.Services.Validation.Client
                 return new ValidationResult(Message.MSG_CPF_Invalido);
             }
 
-            IClientRepository repository = (IClientRepository)validationContext.GetService(typeof(IClientRepository));
+            ISupplierRepository repository = (ISupplierRepository)validationContext.GetService(typeof(ISupplierRepository));
             EmployeeLogin login = (EmployeeLogin)validationContext.GetService(typeof(EmployeeLogin));
             
-            List<ClientPhysical> list = (List<ClientPhysical>)repository.FindByCpf(cpf,login.GetEmployee().BusinessId);
-            ClientPhysical client = (ClientPhysical)validationContext.ObjectInstance;
+            List<SupplierPhysical> list = (List<SupplierPhysical>)repository.FindByCpf(cpf,login.GetEmployee().BusinessId);
+            SupplierPhysical client = (SupplierPhysical)validationContext.ObjectInstance;
 
             if (list.Count > 1)
             {
