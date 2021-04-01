@@ -9,7 +9,8 @@ namespace Ragnarok.Models
     public class SupplierJuridical : Supplier
     {
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
-        public string FullName { get; set; }
+        public string CompanyName { get; set; }
+        public string FantasyName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime OpeningDate { get; set; }
         private string _cnpj;
@@ -25,11 +26,12 @@ namespace Ragnarok.Models
         {
         }
 
-        public SupplierJuridical(int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee,
-            string fullName, DateTime openingDate, string cNPJ)
-            : base(id, email, insertDate, updateDate, address, registerEmployee)
+        public SupplierJuridical(int id, string email, bool active, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee,
+            string companyName, string fantasyName, DateTime openingDate, string cNPJ)
+            : base(id, email, active, insertDate, updateDate, address, registerEmployee)
         {
-            FullName = fullName;
+            CompanyName = companyName;
+            FantasyName = fantasyName;
             OpeningDate = openingDate;
             CNPJ = cNPJ;
         }

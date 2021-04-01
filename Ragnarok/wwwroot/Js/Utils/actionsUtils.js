@@ -58,7 +58,7 @@ $('.fullName').change(function () {
 
 });
 
-$('.fullCpmpanyName').change(function () {
+$('.fullCompanyName').change(function () {
 
     var name = $(this).val();
 

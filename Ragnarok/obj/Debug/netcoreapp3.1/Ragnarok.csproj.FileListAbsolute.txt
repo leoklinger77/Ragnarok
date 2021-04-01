@@ -445,3 +445,5 @@ C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Supplier\Index.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Client\Insert.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Client\Details.cshtml.g.cs
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Supplier\Insert.cshtml.g.cs
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Supplier\Details.cshtml.g.cs

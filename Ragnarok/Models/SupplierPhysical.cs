@@ -1,4 +1,5 @@
-﻿using Ragnarok.Services.Lang;
+﻿using Ragnarok.Models.Enums;
+using Ragnarok.Services.Lang;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
@@ -11,9 +12,8 @@ namespace Ragnarok.Models
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string FullName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
-        public string FantasyName { get; set; }
-        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public DateTime BirthDay { get; set; }
+        public Sexo Sexo { get; set; }
 
         private string _cpf;
 
@@ -24,17 +24,17 @@ namespace Ragnarok.Models
             set { _cpf = value.Replace(".", "").Replace("-", ""); }
         }
 
-        public SupplierPhysical()
+        public SupplierPhysical() : base()
         {
         }
 
-        public SupplierPhysical(string fullName, string fantasyName, DateTime birthDay, string cPF,
-            int id, string email, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee)
-            : base(id, email, insertDate, updateDate, address, registerEmployee)
+        public SupplierPhysical(int id, string email, bool active, DateTime insertDate, DateTime? updateDate, Address address, Employee registerEmployee,
+            string fullName, DateTime birthDay, Sexo sexo, string cPF)
+            : base(id, email, active, insertDate,  updateDate, address, registerEmployee)
         {
-            FullName = fullName;
-            FantasyName = fantasyName;
+            FullName = fullName;            
             BirthDay = birthDay;
+            Sexo = sexo;
             CPF = cPF;
         }
 

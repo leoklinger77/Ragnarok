@@ -69,11 +69,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public Supplier FindById(int id)
+        public Supplier FindById(int id, int bussinessId)
         {
             try
             {
-                return _context.Supplier.Where(x => x.Id == id)
+                return _context.Supplier.Where(x => x.Id == id && x.RegisterEmployee.BusinessId == bussinessId)
                     .Include(x => x.Address)
                     .Include(x => x.Contacts)
                     .FirstOrDefault();
@@ -83,6 +83,13 @@ namespace Ragnarok.Repository
 
                 throw new Exception(e.Message);
             }
+        }
+
+        public int FindTheClientIdByAddress(int addressId)
+        {
+            return _context.Client.Where(x => x.AddressId == addressId)
+                    .AsNoTracking()
+                    .First().Id;
         }
 
         public void Insert(Supplier supplier)
@@ -99,16 +106,37 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Remove(int id)
+        public void Remove(int id, int bussinessId)
         {
             try
             {
-                Supplier supplier = FindById(id);
+                Supplier supplier = FindById(id, bussinessId);
                 _context.Remove(supplier.Address);
                 _context.Remove(supplier);
                 _context.Remove(supplier.Contacts);
 
                 _context.SaveChanges();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }      
+
+        public void RemoveContact(int id)
+        {
+            try
+            {
+                Contact contact = _context.Contact.Where(x => x.Id == id).First();
+                if (contact != null)
+                {
+                    _context.Remove(contact);
+                    _context.SaveChanges();
+                    return;
+                }
+                throw new Exception("Id not found");
+
             }
             catch (Exception e)
             {

@@ -8429,6 +8429,24 @@ div[class*="col-"] > .form-group {
         margin-bottom: 10px;
     }
 
+#insertSupplier fieldset,
+#insertSupplier #tab4 {
+    min-height: 386px;
+    background: #fff;
+}
+
+#insertSupplier #tab4 {
+    padding: 15px;
+}
+
+#insertSupplier .dl-horizontal {
+    margin-top: 30px;
+}
+
+    #insertSupplier .dl-horizontal dt {
+        margin-bottom: 10px;
+    }
+
 /*------------------------------------------------*/
 /*	Top
 /*------------------------------------------------*/

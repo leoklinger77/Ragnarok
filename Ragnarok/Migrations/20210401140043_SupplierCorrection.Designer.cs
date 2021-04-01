@@ -3,15 +3,17 @@ using System;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
 using Microsoft.EntityFrameworkCore.Metadata;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 using Ragnarok.Data;
 
 namespace Ragnarok.Migrations
 {
     [DbContext(typeof(RagnarokContext))]
-    partial class RagnarokContextModelSnapshot : ModelSnapshot
+    [Migration("20210401140043_SupplierCorrection")]
+    partial class SupplierCorrection
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
@@ -484,6 +486,11 @@ namespace Ragnarok.Migrations
 
                     b.Property<string>("CPF")
                         .IsRequired()
+                        .HasColumnType("nvarchar(max)");
+
+                    b.Property<string>("FantasyName")
+                        .IsRequired()
+                        .HasColumnName("SupplierPhysical_FantasyName")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("FullName")
