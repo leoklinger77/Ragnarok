@@ -69,7 +69,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_S"] = Message.MSG_S_005;
                 return RedirectToAction(nameof(Index));
             }
-            catch (Exception e)
+            catch (Exception)
             {
                 TempData["MSG_E"] = Message.MSG_E_003;
                 return RedirectToAction(nameof(Index));

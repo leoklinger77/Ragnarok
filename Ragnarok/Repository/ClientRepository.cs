@@ -70,12 +70,14 @@ namespace Ragnarok.Repository
             }
         }
 
-        public Client FindById(int id)
+        public Client FindById(int id, int businessId)
         {
             try
             {
-                return _context.Client.Where(x => x.Id == id)
+                return _context.Client.Where(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId)
                     .Include(x=>x.Address)
+                    .Include(x => x.Address.City)
+                    .Include(x => x.Address.City.State)
                     .Include(x => x.Contacts)
                     .FirstOrDefault();
             }
@@ -84,6 +86,16 @@ namespace Ragnarok.Repository
 
                 throw new Exception(e.Message);
             }
+        }
+
+        public int FindTheClientIdByAddress(int addressId)
+        {
+            return _context.Client.Where(x => x.AddressId == addressId)
+                    .Include(x => x.Address)
+                    .Include(x => x.Address.City)
+                    .Include(x => x.Address.City.State)
+                    .Include(x => x.Contacts)
+                    .First().Id;
         }
 
         public void Insert(Client client)
@@ -100,11 +112,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Remove(int id)
+        public void Remove(int id, int businessId)
         {
             try
             {
-                Client client = FindById(id);
+                Client client = FindById(id, businessId);
                 _context.Remove(client.Address);
                 _context.Remove(client);
                 _context.Remove(client.Contacts);
@@ -118,11 +130,32 @@ namespace Ragnarok.Repository
             }
         }
 
+        public void RemoveContact(int id)
+        {
+            try
+            {
+                Contact contact = _context.Contact.Where(x => x.Id == id).First();
+                if (contact != null)
+                {
+                    _context.Remove(contact);
+                    _context.SaveChanges();
+                    return;
+                }
+                throw new Exception("Id not found");
+                
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
+
         public void UpdateAddress(Address address)
         {
             try
             {
-                _context.Address.Add(address);
+                _context.Address.Update(address);
                 _context.Entry(address).Property(x => x.InsertDate).IsModified = false;
                 _context.SaveChanges();
             }
@@ -137,7 +170,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                _context.Client.Add(client);
+                _context.Client.Update(client);
                 _context.Entry(client).Property(x => x.InsertDate).IsModified = false;
                 if (client is ClientJuridical)
                 {
@@ -148,8 +181,8 @@ namespace Ragnarok.Repository
                 {
                     _context.Entry((ClientPhysical)client).Property(x => x.CPF).IsModified = false;
                     _context.Entry((ClientPhysical)client).Property(x => x.BirthDay).IsModified = false;
-                }               
-                
+                }
+
                 _context.SaveChanges();
             }
             catch (Exception e)

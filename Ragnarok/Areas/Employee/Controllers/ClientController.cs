@@ -68,5 +68,101 @@ namespace Ragnarok.Areas.Employee.Controllers
             }
             return Json("Error");
         }
+        [HttpGet]
+        public IActionResult Details(int id)
+        {
+            ClientFormViewModel viewModel = new ClientFormViewModel();
+            Client client = _clientRepository.FindById(id, _employeeLogin.GetEmployee().BusinessId);
+            if (client is ClientJuridical)
+            {
+                viewModel.ClientJuridical = (ClientJuridical)client;
+            }
+            else
+            {
+                viewModel.ClientPhysical = (ClientPhysical)client;
+            }
+            foreach (var item in client.Contacts)
+            {
+                if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
+                {
+                    viewModel.Celular = item;
+                }
+                if (item.TypeNumber == Models.Enums.TypeNumber.Residencial)
+                {
+                    viewModel.Comercial = item;
+                }
+            }
+            viewModel.Address = client.Address;
+            return View(viewModel);
+        }
+        [HttpPost]
+        public IActionResult Update(ClientFormViewModel client)
+        {
+            ModelState.Remove("Comercial.Id");
+            ModelState.Remove("Comercial.InsertDate");
+            if (ModelState.IsValid)
+            {
+                if (client.ClientPhysical != null)
+                {
+                    //Atualiza Physical
+                    client.ClientPhysical.UpdateDate = DateTime.Now;
+
+                    client.Celular.UpdateDate = DateTime.Now;
+                    client.ClientPhysical.Contacts.Add(client.Celular);
+                    if (client.Comercial.Id == 0 && client.Comercial.Number != null)
+                    {
+                        client.Comercial.InsertDate = DateTime.Now;
+                        client.ClientPhysical.Contacts.Add(client.Comercial);
+                    }
+                    else if (client.Comercial.Id > 0 && client.Comercial.Number == null)
+                    {
+                        _clientRepository.RemoveContact(client.Comercial.Id);
+                    }
+                    else if (client.Comercial.Id > 0 && client.Comercial.Number != null)
+                    {
+                        client.Comercial.UpdateDate = DateTime.Now;
+                        client.ClientPhysical.Contacts.Add(client.Comercial);
+                    }
+
+                    _clientRepository.UpdateMain(client.ClientPhysical);
+                    TempData["MSG_S"] = Message.MSG_S_001;
+                    return RedirectToAction(nameof(Details), new { Id = client.ClientPhysical.Id });
+                }
+                else if (client.ClientJuridical != null)
+                {
+                    client.ClientJuridical.UpdateDate = DateTime.Now;
+
+                    client.Celular.UpdateDate = DateTime.Now;
+                    client.ClientJuridical.Contacts.Add(client.Celular);
+                    if (client.Comercial.Id == 0 && client.Comercial.Number != null)
+                    {
+                        client.Comercial.InsertDate = DateTime.Now;
+                        client.ClientJuridical.Contacts.Add(client.Comercial);
+                    }
+                    else if (client.Comercial.Id > 0 && client.Comercial.Number == null)
+                    {
+                        _clientRepository.RemoveContact(client.Comercial.Id);
+                    }
+                    else if (client.Comercial.Id > 0 && client.Comercial.Number != null)
+                    {
+                        client.Comercial.UpdateDate = DateTime.Now;
+                        client.ClientJuridical.Contacts.Add(client.Comercial);
+                    }                  
+
+                    _clientRepository.UpdateMain(client.ClientJuridical);
+                    TempData["MSG_S"] = Message.MSG_S_001;
+                    return RedirectToAction(nameof(Details), new { Id = client.ClientJuridical.Id });
+                }
+                else if (client.Address != null)
+                {
+                    client.Address.UpdateDate = DateTime.Now;
+                    _clientRepository.UpdateAddress(client.Address);
+
+                    TempData["MSG_S"] = Message.MSG_S_001;
+                    return RedirectToAction(nameof(Details), new { Id = _clientRepository.FindTheClientIdByAddress(client.Address.Id) });
+                }
+            }
+            return View(nameof(Details), client);
+        }
     }
 }

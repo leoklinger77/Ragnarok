@@ -12,6 +12,7 @@ namespace Ragnarok.Models
     public class ClientPhysical : Client
     {
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Nome Completo")]
         public string FullName { get; set; }
 
         private string _cpf;
@@ -19,6 +20,7 @@ namespace Ragnarok.Models
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public Sexo Sexo { get; set; }                
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Nascimento")]
         public DateTime BirthDay { get; set; }
 
         

@@ -11,18 +11,22 @@ namespace Ragnarok.Models
         public int Id { get; set; }        
         private string _zipCode;
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Endereço")]
         public string Street { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Número")]
         public int Number { get; set; }
         public string Complement { get; set; }
         public string Reference { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Bairro")]
         public string Neighborhood { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public City City{ get; set; }
         public int CityId { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Cep")]
         public string ZipCode
         {
             get { return _zipCode; }

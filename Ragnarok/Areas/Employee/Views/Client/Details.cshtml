@@ -1,0 +1,329 @@
+﻿@model ClientFormViewModel
+@{
+    ViewData["Title"] = "Details";
+    var id = 0;
+    var name = "";
+    @if (Model.ClientJuridical != null)
+    {
+        id = @Model.ClientJuridical.Id;
+        name = @Model.ClientJuridical.CompanyName;
+    }
+    else
+    {
+        id = @Model.ClientPhysical.Id;
+        name = @Model.ClientPhysical.FullName;
+    }
+}
+
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>DETALHES DO FUNCIONÁRIO</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Client" asp-area="Employee">Funcionário</a></li>
+            <li><a asp-action="Details" asp-controller="Client" asp-area="Employee" asp-route-id="@id">Detalhes do Cliente</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+
+        </div>
+        <!-- quick task modal -->
+
+    </div>
+
+    @if (TempData["MSG_S"] != null)
+    {
+        <div class="alert alert-success fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Feito!</strong> @TempData["MSG_S"]
+        </div>
+    }
+    @if (TempData["MSG_E"] != null)
+    {
+        <div class="alert alert-danger fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Erro!</strong> @TempData["MSG_E"]
+        </div>
+    }
+
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-person"></i> <span>@name</span></h3>
+        </div>
+        <div class="widget-content">
+            <ul class="nav nav-tabs tabs-iconized" role="tablist">
+                <li class="active"><a href="#home2" role="tab" data-toggle="tab"><i class="icon ion-person"></i> Principal</a></li>
+                <li><a href="#profile2" role="tab" data-toggle="tab"><i class="icon ion-home"></i> Endereço</a></li>
+                <li><a href="#settings2" role="tab" data-toggle="tab"><i class="icon ion-bag"></i> Compras</a></li>
+            </ul>
+            <div class="tab-content">
+
+                <div class="tab-pane fade in active" id="home2">
+                    <form asp-action="Update" method="post">
+                        @if (Model.ClientPhysical != null)
+                        {
+                            <input asp-for="ClientPhysical.Id" type="hidden" />
+                            <input asp-for="ClientPhysical.AddressId" type="hidden" />
+                            <input asp-for="ClientPhysical.CPF" type="hidden" />
+                            <input asp-for="ClientPhysical.BirthDay" type="hidden" />
+                            <input asp-for="ClientPhysical.InsertDate" type="hidden" />
+                            <input asp-for="ClientPhysical.RegisterEmployeeId" type="hidden" />
+                            <div class="row">
+                                <div class="col-sm-5">
+                                    <label asp-for="ClientPhysical.FullName"></label>
+                                    <input asp-for="ClientPhysical.FullName" type="text" class="form-control" required>
+                                    <span asp-validation-for="ClientPhysical.FullName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label asp-for="ClientPhysical.InsertDate"></label>
+                                    <input asp-for="ClientPhysical.InsertDate" type="text" class="form-control" required disabled style="background-color:white">
+                                    <span asp-validation-for="ClientPhysical.InsertDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label asp-for="ClientPhysical.CPF"></label>
+                                    <input asp-for="ClientPhysical.CPF" type="text" class="form-control cpf" required disabled style="background-color:white" />
+                                    <span asp-validation-for="ClientPhysical.CPF" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-3">
+                                    <label asp-for="ClientPhysical.BirthDay"></label>
+                                    <input asp-for="ClientPhysical.BirthDay" type="text" class="form-control" required disabled style="background-color:white" />
+                                    <span asp-validation-for="ClientPhysical.BirthDay" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientPhysical.Email"></label>
+                                    <input asp-for="ClientPhysical.Email" type="text" class="form-control" required />
+                                    <span asp-validation-for="ClientPhysical.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-horizontal" style="margin-top:23px">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Ativado</label>
+                                            <div class="col-md-10">
+                                                <label class="radio radio-inline">
+                                                    <input asp-for="ClientPhysical.Active" type="radio" value="true" required> Ativado
+                                                    <span asp-validation-for="ClientPhysical.Active" class="text-danger"></span>
+                                                </label>
+                                                <label class="radio radio-inline">
+                                                    <input asp-for="ClientPhysical.Active" type="radio" value="false"> Destivado
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-sm-4">
+                                    <div class="form-horizontal" style="margin-top:23px">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Sexo</label>
+                                            <div class="col-md-10">
+                                                <label class="radio radio-inline">
+                                                    <input asp-for="ClientPhysical.Sexo" type="radio" value="Masculino" required> Masculino
+                                                    <span asp-validation-for="ClientPhysical.Sexo" class="text-danger"></span>
+                                                </label>
+                                                <label class="radio radio-inline">
+                                                    <input asp-for="ClientPhysical.Sexo" type="radio" value="Feminino"> Feminino
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                        }
+                        else
+                        {
+                            <input asp-for="ClientJuridical.Id" type="hidden" />
+                            <input asp-for="ClientJuridical.AddressId" type="hidden" />
+                            <input asp-for="ClientJuridical.CNPJ" type="hidden" />
+                            <input asp-for="ClientJuridical.OpeningDate" type="hidden" />
+                            <input asp-for="ClientJuridical.InsertDate" type="hidden" />
+                            <input asp-for="ClientJuridical.RegisterEmployeeId" type="hidden" />
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.CompanyName"></label>
+                                    <input asp-for="ClientJuridical.CompanyName" type="text" class="form-control" required>
+                                    <span asp-validation-for="ClientJuridical.CompanyName" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.FantasyName"></label>
+                                    <input asp-for="ClientJuridical.FantasyName" type="text" class="form-control" required>
+                                    <span asp-validation-for="ClientJuridical.FantasyName" class="text-danger"></span>
+                                </div>
+
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-3">
+                                    <label asp-for="ClientJuridical.CNPJ"></label>
+                                    <input asp-for="ClientJuridical.CNPJ" type="text" class="form-control cnpj" required disabled style="background-color:white" />
+                                    <span asp-validation-for="ClientJuridical.CNPJ" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label asp-for="ClientJuridical.OpeningDate"></label>
+                                    <input asp-for="ClientJuridical.OpeningDate" type="text" class="form-control" required disabled style="background-color:white" />
+                                    <span asp-validation-for="ClientJuridical.OpeningDate" class="text-danger"></span>
+                                </div>
+                                <div class="col-sm-2">
+                                    <label asp-for="ClientJuridical.InsertDate"></label>
+                                    <input asp-for="ClientJuridical.InsertDate" type="text" class="form-control" required disabled style="background-color:white">
+                                    <span asp-validation-for="ClientJuridical.InsertDate" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <label asp-for="ClientJuridical.Email"></label>
+                                    <input asp-for="ClientJuridical.Email" type="text" class="form-control" required />
+                                    <span asp-validation-for="ClientJuridical.Email" class="text-danger"></span>
+                                </div>
+                            </div>
+                            <div class="row">
+                                <div class="col-sm-4">
+                                    <div class="form-horizontal" style="margin-top:23px">
+                                        <div class="form-group">
+                                            <label class="col-md-2 control-label">Ativado</label>
+                                            <div class="col-md-10">
+                                                <label class="radio radio-inline">
+                                                    <input asp-for="ClientJuridical.Active" type="radio" value="true" required> Ativado
+                                                    <span asp-validation-for="ClientJuridical.Active" class="text-danger"></span>
+                                                </label>
+                                                <label class="radio radio-inline">
+                                                    <input asp-for="ClientJuridical.Active" type="radio" value="false"> Destivado
+                                                </label>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        }
+                        <div class="row">
+                            <input asp-for="Celular.Id" type="hidden">
+                            <input asp-for="Comercial.Id" type="hidden" />
+
+                            <input asp-for="Celular.TypeNumber" value="Celular" type="hidden">
+                            <input asp-for="Comercial.TypeNumber" value="Residencial" type="hidden" />
+
+                            <input asp-for="Celular.InsertDate" type="hidden">
+                            <input asp-for="Comercial.InsertDate" type="hidden" />
+
+                            <input asp-for="Celular.InsertDate" type="hidden">
+                            <input asp-for="Comercial.InsertDate" type="hidden" />
+                            <div class="col-sm-1">
+                                <label asp-for="Celular.DDD "></label>
+                                <input asp-for="Celular.DDD" type="tel" class="form-control ddd" required>
+                                <span asp-validation-for="Celular.DDD" class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label asp-for="Celular.Number "></label>
+                                <input asp-for="Celular.Number" type="tel" class="form-control cel" required>
+                                <span asp-validation-for="Celular.Number" class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-1">
+                                <label asp-for="Comercial.DDD"></label>
+                                <input asp-for="Comercial.DDD" type="tel" class="form-control ddd">
+                                <span asp-validation-for="Comercial.DDD" class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label asp-for="Comercial.Number"></label>
+                                <input asp-for="Comercial.Number" type="tel" class="form-control tel">
+                                <span asp-validation-for="Comercial.Number" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <button type="submit" class="btn btn-success btn-sm btn-quick-task">Alterar</button>
+                                <a asp-action="Index" asp-controller="Client" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> Voltar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="profile2">
+                    <form asp-action="Update" method="post">
+                        <input asp-for="Address.Id" type="hidden" />
+                        <input asp-for="Address.CityId" id="cityId" type="hidden" />
+                        <div class="row">
+                            <div class="col-sm-2">
+                                <label>Cep</label>
+                                <input asp-for="Address.ZipCode" type="text" class="form-control cep" id="zipCode" required />
+                                <span class="text-danger span-cep"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Rua</label>
+                                <input asp-for="Address.Street" type="text" class="form-control" id="street" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Número</label>
+                                <input asp-for="Address.Number" type="text" class="form-control" id="number" required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-4">
+                                <label>Referencia</label>
+                                <input asp-for="Address.Reference" type="text" class="form-control" id="complement" />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-4">
+                                <label>Complemento</label>
+                                <input asp-for="Address.Complement" type="text" class="form-control" id="reference" />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-sm-3">
+                                <label>Bairro</label>
+                                <input asp-for="Address.Neighborhood" type="text" class="form-control" id="neighborhood" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-3">
+                                <label>Cidade</label>
+                                <input asp-for="Address.City.Name" type="text" class="form-control" id="city" required />
+                                <span class="text-danger"></span>
+                            </div>
+                            <div class="col-sm-2">
+                                <label>Estado</label>
+                                <input asp-for="Address.City.State.Name" type="text" class="form-control" id="state" required />
+                                <span class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-sm-5">
+                                <button type="submit" class="btn btn-success btn-sm btn-quick-task">Alterar</button>
+                                <a asp-action="Index" asp-controller="Update" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> Voltar</a>
+                            </div>
+                        </div>
+                    </form>                    
+                </div>
+                <div class="tab-pane fade" id="settings2">
+                    <h5>Tab Settings</h5>
+                    <p>Dramatically supply adaptive imperatives and stand-alone content. Seamlessly pursue exceptional solutions after web-enabled potentialities. Synergistically negotiate alternative best practices whereas professional "outside the box" thinking. Completely expedite dynamic.</p>
+                </div>
+
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>
+

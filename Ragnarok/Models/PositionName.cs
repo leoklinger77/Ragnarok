@@ -9,6 +9,7 @@ namespace Ragnarok.Models
     public class PositionName
     {
         public int Id { get; set; }
+        [Display(Name = "Nome do Cargo")]
         public string Name { get; set; }
         [Display(Name = "Cadastro")]
         [DisplayFormat(DataFormatString = "dd/MM/yyyy")]

@@ -63,6 +63,7 @@
         }
         return result;
     }
+
     if ($('#insertClient').length > 0) {
         $('#insertClient').bootstrapWizard({
             'tabClass': 'nav nav-pills',

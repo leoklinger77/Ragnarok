@@ -10,10 +10,13 @@ namespace Ragnarok.Models
     public class ClientJuridical : Client
     {
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name ="Razão Social")]
         public string CompanyName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Nome Fantasia")]
         public string FantasyName { get; set; }
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name = "Data de Abertura")]
         public DateTime OpeningDate { get; set; }
         
         private string _cnpj;

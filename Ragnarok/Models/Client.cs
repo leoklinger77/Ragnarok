@@ -1,6 +1,7 @@
 ﻿using Ragnarok.Services.Validation.Client;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
@@ -10,8 +11,10 @@ namespace Ragnarok.Models
     {
         public int Id { get; set; }
         [EmailValidationClient]
+        [Display(Name = "E-mail")]
         public string Email { get; set; }
         public Boolean Active { get; set; }
+        [Display(Name = "Cadastro")]
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
         public Address Address { get; set; }
