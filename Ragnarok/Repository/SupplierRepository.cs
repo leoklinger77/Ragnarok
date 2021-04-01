@@ -87,7 +87,7 @@ namespace Ragnarok.Repository
 
         public int FindTheClientIdByAddress(int addressId)
         {
-            return _context.Client.Where(x => x.AddressId == addressId)
+            return _context.Supplier.Where(x => x.AddressId == addressId)
                     .AsNoTracking()
                     .First().Id;
         }
@@ -149,7 +149,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                _context.Address.Add(address);
+                _context.Address.Update(address);
                 _context.Entry(address).Property(x => x.InsertDate).IsModified = false;
                 _context.SaveChanges();
             }
@@ -164,7 +164,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                _context.Supplier.Add(supplier);
+                _context.Supplier.Update(supplier);
                 _context.Entry(supplier).Property(x => x.InsertDate).IsModified = false;
                 if (supplier is SupplierJuridical)
                 {

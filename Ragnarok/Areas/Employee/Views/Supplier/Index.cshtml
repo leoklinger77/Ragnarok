@@ -52,8 +52,11 @@
                 <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable">
                     <thead>
                         <tr>
-                            <th>Cargo</th>
-                            <th>Qtd Func</th>
+                            <th>Nome</th>
+                            <th>CNPJ/CPF</th>
+                            <th>E-mail</th>
+
+                            <th>Tipo Cliente</th>
                             <th>Ação</th>
 
                         </tr>
@@ -61,15 +64,41 @@
                     <tbody>
                         @foreach (var item in Model)
                         {
-                            <tr>
-                                <td>@item</td>
-                                <td>@item</td>
-                                <td>
-                                    <a asp-action="Details" asp-controller="PositionName" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
-                                    |
-                                    <a asp-action="Remove" asp-controller="PositionName" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
-                                </td>
-                            </tr>
+                            @if (item is SupplierJuridical)
+                            {
+                                SupplierJuridical supplier = (SupplierJuridical)item;
+                                <tr>
+                                    <td>@supplier.CompanyName</td>
+                                    <td>@supplier.CNPJ</td>
+                                    <td>@supplier.Email</td>
+
+
+                                    <td>Pessoa Jurídica</td>
+                                    <td>
+                                        <a asp-action="Details" asp-controller="Supplier" asp-area="Employee" asp-route-id="@supplier.Id"><i class="icon ion-edit"></i> Editar</a>
+                                        |
+                                        <a asp-action="Remove" asp-controller="Supplier" asp-area="Employee" asp-route-id="@supplier.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                    </td>
+                                </tr>
+                            }
+                            else
+                            {
+                                SupplierPhysical supplier = (SupplierPhysical)item;
+                                <tr>
+                                    <td>@supplier.FullName</td>
+                                    <td>@supplier.CPF</td>
+                                    <td>@supplier.Email</td>
+
+
+                                    <td>Pessoa Física</td>
+                                    <td>
+                                        <a asp-action="Details" asp-controller="Supplier" asp-area="Employee" asp-route-id="@supplier.Id"><i class="icon ion-edit"></i> Editar</a>
+                                        |
+                                        <a asp-action="Remove" asp-controller="Supplier" asp-area="Employee" asp-route-id="@supplier.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                    </td>
+                                </tr>
+                            }
+
                         }
 
                     </tbody>
