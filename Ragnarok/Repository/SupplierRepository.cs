@@ -113,7 +113,7 @@ namespace Ragnarok.Repository
                 Supplier supplier = FindById(id, bussinessId);
                 _context.Remove(supplier.Address);
                 _context.Remove(supplier);
-                _context.Remove(supplier.Contacts);
+                _context.RemoveRange(supplier.Contacts);
 
                 _context.SaveChanges();
             }
