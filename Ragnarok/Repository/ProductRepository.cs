@@ -8,20 +8,20 @@ using System.Linq;
 
 namespace Ragnarok.Repository
 {
-    public class CategoryRepository : ICategoryRepository
+    public class ProductRepository : IProductRepository
     {
         private readonly RagnarokContext _context;
 
-        public CategoryRepository(RagnarokContext ragnarokContext)
+        public ProductRepository(RagnarokContext context)
         {
-            _context = ragnarokContext;
+            _context = context;
         }
 
-        public ICollection<Category> FindAlls(int businessId)
+        public ICollection<Product> FindAlls(int businessId)
         {
             try
             {
-                return _context.Category.Where(x => x.RegisterEmployee.BusinessId == businessId).ToList();
+                return _context.Product.Where(x => x.RegisterEmployee.BusinessId == businessId).ToList();
             }
             catch (Exception e)
             {
@@ -30,11 +30,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public Category FindById(int id, int businessId)
+        public Product FindById(int id, int businessId)
         {
             try
             {
-                return _context.Category.FirstOrDefault(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId);
+                return _context.Product.FirstOrDefault(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId);
             }
             catch (Exception e)
             {
@@ -43,11 +43,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public ICollection<Category> FindByName(string name, int businessId)
+        public ICollection<Product> FindByName(string name, int businessId)
         {
             try
             {
-                return _context.Category.Where(x => x.Name == name && x.RegisterEmployee.BusinessId == businessId).AsNoTracking().ToList(); ;
+                return _context.Product.Where(x => x.Name == name && x.RegisterEmployee.BusinessId == businessId).AsNoTracking().ToList(); ;
             }
             catch (Exception e)
             {
@@ -56,11 +56,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Insert(Category category)
+        public void Insert(Product product)
         {
             try
             {
-                _context.Category.Add(category);
+                _context.Product.Add(product);
                 _context.SaveChanges();
             }
             catch (Exception e)
@@ -74,8 +74,8 @@ namespace Ragnarok.Repository
         {
             try
             {
-                Category category = FindById(id, businessId);
-                _context.Category.Remove(category);
+                Product product = FindById(id, businessId);
+                _context.Product.Remove(product);
                 _context.SaveChanges();
             }
             catch (Exception e)
@@ -85,12 +85,12 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Update(Category category)
+        public void Update(Product product)
         {
             try
             {
-                _context.Category.Update(category);
-                _context.Entry(category).Property(x => x.InsertDate).IsModified = false;
+                _context.Product.Update(product);
+                _context.Entry(product).Property(x => x.InsertDate).IsModified = false;
                 _context.SaveChanges();
             }
             catch (Exception e)
