@@ -21,7 +21,9 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.Product.Where(x => x.RegisterEmployee.BusinessId == businessId).ToList();
+                return _context.Product.Where(x => x.RegisterEmployee.BusinessId == businessId)
+                    .Include(x=>x.CategoryProduct)
+                    .ToList();
             }
             catch (Exception e)
             {
@@ -34,7 +36,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.Product.FirstOrDefault(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId);
+                return _context.Product.Include(x => x.CategoryProduct).FirstOrDefault(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId);
             }
             catch (Exception e)
             {

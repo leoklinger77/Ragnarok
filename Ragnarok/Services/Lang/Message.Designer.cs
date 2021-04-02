@@ -133,6 +133,15 @@ namespace Ragnarok.Services.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O produto não pode ficar sem uma categoria..
+        /// </summary>
+        public static string MSG_E_005 {
+            get {
+                return ResourceManager.GetString("MSG_E_005", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cadastro alterado com sucesso..
         /// </summary>
         public static string MSG_S_001 {

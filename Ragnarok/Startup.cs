@@ -84,6 +84,7 @@ namespace Ragnarok
 
             services.AddScoped<ICategoryRepository, CategoryRepository>();
             services.AddScoped<IProductRepository, ProductRepository>();
+            services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
 
         }
 

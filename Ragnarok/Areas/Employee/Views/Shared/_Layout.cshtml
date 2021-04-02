@@ -21,7 +21,7 @@
 </head>
 
 <body class="fixed-top-active dashboard">
-    <div class="wrapper">        
+    <div class="wrapper">
         <nav class="top-bar navbar-fixed-top" role="navigation">
             <div class="logo-area">
                 <a href="#" id="btn-nav-sidebar-minified" class="btn btn-link btn-nav-sidebar-minified pull-left"><i class="icon ion-arrow-swap"></i></a>
@@ -43,7 +43,7 @@
             <div class="top-bar-right pull-right">
                 <div class="action-group hidden-xs hidden-sm">
                     <ul>
-                        
+
                         <li class="action-item skins">
                             <form id="style-switcher">
                                 <div class="btn-group">
@@ -152,7 +152,7 @@
                                 </ul>
                             </div>
                         </li>
-                        
+
                     </ul>
                 </div>
                 <div class="logged-user">
@@ -208,21 +208,21 @@
                                 <li><a asp-action="Index" asp-controller="Supplier" asp-area="Employee"><span class="text">Fornecedor</span></a></li>
                                 <li><a asp-action="Index" asp-controller="Category" asp-area="Employee"><span class="text">Categoria</span></a></li>
                                 <li><a asp-action="Index" asp-controller="Product" asp-area="Employee"><span class="text">Produto</span></a></li>
-                                <li ><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>
-                                <li ><a asp-action="Index" asp-controller="PositionName" asp-area="Employee"><span class="text">Departamentos</span></a></li>
+                                <li><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>
+                                <li><a asp-action="Index" asp-controller="PositionName" asp-area="Employee"><span class="text">Departamentos</span></a></li>
                             </ul>
                         </li>
                     </ul>
                 </nav>
             </div>
         </div>
-        
+
         <div id="col-right" class="col-right ">
             @RenderBody()
         </div>
-        
+
     </div>
-    
+
     <script src="~/assets/js/jquery/jquery-2.1.0.min.js"></script>
     <script src="~/assets/js/bootstrap/bootstrap.js"></script>
     <script src="~/assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js"></script>
@@ -264,6 +264,8 @@
     <script src="~/assets/js/plugins/bootstrap-multiselect/bootstrap-multiselect.js"></script>
     <script src="~/assets/js/plugins/jquery-slimscroll/jquery.slimscroll.min.js"></script>
     <script src="~/assets/js/plugins/wizard/bootstrap-wizard/jquery.bootstrap.wizard.min.js"></script>
+
+    <script src="~/assets/js/plugins/select2/select2.min.js"></script>
 </body>
 
 </html>

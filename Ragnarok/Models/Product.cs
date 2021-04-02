@@ -15,7 +15,7 @@ namespace Ragnarok.Models
         public DateTime? UpdateDate { get; set; }
         public Employee RegisterEmployee { get; set; }
         public int RegisterEmployeeId { get; set; }
-        public ICollection<CategoryProduct> CategoryProduct { get; set; }
+        public ICollection<CategoryProduct> CategoryProduct { get; set; } = new HashSet<CategoryProduct>();
 
         public Product()
         {

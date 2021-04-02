@@ -1,4 +1,6 @@
-﻿using System.ComponentModel.DataAnnotations.Schema;
+﻿using System;
+using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models.ManyToMany
 {
@@ -9,5 +11,17 @@ namespace Ragnarok.Models.ManyToMany
         public int CategoryId { get; set; }
         public Product Product { get; set; }
         public int ProductId { get; set; }
+
+        public CategoryProduct()
+        {
+        }
+
+        public CategoryProduct(Category category, Product product)
+        {
+            Category = category;
+            Product = product;
+        }
+
+
     }
 }

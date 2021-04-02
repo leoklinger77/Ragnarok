@@ -67,13 +67,13 @@ namespace Ragnarok.Migrations
                         column: x => x.CategoryId,
                         principalTable: "TB_Category",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TB_CategoryProduct_TB_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "TB_Product",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(

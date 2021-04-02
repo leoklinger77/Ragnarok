@@ -141,6 +141,9 @@
   <data name="MSG_E_004" xml:space="preserve">
     <value>Não é possivel excluir um usúario que está logado.</value>
   </data>
+  <data name="MSG_E_005" xml:space="preserve">
+    <value>O produto não pode ficar sem uma categoria.</value>
+  </data>
   <data name="MSG_S_001" xml:space="preserve">
     <value>Cadastro alterado com sucesso.</value>
   </data>
