@@ -1,4 +1,4 @@
-﻿
+﻿@model ICollection<Category> 
 @{
     ViewData["Title"] = "Index";
 }
@@ -9,10 +9,10 @@
         <h2>CATEGORIAS</h2>
         <ul class="breadcrumb pull-left">
             <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
-            <li><a asp-action="Index" asp-controller="Category" asp-area="Employee">Categorias</a></li>            
+            <li><a asp-action="Index" asp-controller="Category" asp-area="Employee">Categorias</a></li>
         </ul>
         <div class="sticky-content pull-right">
-            <button asp-action="Insert" asp-controller="Category" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Nova Categoria</button>
+            <a asp-action="Insert" asp-controller="Category" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Nova Categoria</a>
             <div class="btn-group btn-dropdown">
                 <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
                 <ul class="dropdown-menu dropdown-menu-right list-inline">
@@ -26,7 +26,58 @@
             </div>
         </div>
     </div>
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS CLIENTES</span></h3>
+        </div>
+        <div class="widget-content">
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
+            
+            <div class="table-responsive">
+                <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable ">
+                    <thead>
+                        <tr>
+                            <th>Categoria</th>
+                            <th>Ação</th>
 
-    
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@item.Name</td>
+                                <td>
+                                    <a asp-action="Details" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
+                                    |
+                                    <a asp-action="Remove" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                </td>
+                            </tr>
+
+
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
 </div>
 

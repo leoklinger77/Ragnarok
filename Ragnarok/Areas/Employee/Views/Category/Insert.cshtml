@@ -1,0 +1,60 @@
+﻿@model Category
+@{
+    ViewData["Title"] = "Insert";
+}
+
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>CATEGORIAS</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Category" asp-area="Employee">Categorias</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <button asp-action="Insert" asp-controller="Category" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Nova Categoria</button>
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-browsers"></i> <span>LISTA DE TODAS AS CATEGORIAS</span></h3>
+        </div>
+        <div class="widget-content">
+            <ul class="nav nav-tabs tabs-iconized" role="tablist">
+                <li class="active"><a href="#home" role="tab" data-toggle="tab"><i class="icon ion-home"></i> Principal</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <h5>Tab Home</h5>
+                    <form asp-action="Insert" method="post">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <label asp-for="Name"> Categoria</label>
+                                <input asp-for="Name" class="form-control" />
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-success btn-sm btn-quick-task"><i class="icon"></i> Salvar</button>
+                                <a asp-action="Index" asp-controller="Category" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> voltar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
