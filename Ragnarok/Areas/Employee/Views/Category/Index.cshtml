@@ -54,7 +54,6 @@
                         <tr>
                             <th>Categoria</th>
                             <th>Ação</th>
-
                         </tr>
                     </thead>
                     <tbody>
@@ -64,9 +63,9 @@
                             <tr>
                                 <td>@item.Name</td>
                                 <td>
-                                    <a asp-action="Details" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
+                                    <a asp-action="Details" asp-controller="Category" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
                                     |
-                                    <a asp-action="Remove" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                    <a asp-action="Remove" asp-controller="Category" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
                                 </td>
                             </tr>
 

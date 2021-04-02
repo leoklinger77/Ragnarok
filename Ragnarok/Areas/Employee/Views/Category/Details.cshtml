@@ -1,6 +1,6 @@
 ﻿@model Category
 @{
-    ViewData["Title"] = "Insert";
+    ViewData["Title"] = "Details";
 }
 
 <div class="container-fluid primary-content">
@@ -32,23 +32,43 @@
             <h3><i class="icon ion-ios-browsers"></i> <span>LISTA DE TODAS AS CATEGORIAS</span></h3>
         </div>
         <div class="widget-content">
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
             <ul class="nav nav-tabs tabs-iconized" role="tablist">
                 <li class="active"><a href="#home" role="tab" data-toggle="tab"><i class="icon ion-home"></i> Principal</a></li>
             </ul>
             <div class="tab-content">
                 <div class="tab-pane fade in active" id="home">
                     <h5>Tab Home</h5>
-                    <form asp-action="Insert" method="post">
+                    <form asp-action="Update" method="post">
+                        <input asp-for="Id" type="hidden" class="form-control" />
+                        <input asp-for="InsertDate" type="hidden" class="form-control" />
+                        <input asp-for="RegisterEmployeeId" type="hidden" class="form-control" />
                         <div class="row">
                             <div class="col-md-6">
                                 <label asp-for="Name"> Categoria</label>
                                 <input asp-for="Name" class="form-control" />
+                                <span asp-validation-for="Name" class="text-danger"></span>
                             </div>
                         </div>
                         <br />
                         <div class="row">
                             <div class="col-md-6">
-                                <button type="submit" class="btn btn-success btn-sm btn-quick-task"><i class="icon"></i> Salvar</button>
+                                <button type="submit" class="btn btn-success btn-sm btn-quick-task"><i class="icon"></i> Atualizar</button>
                                 <a asp-action="Index" asp-controller="Category" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> voltar</a>
                             </div>
                         </div>
