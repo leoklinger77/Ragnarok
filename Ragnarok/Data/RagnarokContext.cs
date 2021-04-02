@@ -1,5 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ragnarok.Models;
+using Ragnarok.Models.ManyToMany;
 
 namespace Ragnarok.Data
 {
@@ -27,5 +28,25 @@ namespace Ragnarok.Data
         public DbSet<Supplier> Supplier { get; set; }
         public DbSet<SupplierJuridical> SupplierJuridical { get; set; }
         public DbSet<SupplierPhysical> SupplierPhysical { get; set; }
+
+        public DbSet<Category> Category { get; set; }
+        public DbSet<Product> Product { get; set; }
+        public DbSet<CategoryProduct> CategoryProduct { get; set; }
+
+
+        protected override void OnModelCreating(ModelBuilder modelBuilder)
+        {
+            modelBuilder.Entity<CategoryProduct>()
+                .HasKey(x => new { x.CategoryId, x.ProductId });
+            modelBuilder.Entity<CategoryProduct>()
+                .HasOne(x => x.Category)
+                .WithMany(x => x.CategoryProduct)
+                .HasForeignKey(x => x.CategoryId);
+            modelBuilder.Entity<CategoryProduct>()
+                .HasOne(x => x.Product)
+                .WithMany(x => x.CategoryProduct)
+                .HasForeignKey(x => x.ProductId);
+
+        }
     }
 }
