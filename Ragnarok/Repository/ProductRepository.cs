@@ -45,11 +45,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public ICollection<Product> FindByName(string name, int businessId)
+        public ICollection<Product> FindByBarCode(string barCode, int businessId)
         {
             try
             {
-                return _context.Product.Where(x => x.Name == name && x.RegisterEmployee.BusinessId == businessId).AsNoTracking().ToList(); ;
+                return _context.Product.Where(x => x.BarCode == barCode && x.RegisterEmployee.BusinessId == businessId).AsNoTracking().ToList(); ;
             }
             catch (Exception e)
             {
@@ -77,6 +77,7 @@ namespace Ragnarok.Repository
             try
             {
                 Product product = FindById(id, businessId);
+                _context.CategoryProduct.RemoveRange(product.CategoryProduct);
                 _context.Product.Remove(product);
                 _context.SaveChanges();
             }
@@ -101,5 +102,7 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
+
+
     }
 }

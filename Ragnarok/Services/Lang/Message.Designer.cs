@@ -142,6 +142,24 @@ namespace Ragnarok.Services.Lang {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to O comprimento máximo é {1}.
+        /// </summary>
+        public static string MSG_E_006 {
+            get {
+                return ResourceManager.GetString("MSG_E_006", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to O comptimento minimo é {1}.
+        /// </summary>
+        public static string MSG_E_007 {
+            get {
+                return ResourceManager.GetString("MSG_E_007", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Cadastro alterado com sucesso..
         /// </summary>
         public static string MSG_S_001 {

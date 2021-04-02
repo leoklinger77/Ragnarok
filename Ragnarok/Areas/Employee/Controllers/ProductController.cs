@@ -44,23 +44,29 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Insert(Product product, List<int> categoryList)
+        public IActionResult Insert(ProductFormViewModel viewModel)
         {
+            if (viewModel.categoryList == null)
+            {
+                TempData["MSG_E"] = Message.MSG_E_005;
+                ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+                return View(nameof(Details), viewModel);
+            }
             if (ModelState.IsValid)
             {
-                product.InsertDate = DateTime.Now;
-                product.RegisterEmployeeId = _employeeLogin.GetEmployee().BusinessId;
-                _productRepository.Insert(product);
+                viewModel.Product.InsertDate = DateTime.Now;
+                viewModel.Product.RegisterEmployeeId = _employeeLogin.GetEmployee().BusinessId;
+                _productRepository.Insert(viewModel.Product);
 
-                foreach (var item in categoryList)
+                foreach (var item in viewModel.categoryList)
                 {
-                    _categoryProductRepository.Insert(new List<CategoryProduct> { new CategoryProduct { ProductId = product.Id, CategoryId = item } });
+                    _categoryProductRepository.Insert(new List<CategoryProduct> { new CategoryProduct { ProductId = viewModel.Product.Id, CategoryId = item } });
                 }
 
                 TempData["MSG_S"] = Message.MSG_S_002;
                 return RedirectToAction(nameof(Index));
             }
-            return View(product);
+            return View(viewModel);
         }
         [HttpGet]
         public IActionResult Details(int id)
@@ -98,6 +104,27 @@ namespace Ragnarok.Areas.Employee.Controllers
             }
             ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(nameof(Details), viewModel);
+        }
+
+        [HttpGet]
+        public IActionResult Remove(int id)
+        {
+            try
+            {
+                if (_employeeLogin.GetEmployee().Id == id)
+                {
+                    TempData["MSG_E"] = Message.MSG_E_004;
+                    return RedirectToAction(nameof(Index));
+                }
+                _productRepository.Remove(id,_employeeLogin.GetEmployee().BusinessId);
+                TempData["MSG_S"] = Message.MSG_S_005;
+                return RedirectToAction(nameof(Index));
+            }
+            catch (Exception)
+            {
+                TempData["MSG_E"] = Message.MSG_E_003;
+                return RedirectToAction(nameof(Index));
+            }
         }
     }
 }

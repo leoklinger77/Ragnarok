@@ -11,6 +11,6 @@ namespace Ragnarok.Repository.Interfaces
         void Update(Product product);
         void Remove(int id, int businessId);
 
-        ICollection<Product> FindByName(string name, int businessId);
+        ICollection<Product> FindByBarCode(string barCode, int businessId);
     }
 }

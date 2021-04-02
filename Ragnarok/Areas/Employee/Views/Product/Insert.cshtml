@@ -1,4 +1,4 @@
-﻿@model Product
+﻿@model ProductFormViewModel
 @{
     ViewData["Title"] = "Insert";
 }
@@ -42,19 +42,21 @@
                     <form asp-action="Insert" method="post">
                         <div class="row">
                             <div class="col-md-6">
-                                <label asp-for="Name"> Produto</label>
-                                <input asp-for="Name" class="form-control" />
+                                <label asp-for="Product.Name"> Produto</label>
+                                <input asp-for="Product.Name" class="form-control" />
+                                <span asp-validation-for="Product.Name" class="text-danger"></span>
                             </div>
                             <div class="col-md-6">
-                                <label asp-for="BarCode"> Código de Barras</label>
-                                <input asp-for="BarCode" class="form-control" />
+                                <label asp-for="Product.BarCode"> Código de Barras</label>
+                                <input asp-for="Product.BarCode" class="form-control" />
+                                <span asp-validation-for="Product.BarCode" class="text-danger"></span>
                             </div>
 
                         </div>
                         <div class="row">                          
                             <div class="col-md-6">
-                                <label asp-for="CategoryProduct"> Categoria</label>
-                                <select multiple asp-for="CategoryProduct" name="categoryList" id="select2-multiple1" class="select2 select2-multiple" asp-items="@ViewBag.Category">
+                                <label asp-for="Product.CategoryProduct"> Categoria</label>
+                                <select multiple asp-for="categoryList" name="categoryList" id="select2-multiple1" class="select2 select2-multiple" asp-items="@ViewBag.Category">
                                     <option value="">Selecione</option>
                                 </select>
                             </div>

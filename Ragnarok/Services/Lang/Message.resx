@@ -144,6 +144,12 @@
   <data name="MSG_E_005" xml:space="preserve">
     <value>O produto não pode ficar sem uma categoria.</value>
   </data>
+  <data name="MSG_E_006" xml:space="preserve">
+    <value>O comprimento máximo é {1}</value>
+  </data>
+  <data name="MSG_E_007" xml:space="preserve">
+    <value>O comptimento minimo é {1}</value>
+  </data>
   <data name="MSG_S_001" xml:space="preserve">
     <value>Cadastro alterado com sucesso.</value>
   </data>

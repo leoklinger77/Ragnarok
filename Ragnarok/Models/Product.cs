@@ -1,6 +1,9 @@
 ﻿using Ragnarok.Models.ManyToMany;
+using Ragnarok.Services.Lang;
+using Ragnarok.Services.Validation.Product;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 
 namespace Ragnarok.Models
@@ -9,7 +12,14 @@ namespace Ragnarok.Models
     public class Product
     {
         public int Id { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [Display(Name ="Nome do Produto")]
         public string Name { get; set; }
+        [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
+        [MaxLength(13, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_006")]
+        [MinLength(13, ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_007")]
+        [Display(Name="Código de Barras")]
+        [BarCodeValidationProduct]
         public string BarCode { get; set; }
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
