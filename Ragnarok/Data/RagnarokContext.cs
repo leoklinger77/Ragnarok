@@ -33,6 +33,10 @@ namespace Ragnarok.Data
         public DbSet<Product> Product { get; set; }
         public DbSet<CategoryProduct> CategoryProduct { get; set; }
 
+        public DbSet<PurchaseOrder> PurchaseOrder { get; set; }
+        public DbSet<PurchaseItemOrder> PurchaseItemOrder { get; set; }
+        
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -45,6 +49,19 @@ namespace Ragnarok.Data
             modelBuilder.Entity<CategoryProduct>()
                 .HasOne(x => x.Product)
                 .WithMany(x => x.CategoryProduct)
+                .HasForeignKey(x => x.ProductId);
+
+
+
+            modelBuilder.Entity<PurchaseItemOrder>()
+    .HasKey(x => new { x.ProductId, x.PurchaseOrderId });
+            modelBuilder.Entity<PurchaseItemOrder>()
+                .HasOne(x => x.PurchaseOrder)
+                .WithMany(x => x.PurchaseItemOrder)
+                .HasForeignKey(x => x.PurchaseOrderId);
+            modelBuilder.Entity<PurchaseItemOrder>()
+                .HasOne(x => x.Product)
+                .WithMany(x => x.PurchaseItemOrder)
                 .HasForeignKey(x => x.ProductId);
 
         }
