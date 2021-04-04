@@ -1,4 +1,4 @@
-﻿using Ragnarok.Services.Validation.Client;
+﻿using Ragnarok.Services.Validation.Supplier;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;

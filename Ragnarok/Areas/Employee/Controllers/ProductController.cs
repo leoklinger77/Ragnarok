@@ -126,5 +126,20 @@ namespace Ragnarok.Areas.Employee.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+
+        [HttpPost]
+        public IActionResult FindByProduct(int productId)
+        {
+            Product product = _productRepository.FindById(productId, _employeeLogin.GetEmployee().BusinessId);
+            if (product == null)
+            {
+                return Json("Error");
+            }
+            ProductJsonConsultPurchase productJson = new ProductJsonConsultPurchase();
+            productJson.Id = product.Id.ToString();
+            productJson.Name = product.Name;
+            productJson.BarCode = product.BarCode;
+            return Json(productJson);
+        }
     }
 }

@@ -5,7 +5,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ragnarok.Services.Validation.Client
 {
-    public class EmailValidationSupplierAttribute : ValidationAttribute
+    public class EmailValidationClientAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

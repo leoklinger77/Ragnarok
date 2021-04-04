@@ -177,5 +177,44 @@ namespace Ragnarok.Areas.Employee.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
+        [HttpPost]
+        public IActionResult FindBySupplier(string supplierId)
+        {
+
+            Supplier supplier = _supplierRepository.FindById(int.Parse(supplierId),_employeeLogin.GetEmployee().BusinessId);
+            if (supplier == null)
+            {
+                return Json("Error");
+            }
+            SupplierJsonConsultBasic supplierJson = new SupplierJsonConsultBasic();
+            supplierJson.Id = supplier.Id.ToString();
+            supplierJson.Street = supplier.Address.Street;
+            supplierJson.Numero = supplier.Address.Number.ToString();
+            supplierJson.neighborhood = supplier.Address.Neighborhood;
+            supplierJson.City = supplier.Address.City.Name;
+            supplierJson.State = supplier.Address.City.State.Name;
+            supplierJson.Email = supplier.Email;
+            foreach (var item in supplier.Contacts)
+            {
+                if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
+                {
+                    supplierJson.Phone = item.DDD + " - " + item.Number;
+                }
+                
+            }
+            if (supplier is SupplierJuridical)
+            {
+                SupplierJuridical juridical = (SupplierJuridical)supplier;
+                supplierJson.Name = juridical.CompanyName;
+            }
+            else
+            {
+                SupplierPhysical physical = (SupplierPhysical)supplier;
+                supplierJson.Name = physical.FullName;
+            }
+            
+            return Json(supplierJson);
+            
+        }
     }
 }

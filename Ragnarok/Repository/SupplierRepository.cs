@@ -75,6 +75,8 @@ namespace Ragnarok.Repository
             {
                 return _context.Supplier.Where(x => x.Id == id && x.RegisterEmployee.BusinessId == bussinessId)
                     .Include(x => x.Address)
+                    .Include(x => x.Address.City)
+                    .Include(x => x.Address.City.State)
                     .Include(x => x.Contacts)
                     .FirstOrDefault();
             }
@@ -187,3 +189,4 @@ namespace Ragnarok.Repository
         }
     }
 }
+

@@ -13,20 +13,23 @@ namespace Ragnarok.Models
         public int PurchaseOrderId { get; set; }
         public double Value { get; set; }
         public int Quantity { get; set; }
-        public DateTime ValidationDate { get; set; }
+        public double Discount { get; set; }
+        public DateTime? ValidationDate { get; set; }
 
         public PurchaseItemOrder()
         {
         }
 
-        public PurchaseItemOrder(Product product, PurchaseOrder purchaseOrder, double value, int quantity, DateTime validationDate)
+        public PurchaseItemOrder(Product product, PurchaseOrder purchaseOrder, double value, int quantity, double discount, DateTime? validationDate)
         {
             Product = product;
             PurchaseOrder = purchaseOrder;
             Value = value;
             Quantity = quantity;
+            Discount = discount;
             ValidationDate = validationDate;
         }
+
         public override bool Equals(object obj)
         {
             return obj is PurchaseItemOrder order &&
@@ -40,7 +43,7 @@ namespace Ragnarok.Models
         }
         public double Total()
         {
-            return Value * Quantity;
+            return (Value * Quantity) - Discount;
         }
     }
 }

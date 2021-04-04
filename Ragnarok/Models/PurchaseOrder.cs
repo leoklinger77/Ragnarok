@@ -14,7 +14,7 @@ namespace Ragnarok.Models
         public Employee RegisterEmployee { get; set; }
         public int RegisterEmployeeId { get; set; }
 
-        public ICollection<PurchaseItemOrder> PurchaseItemOrder { get; set; } = new HashSet<PurchaseItemOrder>();
+        public ICollection<PurchaseItemOrder> PurchaseItemOrder { get; set; } = new List<PurchaseItemOrder>();
 
         public PurchaseOrder()
         {

@@ -10,7 +10,7 @@ namespace Ragnarok.Models
     public abstract class Client
     {
         public int Id { get; set; }
-        [EmailValidationSupplier]
+        [EmailValidationClient]
         [Display(Name = "E-mail")]
         public string Email { get; set; }
         public Boolean Active { get; set; }

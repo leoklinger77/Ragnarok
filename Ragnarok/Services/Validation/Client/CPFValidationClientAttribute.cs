@@ -7,7 +7,7 @@ using System.ComponentModel.DataAnnotations;
 
 namespace Ragnarok.Services.Validation.Client
 {
-    public class CPFValidationSupplierAttribute : ValidationAttribute
+    public class CPFValidationClientAttribute : ValidationAttribute
     {
         protected override ValidationResult IsValid(object value, ValidationContext validationContext)
         {

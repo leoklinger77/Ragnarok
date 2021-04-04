@@ -24,7 +24,7 @@ namespace Ragnarok.Models
         public DateTime BirthDay { get; set; }
 
         
-        [CPFValidationSupplier]
+        [CPFValidationClient]
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
         public string CPF
         {

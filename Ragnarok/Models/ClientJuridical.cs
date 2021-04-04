@@ -21,7 +21,7 @@ namespace Ragnarok.Models
         
         private string _cnpj;
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
-        [CNPJValidationSupplier]
+        [CNPJValidationClient]
         public string CNPJ
         {
             get { return _cnpj; }

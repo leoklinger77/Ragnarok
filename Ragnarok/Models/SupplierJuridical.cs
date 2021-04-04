@@ -1,5 +1,5 @@
 ﻿using Ragnarok.Services.Lang;
-using Ragnarok.Services.Validation.Client;
+using Ragnarok.Services.Validation.Supplier;
 using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
