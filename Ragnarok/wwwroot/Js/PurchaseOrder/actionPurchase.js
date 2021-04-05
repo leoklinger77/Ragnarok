@@ -66,10 +66,20 @@
         $('#invoicePurchase tbody tr').each(function (index) {
 
             if (i == 0) {
-                envio += "PurchaseItemOrder:[{ProductId:'" + $(this).find('td').eq(0).text() + "',PurchasePrice:'" + $(this).find('td').eq(3).text() + "',SalesPrice:'" + $(this).find('td').eq(4).text()+"',Quantity:'" + $(this).find('td').eq(2).text() + "',Discount:'" + $(this).find('td').eq(5).text() + "'}"
+                envio += "PurchaseItemOrder:[{ProductId:'" + $(this).find('td').eq(0).text() +
+                    "',PurchasePrice:'" + $(this).find('td').eq(3).text() +
+                    "',SalesPrice:'" + $(this).find('td').eq(4).text() +
+                    "',Quantity:'" + $(this).find('td').eq(2).text() +
+                    "',Discount:'" + $(this).find('td').eq(5).text() +
+                    "',ValidationDate:'" + $(this).find('td').eq(7).text() + "'}"
                 list++;
             } else {
-                envio += ",{ProductId:'" + $(this).find('td').eq(0).text() + "',PurchasePrice:'" + $(this).find('td').eq(3).text() + "',SalesPrice:'" + $(this).find('td').eq(4).text() + "',Quantity:'" + $(this).find('td').eq(2).text() + "',Discount:'" + $(this).find('td').eq(5).text() + "'}"
+                envio += ",{ProductId:'" + $(this).find('td').eq(0).text() +
+                    "',PurchasePrice:'" + $(this).find('td').eq(3).text() +
+                    "',SalesPrice:'" + $(this).find('td').eq(4).text() +
+                    "',Quantity:'" + $(this).find('td').eq(2).text() +
+                    "',Discount:'" + $(this).find('td').eq(5).text() +
+                    "',ValidationDate:'" + $(this).find('td').eq(7).text() + "'}"
                 list++;
             }
             i = 1;
@@ -110,6 +120,7 @@ function addProductList() {
     var purchasePrice = parseFloat($('#salesPrice').val());
     var quantity = parseInt($('#quantity').val());
     var discont = parseFloat($('#discont').val());
+    var validition = $('#validition').val();
 
     total += (salesPrice * quantity);
     totalDiscont += discont;
@@ -123,6 +134,7 @@ function addProductList() {
         "<td>" + purchasePrice + "</td>" +
         "<td>" + discont + "</td>" +
         "<td>" + discontPrice + "</td>" +
+        "<td>" + validition + "</td>" +
         "<td><td><a class ='elimina'><button class='btn btn-danger' id='DeletaLinha' type='button'><span class='icon ion-android-close' ></span></button></a></td></td>" +
         "</tr> ";
     $("#invoicePurchase tbody").append(cadeia);
@@ -169,7 +181,8 @@ function cleanImput() {
     $('#purchasePrice').val('');
     $('#salesPrice').val('');
     $('#quantity').val('1');
-    $('#discont').val('0.0');
+    $('#discont').val('0');
+    $('#validition').val('');
     $('#selectProduct').val('Selecione');
 }
 

@@ -30,9 +30,9 @@ namespace Ragnarok.Areas.Employee.Controllers
             _productRepository = productRepository;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ICollection<PurchaseOrder> list = _purchaseOrderRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId);
+            ICollection<PurchaseOrder> list = await _purchaseOrderRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]

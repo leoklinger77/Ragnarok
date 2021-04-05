@@ -18,11 +18,11 @@ namespace Ragnarok.Repository
             _context = context;
         }
 
-        public ICollection<PurchaseOrder> FindAlls(int BusinessId)
+        public async Task<ICollection<PurchaseOrder>> FindAllsAsync(int BusinessId)
         {
             try
             {
-                return _context.PurchaseOrder.Where(x => x.RegisterEmployee.BusinessId == BusinessId).Include(x => x.PurchaseItemOrder).Include(x=>x.Supplier).ToList();
+                return await _context.PurchaseOrder.Where(x => x.RegisterEmployee.BusinessId == BusinessId).Include(x => x.PurchaseItemOrder).Include(x=>x.Supplier).ToListAsync();
             }
             catch (Exception e)
             {
