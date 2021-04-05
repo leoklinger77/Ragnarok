@@ -11,7 +11,8 @@ namespace Ragnarok.Models
         public int ProductId { get; set; }
         public PurchaseOrder PurchaseOrder { get; set; }
         public int PurchaseOrderId { get; set; }
-        public double Value { get; set; }
+        public double PurchasePrice { get; set; }
+        public double SalesPrice { get; set; }
         public int Quantity { get; set; }
         public double Discount { get; set; }
         public DateTime? ValidationDate { get; set; }
@@ -20,11 +21,12 @@ namespace Ragnarok.Models
         {
         }
 
-        public PurchaseItemOrder(Product product, PurchaseOrder purchaseOrder, double value, int quantity, double discount, DateTime? validationDate)
+        public PurchaseItemOrder(Product product, PurchaseOrder purchaseOrder, double purchasePrice, double salesPrice, int quantity, double discount, DateTime? validationDate)
         {
             Product = product;
             PurchaseOrder = purchaseOrder;
-            Value = value;
+            PurchasePrice = purchasePrice;
+            SalesPrice = salesPrice;
             Quantity = quantity;
             Discount = discount;
             ValidationDate = validationDate;
@@ -41,9 +43,17 @@ namespace Ragnarok.Models
         {
             return HashCode.Combine(Product, PurchaseOrder);
         }
-        public double Total()
+        public double TotalPurchase()
         {
-            return (Value * Quantity) - Discount;
+            return (PurchasePrice * Quantity);
+        }
+        public double TotalDiscontPurchase()
+        {
+            return (PurchasePrice * Quantity) - Discount;
+        }
+        public double TotalSales()
+        {
+            return (SalesPrice * Quantity);
         }
     }
 }

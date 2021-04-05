@@ -7,7 +7,8 @@ namespace Ragnarok.Repository.Interfaces
     {
         ICollection<PurchaseOrder> FindAlls(int BusinessId);
         PurchaseOrder FindById(int id, int businessId);
-        void Insert(PurchaseOrder order);    
+        void Insert(PurchaseOrder order);
+        void Remove(int id, int BusinessId);
         
     }
 }

@@ -22,7 +22,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.PurchaseOrder.Where(x => x.RegisterEmployee.BusinessId == BusinessId).Include(x => x.PurchaseItemOrder).ToList();
+                return _context.PurchaseOrder.Where(x => x.RegisterEmployee.BusinessId == BusinessId).Include(x => x.PurchaseItemOrder).Include(x=>x.Supplier).ToList();
             }
             catch (Exception e)
             {
@@ -35,9 +35,18 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return _context.PurchaseOrder.Where(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId)
+                PurchaseOrder order = _context.PurchaseOrder
+                    .Include(x=>x.Supplier.Address.City.State)
+                    .Include(x=>x.Supplier.Contacts)
                     .Include(x => x.PurchaseItemOrder)
-                    .FirstOrDefault();
+                    .FirstOrDefault(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId);
+
+                foreach (var item in order.PurchaseItemOrder)
+                {
+                    item.Product = _context.Product.AsNoTracking().First(x => x.Id == item.ProductId);
+                }
+                return order;
+
             }
             catch (Exception e)
             {
@@ -57,6 +66,21 @@ namespace Ragnarok.Repository
             {
 
                 throw new Exception(e.Message);
+            }
+        }
+
+        public void Remove(int id, int BusinessId)
+        {
+            try
+            {
+                PurchaseOrder order = FindById(id, BusinessId);
+                _context.PurchaseOrder.Remove(order);
+                _context.SaveChanges();
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
     }

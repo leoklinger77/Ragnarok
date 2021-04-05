@@ -386,14 +386,17 @@ namespace Ragnarok.Migrations
                     b.Property<double>("Discount")
                         .HasColumnType("float");
 
+                    b.Property<double>("PurchasePrice")
+                        .HasColumnType("float");
+
                     b.Property<int>("Quantity")
                         .HasColumnType("int");
 
+                    b.Property<double>("SalesPrice")
+                        .HasColumnType("float");
+
                     b.Property<DateTime?>("ValidationDate")
                         .HasColumnType("datetime2");
-
-                    b.Property<double>("Value")
-                        .HasColumnType("float");
 
                     b.HasKey("ProductId", "PurchaseOrderId");
 
@@ -411,6 +414,9 @@ namespace Ragnarok.Migrations
 
                     b.Property<DateTime>("InsertDate")
                         .HasColumnType("datetime2");
+
+                    b.Property<string>("Notes")
+                        .HasColumnType("nvarchar(max)");
 
                     b.Property<int>("RegisterEmployeeId")
                         .HasColumnType("int");

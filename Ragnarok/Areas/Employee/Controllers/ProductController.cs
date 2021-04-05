@@ -40,17 +40,18 @@ namespace Ragnarok.Areas.Employee.Controllers
         [HttpGet]
         public IActionResult Insert()
         {
+            ProductFormViewModel viewModel = new ProductFormViewModel();
             ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-            return View();
+            return View(viewModel);
         }
         [HttpPost]
         public IActionResult Insert(ProductFormViewModel viewModel)
         {
-            if (viewModel.categoryList == null)
+            if (viewModel.categoryList.Count == 0)
             {
                 TempData["MSG_E"] = Message.MSG_E_005;
                 ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
-                return View(nameof(Details), viewModel);
+                return View(nameof(Insert), viewModel);
             }
             if (ModelState.IsValid)
             {
@@ -66,6 +67,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_S"] = Message.MSG_S_002;
                 return RedirectToAction(nameof(Index));
             }
+            ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(viewModel);
         }
         [HttpGet]
@@ -80,7 +82,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         public IActionResult Update(ProductFormViewModel viewModel)
         {
 
-            if (viewModel.categoryList == null)
+            if (viewModel.categoryList.Count == 0)
             {
                 TempData["MSG_E"] = Message.MSG_E_005;
                 ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));

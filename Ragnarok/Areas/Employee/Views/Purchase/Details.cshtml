@@ -1,6 +1,6 @@
 ﻿@model PurchaseOrder
 @{
-    ViewData["Title"] = "Insert";
+    ViewData["Title"] = "Details";
 }
 
 <div class="container-fluid primary-content">
@@ -53,9 +53,9 @@
                 </div>
                 <div class="col-md-9 col-print-9">
                     <ul class="list-inline">
-                        <li>Número da Ordem #: <strong></strong></li>
-                        <li>Data: <strong>@DateTime.Now.Date.ToString("dd/MM/yyyy")</strong></li>
-                        <li>Valor Total: <strong id="totalTop">R$ 0.00</strong></li>
+                        <li>Número da Ordem #: <strong>@Model.Id</strong></li>
+                        <li>Data: <strong>@Model.InsertDate.Date.ToString("dd/MM/yyyy")</strong></li>
+                        <li>Valor Total: <strong id="totalTop">@Model.TotalPurchase().ToString("F2")</strong></li>
                     </ul>
                 </div>
             </div>
@@ -65,69 +65,34 @@
         <div class="invoice-from-to">
             <div class="row">
                 <div class="col-sm-5 col-print-6">
-                    <div class="row">
-                        <div class="col-md-10">
-                            <label>Selecione o fornecedor</label>
-                            <select name="select2" id="supplier" class="select2" asp-items="@ViewBag.Supplier">
-                                <option value="Selecione">Selecione</option>
-                            </select>
-                        </div>
-                    </div>
-                    <br />
-                    <p class="name" id="companyNamePurchase"></p>
-                    <input id="selectProvider" type="hidden" />
-                    <address id="companyDescriptionPurchase">
+                    @if (Model.Supplier is SupplierJuridical)
+                    {
+                        SupplierJuridical supplier = (SupplierJuridical)Model.Supplier;
+                        <p class="name" id="companyNamePurchase">@supplier.CompanyName</p>
+                        <address id="companyDescriptionPurchase">
+                            @supplier.Address.Street , @supplier.Address.Number
+                            <br />
+                            @supplier.Address.Neighborhood , @supplier.Address.City.Name, @supplier.Address.City.State.Name
+                            <br />
+                            <div class='contact'>
 
-                    </address>
-                </div>
-                <div class=" col-sm-6 col-print-6">
-                    <form action="javascript:addProductList()" method="post">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <label>Selecione o Produto</label>
-                                <select name="select2" id="selectProduct" class="select2" asp-items="@ViewBag.Product">
-                                    <option value="">Selecione</option>
-                                </select>
-                            </div>
-                            <div class="col-md-9">
-                                <input id="selectedProductId" type="hidden" required />
-                                <label>Produto Selecionado</label>
-                                <input id="selectedProduct" class="form-control" required disabled style="background-color:white" />
-                            </div>
-                        </div>
-                        <div class="row">
-                            <div class="col-md-3">
-                                <label>Preço Compra</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">R$</span>
-                                    <input id="purchasePrice" type="text" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="col-md-3">
-                                <label>Preço Venda</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">R$</span>
-                                    <input id="salesPrice" type="text" class="form-control" required />
-                                </div>
-                            </div>
-                            <div class="col-md-2">
-                                <label>Quantidade</label>
-                                <input id="quantity" type="text" value="1" class="form-control" required />
-                            </div>
-                            <div class="col-md-3">
-                                <label>Desconto</label>
-                                <div class="input-group">
-                                    <span class="input-group-addon">R$</span>
-                                    <input id="discont" type="text" value="0" class="form-control" />
-                                </div>
+                                <p><span>Email:</span> @supplier.Email </p>
+
 
                             </div>
-                            <div class="col-md-1">
-                                <button type="submit" class="btn btn-success btn-sm btn-quick-task" style="margin-top: 25px;">Add</button>
-                            </div>
-                        </div>
-                    </form>
+                        </address>
+                    }
+                    else
+                    {
+                        SupplierPhysical supplier = (SupplierPhysical)Model.Supplier;
+                        <p class="name" id="companyNamePurchase">@supplier.FullName</p>
+                        <address id="companyDescriptionPurchase">
+                            @supplier.Address.Street
+                        </address>
+                    }
+
                 </div>
+
             </div>
             <!-- end invoice address -->
             <!-- invoice item table -->
@@ -142,10 +107,22 @@
                             <th>Preço Venda</th>
                             <th>Desconto</th>
                             <th>Total</th>
-                            <th>Ação</th>
                         </tr>
                     </thead>
-                    <tbody></tbody>
+                    <tbody>
+                        @foreach (var item in Model.PurchaseItemOrder)
+                        {
+                            <tr>
+                                <td>@item.ProductId</td>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.PurchasePrice</td>
+                                <td>@item.SalesPrice</td>
+                                <td>@item.Discount</td>
+                                <td>@item.TotalDiscontPurchase()</td>
+                            </tr>
+                        }
+                    </tbody>
                 </table>
             </div>
             <!-- end invoice item table -->
@@ -161,9 +138,9 @@
                                     <p>Total à pagar</p>
                                 </div>
                                 <div class="col-xs-4 text-right col-print-4">
-                                    <p id="resultSubTotal">R$ 0.00</p>
-                                    <p id="resultDiscont">R$ 0.00</p>
-                                    <p id="resultTotalPayment">R$ 0.00</p>
+                                    <p id="resultSubTotal">R$ @Model.Total()</p>
+                                    <p id="resultDiscont">R$ @Model.TotalDiscont()</p>
+                                    <p id="resultTotalPayment">R$ @Model.TotalPurchase()</p>
                                 </div>
                             </div>
                         </div>
@@ -171,7 +148,7 @@
                     <div class="col-sm-6 col-print-6 left-col">
                         <blockquote class="invoice-notes">
                             <strong>Notes:</strong>
-                            <textarea id="notes" class="form-control"></textarea>
+                            <p>@Model.Notes</p>
                         </blockquote>
                     </div>
                 </div>
@@ -186,4 +163,3 @@
         </div>
     </div>
 </div>
-

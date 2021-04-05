@@ -165,4 +165,7 @@
   <data name="MSG_S_005" xml:space="preserve">
     <value>Registro excluido com sucesso.</value>
   </data>
+  <data name="MSG_S_006" xml:space="preserve">
+    <value>Ordem de compra criada com sucesso. </value>
+  </data>
 </root>

@@ -1,6 +1,4 @@
-﻿var line = 0;
-
-$(document).ready(function () {
+﻿$(document).ready(function () {
 
     //Seleciona Supplier
     $('#supplier').change(function () {
@@ -53,7 +51,7 @@ $(document).ready(function () {
 
     //Finalizar Compra
     $('#finishPurchase').click(function (e) {
-        var supplierId = $('#selectProvider').val();
+            var supplierId = $('#selectProvider').val();
 
         if (supplierId == '') {
             alert("Selecione um fornecedor")
@@ -61,17 +59,17 @@ $(document).ready(function () {
             return;
         }
 
-        var envio = "{SupplierId:'" + $('#selectProvider').val() + "',";
+        var envio = "{SupplierId:'" + $('#selectProvider').val() + "',Notes:'" + $('#notes').val() +"',";
 
         var i = 0;
         var list = 0;
         $('#invoicePurchase tbody tr').each(function (index) {
 
             if (i == 0) {
-                envio += "PurchaseItemOrder:[{ProductId:'" + $(this).find('td').eq(0).text() + "',Value:'" + $(this).find('td').eq(3).text() + "',Quantity:'" + $(this).find('td').eq(2).text() + "',Discount:'" + $(this).find('td').eq(4).text() + "'}"
+                envio += "PurchaseItemOrder:[{ProductId:'" + $(this).find('td').eq(0).text() + "',PurchasePrice:'" + $(this).find('td').eq(3).text() + "',SalesPrice:'" + $(this).find('td').eq(4).text()+"',Quantity:'" + $(this).find('td').eq(2).text() + "',Discount:'" + $(this).find('td').eq(5).text() + "'}"
                 list++;
             } else {
-                envio += ",{ProductId:'" + $(this).find('td').eq(0).text() + "',Value:'" + $(this).find('td').eq(3).text() + "',Quantity:'" + $(this).find('td').eq(2).text() + "',Discount:'" + $(this).find('td').eq(4).text() + "'}"
+                envio += ",{ProductId:'" + $(this).find('td').eq(0).text() + "',PurchasePrice:'" + $(this).find('td').eq(3).text() + "',SalesPrice:'" + $(this).find('td').eq(4).text() + "',Quantity:'" + $(this).find('td').eq(2).text() + "',Discount:'" + $(this).find('td').eq(5).text() + "'}"
                 list++;
             }
             i = 1;
@@ -89,7 +87,7 @@ $(document).ready(function () {
                 if (message == "Error") {
 
                 } else {
-                    
+                    window.location.href = "/Employee/Purchase/Insert";
                 }
             }
         });
@@ -108,19 +106,21 @@ var deleteDiscont = 0.0;
 function addProductList() {
     var productId = $('#selectedProductId').val();
     var productName = $('#selectedProduct').val();
-    var price = parseFloat($('#price').val());
+    var salesPrice = parseFloat($('#purchasePrice').val());
+    var purchasePrice = parseFloat($('#salesPrice').val());
     var quantity = parseInt($('#quantity').val());
     var discont = parseFloat($('#discont').val());
 
-    total += (price * quantity);
+    total += (salesPrice * quantity);
     totalDiscont += discont;
 
-    var discontPrice = (price * quantity) - discont;
+    var discontPrice = (salesPrice * quantity) - discont;
     cadeia = "<tr>" +
         "<td>" + productId + "</td>" +
         "<td>" + productName + "</td>" +
         "<td>" + quantity + "</td>" +
-        "<td>" + price + "</td>" +
+        "<td>" + salesPrice + "</td>" +
+        "<td>" + purchasePrice + "</td>" +
         "<td>" + discont + "</td>" +
         "<td>" + discontPrice + "</td>" +
         "<td><td><a class ='elimina'><button class='btn btn-danger' id='DeletaLinha' type='button'><span class='icon ion-android-close' ></span></button></a></td></td>" +
@@ -143,7 +143,7 @@ function deletarlinha() {
     $("a.elimina").click(function () {
         deleteQuantity = $(this).parents("tr").find("td").eq(2).html();
         deletePrice = $(this).parents("tr").find("td").eq(3).html();
-        deleteDiscont = $(this).parents("tr").find("td").eq(4).html();
+        deleteDiscont = $(this).parents("tr").find("td").eq(5).html();
 
         $(this).parents("tr").fadeOut("normal", function () {
             $(this).remove();
@@ -166,7 +166,8 @@ function cleanImput() {
 
     $('#selectedProductId').val('');
     $('#selectedProduct').val('');
-    $('#price').val('');
+    $('#purchasePrice').val('');
+    $('#salesPrice').val('');
     $('#quantity').val('1');
     $('#discont').val('0.0');
     $('#selectProduct').val('Selecione');

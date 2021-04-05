@@ -9,6 +9,7 @@ namespace Ragnarok.Models
     {
         public int Id { get; set; }
         public DateTime InsertDate { get; set; }
+        public string Notes { get; set; }
         public Supplier Supplier { get; set; }
         public int SupplierId { get; set; }
         public Employee RegisterEmployee { get; set; }
@@ -20,12 +21,24 @@ namespace Ragnarok.Models
         {
         }
 
-        public PurchaseOrder(int id, DateTime insertDate, Supplier supplier, Employee employee)
+        public PurchaseOrder(int id, DateTime insertDate, string notes, Supplier supplier, Employee registerEmployee, ICollection<PurchaseItemOrder> purchaseItemOrder)
         {
             Id = id;
             InsertDate = insertDate;
+            Notes = notes;
             Supplier = supplier;
-            RegisterEmployee = employee;
+            RegisterEmployee = registerEmployee;
+            PurchaseItemOrder = purchaseItemOrder;
+        }
+
+        public double Total()
+        {
+            double sum = 0.0;
+            foreach (var item in PurchaseItemOrder)
+            {
+                sum += item.TotalPurchase();
+            }
+            return sum;
         }
 
         public double TotalPurchase()
@@ -33,7 +46,16 @@ namespace Ragnarok.Models
             double sum = 0.0;
             foreach (var item in PurchaseItemOrder)
             {
-                sum += item.Total();
+                sum += item.TotalDiscontPurchase();
+            }
+            return sum;
+        }
+        public double TotalDiscont()
+        {
+            double sum = 0.0;
+            foreach (var item in PurchaseItemOrder)
+            {
+                sum += item.Discount;
             }
             return sum;
         }

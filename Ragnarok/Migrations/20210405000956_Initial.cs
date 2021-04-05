@@ -373,15 +373,16 @@ namespace Ragnarok.Migrations
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     InsertDate = table.Column<DateTime>(nullable: false),
+                    Notes = table.Column<string>(nullable: true),
                     SupplierId = table.Column<int>(nullable: false),
-                    EmployeeId = table.Column<int>(nullable: false)
+                    RegisterEmployeeId = table.Column<int>(nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_TB_PurchaseOrder", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_TB_PurchaseOrder_TB_Employee_EmployeeId",
-                        column: x => x.EmployeeId,
+                        name: "FK_TB_PurchaseOrder_TB_Employee_RegisterEmployeeId",
+                        column: x => x.RegisterEmployeeId,
                         principalTable: "TB_Employee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -399,9 +400,11 @@ namespace Ragnarok.Migrations
                 {
                     ProductId = table.Column<int>(nullable: false),
                     PurchaseOrderId = table.Column<int>(nullable: false),
-                    Value = table.Column<double>(nullable: false),
+                    PurchasePrice = table.Column<double>(nullable: false),
+                    SalesPrice = table.Column<double>(nullable: false),
                     Quantity = table.Column<int>(nullable: false),
-                    ValidationDate = table.Column<DateTime>(nullable: false)
+                    Discount = table.Column<double>(nullable: false),
+                    ValidationDate = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
@@ -511,9 +514,9 @@ namespace Ragnarok.Migrations
                 column: "PurchaseOrderId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_TB_PurchaseOrder_EmployeeId",
+                name: "IX_TB_PurchaseOrder_RegisterEmployeeId",
                 table: "TB_PurchaseOrder",
-                column: "EmployeeId");
+                column: "RegisterEmployeeId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_TB_PurchaseOrder_SupplierId",

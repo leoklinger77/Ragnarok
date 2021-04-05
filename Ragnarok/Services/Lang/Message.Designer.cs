@@ -203,5 +203,14 @@ namespace Ragnarok.Services.Lang {
                 return ResourceManager.GetString("MSG_S_005", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Ordem de compra criada com sucesso. .
+        /// </summary>
+        public static string MSG_S_006 {
+            get {
+                return ResourceManager.GetString("MSG_S_006", resourceCulture);
+            }
+        }
     }
 }

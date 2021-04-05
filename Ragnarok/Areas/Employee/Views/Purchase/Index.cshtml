@@ -54,6 +54,7 @@
                     <thead>
                         <tr>
                             <th>Data da Compra</th>
+                            <th>Fornecedor</th>
                             <th>Total</th>
                             <th>Ação</th>
 
@@ -64,13 +65,25 @@
                         {
 
                             <tr>
-                                <td>@item.InsertDate.Date</td>
+                                <td>@item.InsertDate.Date.ToString("dd/MM/yyyy")</td>
+                                @if (item.Supplier is SupplierJuridical)
+                                {
+                                    SupplierJuridical supplier = (SupplierJuridical)item.Supplier;
+                                    <td>@supplier.CompanyName</td>
+                                }
+                                else
+                                {
+                                    SupplierPhysical supplier = (SupplierPhysical)item.Supplier;
+                                    <td>@supplier.FullName</td>
+
+                                }
+
                                 <td>@item.TotalPurchase()</td>
 
                                 <td>
-                                    <a asp-action="Details" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
+                                    <a asp-action="Details" asp-controller="Purchase" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
                                     |
-                                    <a asp-action="Remove" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                    <a asp-action="Remove" asp-controller="Purchase" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
                                 </td>
                             </tr>
 
