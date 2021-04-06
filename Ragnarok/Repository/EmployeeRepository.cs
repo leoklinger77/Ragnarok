@@ -5,6 +5,7 @@ using Ragnarok.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository
 {
@@ -17,14 +18,13 @@ namespace Ragnarok.Repository
             _context = context;
         }
 
-        public ICollection<Employee> FindAlls(int businessId)
+        public async Task<ICollection<Employee>> FindAllsAsync(int businessId)
         {
             try
             {
-                return _context.Employee.Where(x => x.BusinessId == businessId)
+                return await _context.Employee.Where(x => x.BusinessId == businessId)
                     .Include(x => x.PositionName)
-                    .ToList();
-
+                    .ToListAsync();
             }
             catch (Exception e)
             {
@@ -58,16 +58,16 @@ namespace Ragnarok.Repository
             }
         }
 
-        public Employee FindById(int id)
+        public async Task<Employee> FindByIdAsync(int id)
         {
             try
             {
-                return _context.Employee
+                return await _context.Employee
                     .Include(x => x.Contacts)
                     .Include(x => x.Address)
                     .Include(x => x.Address.City)
                     .Include(x => x.Address.City.State)
-                    .FirstOrDefault(x => x.Id == id);
+                    .FirstOrDefaultAsync(x => x.Id == id);
             }
             catch (Exception e)
             {
@@ -125,7 +125,7 @@ namespace Ragnarok.Repository
             {
                 throw new Exception(e.Message);
             }
-        }        
+        }
 
         public Employee Login(string login, string password)
         {
@@ -151,13 +151,21 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Remove(int id)
+        public void Remove(int id, int businessId)
         {
             try
             {
-                Employee employee = FindById(id);
+                Employee employee = _context.Employee
+                    .Include(x=>x.Address)
+                    .Include(x => x.Contacts)
+                    .FirstOrDefault(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId);
+                if (employee == null)
+                {
+                    throw new Exception("Id Not Found");
+                }
+
                 _context.RemoveRange(employee.Address);
-                _context.RemoveRange(employee);                
+                _context.RemoveRange(employee);
                 _context.RemoveRange(employee.Contacts);
                 _context.SaveChanges();
             }
@@ -199,8 +207,8 @@ namespace Ragnarok.Repository
         {
             try
             {
-                _context.Employee.Update(employee);                
-                _context.Entry(employee).Property(x => x.Password).IsModified = false;                
+                _context.Employee.Update(employee);
+                _context.Entry(employee).Property(x => x.Password).IsModified = false;
                 _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
                 _context.Entry(employee).Property(x => x.CPF).IsModified = false;
 
@@ -233,6 +241,6 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
-                
+
     }
 }

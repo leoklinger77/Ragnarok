@@ -36,10 +36,10 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(list);
         }
         [HttpGet]
-        public IActionResult Insert()
+        public async Task<IActionResult> Insert()
         {
             Dictionary<string, string> listSupplier = new Dictionary<string, string>();
-            foreach (var item in _supplierRepository.FIndAlls(_employeeLogin.GetEmployee().BusinessId))
+            foreach (var item in await _supplierRepository.FIndAllsAsync(_employeeLogin.GetEmployee().BusinessId))
             {
                 if (item is SupplierJuridical)
                 {
@@ -53,7 +53,8 @@ namespace Ragnarok.Areas.Employee.Controllers
                 }
             }
             ViewBag.Supplier = listSupplier.ToList().Select(x => new SelectListItem(x.Value, x.Key));
-            ViewBag.Product = _productRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name + " - " + x.BarCode, x.Id.ToString()));
+            ICollection<Product> list = await _productRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.Product = list.Select(x => new SelectListItem(x.Name + " - " + x.BarCode, x.Id.ToString()));
 
             return View();
         }

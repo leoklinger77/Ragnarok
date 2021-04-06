@@ -24,9 +24,9 @@ namespace Ragnarok.Areas.Employee.Controllers
             _categoryRepository = categoryRepository;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ICollection<Category> list = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId);
+            ICollection<Category> list = await _categoryRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]

@@ -1,5 +1,6 @@
 ﻿using Ragnarok.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository.Interfaces
 {
@@ -11,7 +12,7 @@ namespace Ragnarok.Repository.Interfaces
 
         PositionName FindById(int id);
 
-        ICollection<PositionName> FindAlls(int businessId);
+        Task<ICollection<PositionName>> FindAllsAsync(int businessId);
 
     }
 }

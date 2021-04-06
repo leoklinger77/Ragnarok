@@ -7,6 +7,7 @@ using Ragnarok.Services.Lang;
 using Ragnarok.Services.Login;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -23,9 +24,9 @@ namespace Ragnarok.Areas.Employee.Controllers
             _employeeLogin = employeeLogin;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ICollection<Supplier> list = _supplierRepository.FIndAlls(_employeeLogin.GetEmployee().BusinessId);
+            ICollection<Supplier> list = await _supplierRepository.FIndAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]

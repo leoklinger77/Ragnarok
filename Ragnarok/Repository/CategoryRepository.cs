@@ -5,6 +5,7 @@ using Ragnarok.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository
 {
@@ -17,11 +18,11 @@ namespace Ragnarok.Repository
             _context = ragnarokContext;
         }
 
-        public ICollection<Category> FindAlls(int businessId)
+        public async Task<ICollection<Category>> FindAllsAsync(int businessId)
         {
             try
             {
-                return _context.Category.Where(x => x.RegisterEmployee.BusinessId == businessId).ToList();
+                return await _context.Category.Where(x => x.RegisterEmployee.BusinessId == businessId).ToListAsync();
             }
             catch (Exception e)
             {

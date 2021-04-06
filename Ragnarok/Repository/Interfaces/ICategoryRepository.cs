@@ -1,11 +1,12 @@
 ﻿using Ragnarok.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository.Interfaces
 {
     public interface ICategoryRepository
     {
-        ICollection<Category> FindAlls(int businessId);
+        Task<ICollection<Category>> FindAllsAsync(int businessId);
         Category FindById(int id, int businessId);
         void Insert(Category category);
         void Update(Category category);

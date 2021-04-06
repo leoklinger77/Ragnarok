@@ -10,6 +10,7 @@ using Ragnarok.Services.Login;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -30,16 +31,16 @@ namespace Ragnarok.Areas.Employee.Controllers
             _sendEmail = sendEmail;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ICollection<Models.Employee> list = _employeeRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId);
+            ICollection<Models.Employee> list = await _employeeRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]
-        public IActionResult Profile()
+        public async Task<IActionResult> Profile()
         {
             EmployeeFormViewModel viewModel = new EmployeeFormViewModel();
-            Models.Employee employee = _employeeRepository.FindById(_employeeLogin.GetEmployee().Id);
+            Models.Employee employee = await _employeeRepository.FindByIdAsync(_employeeLogin.GetEmployee().Id);
             viewModel.Employee = employee;
             viewModel.Address = employee.Address;
             foreach (var item in employee.Contacts)
@@ -98,7 +99,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(nameof(Profile), viewModel);
         }
         [HttpPost]
-        public IActionResult ProfileAddressUpdate(EmployeeFormViewModel viewModel)
+        public async Task<IActionResult> ProfileAddressUpdate(EmployeeFormViewModel viewModel)
         {
             if (ModelState.IsValid)
             {
@@ -107,7 +108,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_S"] = TempData["MSG_S"] = Message.MSG_S_003;
                 return RedirectToAction(nameof(Profile));
             }                       
-            viewModel.Employee = _employeeRepository.FindById(_employeeLogin.GetEmployee().Id);
+            viewModel.Employee = await _employeeRepository.FindByIdAsync(_employeeLogin.GetEmployee().Id);
             foreach (var item in viewModel.Employee.Contacts)
             {
                 if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
@@ -122,7 +123,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(nameof(Profile), viewModel);
         }
         [HttpPost]
-        public IActionResult ProfilePasswordUpdate(EmployeeFormViewModel viewModel, string informationPassword)
+        public async Task<IActionResult> ProfilePasswordUpdate(EmployeeFormViewModel viewModel, string informationPassword)
         {
             ModelState.Remove("Employee.Name");
             ModelState.Remove("Employee.CPF");
@@ -146,8 +147,9 @@ namespace Ragnarok.Areas.Employee.Controllers
             {
                 TempData["MSG_E"] = "Senha Invalida";
             }            
-            viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);            
-            foreach (var item in _employeeRepository.FindById(viewModel.Employee.Id).Contacts)
+            viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);
+            Models.Employee employee = await _employeeRepository.FindByIdAsync(viewModel.Employee.Id);
+            foreach (var item in employee.Contacts)
             {
                 if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
                 {
@@ -161,9 +163,10 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(nameof(Profile), viewModel);
         }
         [HttpGet]
-        public IActionResult Insert()
+        public async Task<IActionResult> Insert()
         {
-            ViewBag.PositionName = _positionNameRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x=> new SelectListItem(x.Name, x.Id.ToString()));
+            ICollection<Models.PositionName> list = await _positionNameRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.PositionName = list.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View();
         }
         [HttpPost]
@@ -195,10 +198,10 @@ namespace Ragnarok.Areas.Employee.Controllers
             return Json(employee);
         }
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {           
             EmployeeFormViewModel viewModel = new EmployeeFormViewModel();
-            Models.Employee employee = _employeeRepository.FindById(id);
+            Models.Employee employee = await _employeeRepository.FindByIdAsync(id);
             viewModel.Employee = employee;
             viewModel.Address = employee.Address;
             foreach (var item in employee.Contacts)
@@ -212,11 +215,12 @@ namespace Ragnarok.Areas.Employee.Controllers
                     viewModel.ContactFixo = item;
                 }
             }
-            ViewBag.PositionName = _positionNameRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            ICollection<Models.PositionName> list = await _positionNameRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.PositionName = list.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Update(EmployeeFormViewModel viewModel)
+        public async Task<IActionResult> Update(EmployeeFormViewModel viewModel)
         {
             ModelState.Remove("Employee.Login");
             ModelState.Remove("Employee.Password");
@@ -250,13 +254,14 @@ namespace Ragnarok.Areas.Employee.Controllers
                 return RedirectToAction(nameof(Details), new { id = viewModel.Employee.Id });
             }
             viewModel.Address = _employeeRepository.FindByIdAddress(viewModel.Employee.AddressId);
-            ViewBag.PositionName = _positionNameRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            ICollection<Models.PositionName> list = await _positionNameRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.PositionName = list.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(nameof(Details), viewModel);
         }
         [HttpGet]
-        public IActionResult ResendPassword(int id)
+        public async Task<IActionResult> ResendPassword(int id)
         {
-            Models.Employee employee = _employeeRepository.FindById(id);
+            Models.Employee employee = await _employeeRepository.FindByIdAsync(id);
                         
             _sendEmail.SendPasswordEmployee(employee);
             TempData["MSG_S"] = Message.MSG_S_004;            
@@ -272,7 +277,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                     TempData["MSG_E"] = Message.MSG_E_004;
                     return RedirectToAction(nameof(Index));
                 }
-                _employeeRepository.Remove(id);
+                _employeeRepository.Remove(id, _employeeLogin.GetEmployee().BusinessId);
                 TempData["MSG_S"] = Message.MSG_S_005;
                 return RedirectToAction(nameof(Index));
             }

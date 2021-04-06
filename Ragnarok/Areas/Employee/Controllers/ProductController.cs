@@ -32,25 +32,27 @@ namespace Ragnarok.Areas.Employee.Controllers
             _employeeLogin = employeeLogin;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ICollection<Product> list = _productRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId);
+            ICollection<Product> list = await _productRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]
-        public IActionResult Insert()
+        public async Task<IActionResult> Insert()
         {
             ProductFormViewModel viewModel = new ProductFormViewModel();
-            ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            ICollection<Category> list = await _categoryRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.Category = list.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Insert(ProductFormViewModel viewModel)
+        public async Task<IActionResult> Insert(ProductFormViewModel viewModel)
         {
             if (viewModel.categoryList.Count == 0)
             {
                 TempData["MSG_E"] = Message.MSG_E_005;
-                ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+                ICollection<Category> list = await _categoryRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+                ViewBag.Category = list.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
                 return View(nameof(Insert), viewModel);
             }
             if (ModelState.IsValid)
@@ -67,25 +69,28 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_S"] = Message.MSG_S_002;
                 return RedirectToAction(nameof(Index));
             }
-            ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            ICollection<Category> listCat = await _categoryRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.Category = listCat.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(viewModel);
         }
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> Details(int id)
         {
             ProductFormViewModel viewModel = new ProductFormViewModel();
             viewModel.Product = _productRepository.FindById(id, _employeeLogin.GetEmployee().BusinessId);
-            ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            ICollection<Category> list = await _categoryRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.Category = list.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(viewModel);
         }
         [HttpPost]
-        public IActionResult Update(ProductFormViewModel viewModel)
+        public async Task<IActionResult> Update(ProductFormViewModel viewModel)
         {
 
             if (viewModel.categoryList.Count == 0)
             {
                 TempData["MSG_E"] = Message.MSG_E_005;
-                ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+                ICollection<Category> list = await _categoryRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+                ViewBag.Category = list.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
                 return View(nameof(Details), viewModel);
             }
 
@@ -104,7 +109,8 @@ namespace Ragnarok.Areas.Employee.Controllers
                 return RedirectToAction(nameof(Details), new { Id = viewModel.Product.Id });
 
             }
-            ViewBag.Category = _categoryRepository.FindAlls(_employeeLogin.GetEmployee().BusinessId).Select(x => new SelectListItem(x.Name, x.Id.ToString()));
+            ICollection<Category> listCat = await _categoryRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.Category = listCat.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(nameof(Details), viewModel);
         }
 

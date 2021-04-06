@@ -1,5 +1,6 @@
 ﻿using Ragnarok.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository.Interfaces
 {
@@ -11,7 +12,7 @@ namespace Ragnarok.Repository.Interfaces
         void UpdateMain(Supplier supplier);
         void UpdateAddress(Address address);
         void Remove(int id, int bussinessId);
-        ICollection<Supplier> FIndAlls(int bussinessId);
+        Task<ICollection<Supplier>> FIndAllsAsync(int bussinessId);
         ICollection<Supplier> FindByEmail(string email, int businessId);
         ICollection<SupplierPhysical> FindByCpf(string cpf, int businessId);
         ICollection<SupplierJuridical> FindByCnpj(string cnpj, int businessId);

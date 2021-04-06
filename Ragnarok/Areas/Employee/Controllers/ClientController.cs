@@ -25,9 +25,9 @@ namespace Ragnarok.Areas.Employee.Controllers
             _employeeLogin = employeeLogin;
         }
         [HttpGet]
-        public IActionResult Index()
+        public async Task<IActionResult> Index()
         {
-            ICollection<Client> list = _clientRepository.FIndAlls(_employeeLogin.GetEmployee().BusinessId);
+            ICollection<Client> list =await _clientRepository.FIndAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]

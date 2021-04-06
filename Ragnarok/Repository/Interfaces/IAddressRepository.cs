@@ -1,5 +1,6 @@
 ﻿using Ragnarok.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository.Interfaces
 {
@@ -10,6 +11,6 @@ namespace Ragnarok.Repository.Interfaces
         void Delete(int id);
 
         Address FindById(int id);        
-        ICollection<Address> FindAlls();
+        Task<ICollection<Address>> FindAlls();
     }
 }

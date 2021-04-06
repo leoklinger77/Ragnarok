@@ -1,9 +1,11 @@
-﻿using Ragnarok.Data;
+﻿using Microsoft.EntityFrameworkCore;
+using Ragnarok.Data;
 using Ragnarok.Models;
 using Ragnarok.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository
 {
@@ -29,11 +31,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public ICollection<Address> FindAlls()
+        public async Task<ICollection<Address>> FindAlls()
         {
             try
             {
-                return _context.Address.ToList();
+                return await _context.Address.ToListAsync();
             }
             catch (Exception e)
             {
