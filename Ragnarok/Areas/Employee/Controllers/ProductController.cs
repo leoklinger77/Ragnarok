@@ -113,8 +113,8 @@ namespace Ragnarok.Areas.Employee.Controllers
             ViewBag.Category = listCat.Select(x => new SelectListItem(x.Name, x.Id.ToString()));
             return View(nameof(Details), viewModel);
         }
-
         [HttpGet]
+        [ValidationhttpReferer]
         public IActionResult Remove(int id)
         {
             try
@@ -134,7 +134,6 @@ namespace Ragnarok.Areas.Employee.Controllers
                 return RedirectToAction(nameof(Index));
             }
         }
-
         [HttpPost]
         public IActionResult FindByProduct(int productId)
         {

@@ -259,6 +259,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(nameof(Details), viewModel);
         }
         [HttpGet]
+        [ValidationhttpReferer]
         public async Task<IActionResult> ResendPassword(int id)
         {
             Models.Employee employee = await _employeeRepository.FindByIdAsync(id);
@@ -268,6 +269,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return RedirectToAction(nameof(Index));
         }
         [HttpGet]
+        [ValidationhttpReferer]
         public IActionResult Remove(int id)
         {
             try

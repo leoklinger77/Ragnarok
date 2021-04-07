@@ -61,6 +61,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(nameof(Details), positionName);
         }
         [HttpGet]
+        [ValidationhttpReferer]
         public IActionResult Remove(int id)
         {
             try

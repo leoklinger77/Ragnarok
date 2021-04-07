@@ -20,6 +20,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View();
         }
         [HttpGet]
+        [ValidationhttpReferer]
         public IActionResult GetOut()
         {
             _employeeLogin.Remove();

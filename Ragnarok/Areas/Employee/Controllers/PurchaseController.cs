@@ -5,6 +5,7 @@ using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Lang;
 using Ragnarok.Services.Login;
+using Ragnarok.Services.Stock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -20,14 +21,16 @@ namespace Ragnarok.Areas.Employee.Controllers
         private readonly ISupplierRepository _supplierRepository;
         private readonly IProductRepository _productRepository;
         private readonly EmployeeLogin _employeeLogin;
+        private readonly InventoryManagement _inventoryManagement;
 
         public PurchaseController(IPurchaseOrderRepository purchaseOrderRepository, EmployeeLogin employeeLogin, ISupplierRepository supplierRepository,
-            IProductRepository productRepository)
+            IProductRepository productRepository, InventoryManagement inventoryManagement)
         {
             _purchaseOrderRepository = purchaseOrderRepository;
             _employeeLogin = employeeLogin;
             _supplierRepository = supplierRepository;
             _productRepository = productRepository;
+            _inventoryManagement = inventoryManagement;
         }
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -59,7 +62,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Insert(PurchaseOrder order)
+        public async Task<IActionResult> InsertAsync(PurchaseOrder order)
         {
             if (ModelState.IsValid)
             {
@@ -67,6 +70,11 @@ namespace Ragnarok.Areas.Employee.Controllers
                 order.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;
                 _purchaseOrderRepository.Insert(order);
                 TempData["MSG_S"] = Message.MSG_S_006;
+                foreach (var item in order.PurchaseItemOrder)
+                {
+                    await _inventoryManagement.StockManagementAsync(item, order.RegisterEmployeeId);
+                }
+                
                 return Json("Ok");
             }
             return Json("Error");
@@ -78,6 +86,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(order);
         }
         [HttpGet]
+        [ValidationhttpReferer]
         public IActionResult Remove(int id)
         {
             try

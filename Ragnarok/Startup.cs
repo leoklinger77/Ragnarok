@@ -11,6 +11,7 @@ using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Email;
 using Ragnarok.Services.Login;
 using Ragnarok.Services.Session;
+using Ragnarok.Services.Stock;
 using Ragnarok.Services.WebService;
 using System;
 using System.Collections.Generic;
@@ -87,6 +88,8 @@ namespace Ragnarok
             services.AddScoped<ICategoryProductRepository, CategoryProductRepository>();
 
             services.AddScoped<IPurchaseOrderRepository, PurchaseOrderRepository>();
+            services.AddScoped<IStockRepository, StockRepository>();
+            services.AddScoped<InventoryManagement>();
 
         }
 
