@@ -1,0 +1,80 @@
+﻿@model IEnumerable<Stock>
+@{
+    ViewData["Title"] = "Index";
+}
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>ESTOQUE DE PRODUTOS</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Stock" asp-area="Employee">Estoque</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS PRODUTOS NO ESTOQUE</span></h3>
+        </div>
+        <div class="widget-content">
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
+
+            <div class="table-responsive">
+                <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable ">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Quantidade</th>
+                            <th>Preço Venda</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.SalesPrice</td>
+                            <td>
+                                <a asp-action="Details" asp-controller="Product" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
+                            </td>
+                        </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+
+</div>
+

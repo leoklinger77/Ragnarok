@@ -22,7 +22,9 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return await _context.Stock.Where(x => x.Product.RegisterEmployee.BusinessId == businessId).ToListAsync();
+                return await _context.Stock.Where(x => x.Product.RegisterEmployee.BusinessId == businessId)
+                    .Include(x => x.Product)
+                    .ToListAsync();
             }
             catch (Exception e)
             {
