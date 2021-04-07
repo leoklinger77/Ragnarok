@@ -24,6 +24,7 @@ namespace Ragnarok.Controllers
             return View();
         }
         [HttpPost]
+        [ValidateAntiForgeryToken]
         public IActionResult Login(string Login, string Password )
         {
             Employee model = _employeeRepository.Login(Login, Password);
