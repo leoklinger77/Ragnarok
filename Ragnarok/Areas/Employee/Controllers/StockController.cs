@@ -20,11 +20,18 @@ namespace Ragnarok.Areas.Employee.Controllers
             _stockRepository = stockRepository;
             _employeeLogin = employeeLogin;
         }
-
+        [HttpGet]
         public async Task<IActionResult> Index()
         {
             ICollection<Stock> list  = await _stockRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            Stock stock = await _stockRepository.FindByIdAsync(id, _employeeLogin.GetEmployee().BusinessId);
+            return View(stock);
+        }
+
     }
 }

@@ -8,7 +8,7 @@ namespace Ragnarok.Models
     public class Stock
     {
         public int Id { get; set; }
-        public int Quantity { get; private set; }
+        public int Quantity { get; private set; }        
         public DateTime? ValidationDate { get; set; }
         public double SalesPrice { get; set; }
         public DateTime InsertDate { get; set; }

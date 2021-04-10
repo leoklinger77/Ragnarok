@@ -156,7 +156,7 @@ namespace Ragnarok.Repository
             try
             {
                 Employee employee = _context.Employee
-                    .Include(x=>x.Address)
+                    .Include(x => x.Address)
                     .Include(x => x.Contacts)
                     .FirstOrDefault(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId);
                 if (employee == null)
@@ -242,5 +242,30 @@ namespace Ragnarok.Repository
             }
         }
 
+        public Employee UpdateImage(Employee employee)
+        {
+            try
+            {   
+                _context.Employee.Update(employee);
+                _context.Entry(employee).Property(x => x.Active).IsModified = false;
+                _context.Entry(employee).Property(x => x.InsertDate).IsModified = false;
+                _context.Entry(employee).Property(x => x.CPF).IsModified = false;
+                _context.Entry(employee).Property(x => x.Name).IsModified = false;
+                _context.Entry(employee).Property(x => x.BirthDay).IsModified = false;
+                _context.Entry(employee).Property(x => x.Email).IsModified = false;
+                _context.Entry(employee).Property(x => x.Sexo).IsModified = false;
+                _context.Entry(employee).Property(x => x.Login).IsModified = false;
+                _context.Entry(employee).Property(x => x.Password).IsModified = false;
+
+                _context.SaveChanges();
+
+                return employee;
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

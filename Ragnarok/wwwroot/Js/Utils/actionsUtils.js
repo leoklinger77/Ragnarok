@@ -4,6 +4,7 @@
         type: "POST",
         url: "/Service/SearchByZipCode",
         data: { zipCode: zipCode },
+        async:true,
         success: function (message) {
             if (message == "Cep inválido") {
                 $(".span-cep").html('Cep Inválido');

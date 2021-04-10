@@ -1,0 +1,108 @@
+﻿@model Stock
+@{
+    ViewData["Title"] = "Details";
+}
+
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>ESTOQUE DE PRODUTOS</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Stock" asp-area="Employee">Estoque</a></li>
+            <li><a asp-action="Details" asp-controller="Stock" asp-area="Employee" asp-route-id="@Model.Id"> Detalhes Estoque</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @if (TempData["MSG_S"] != null)
+    {
+        <div class="alert alert-success fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Feito!</strong> @TempData["MSG_S"]
+        </div>
+    }
+    @if (TempData["MSG_E"] != null)
+    {
+        <div class="alert alert-danger fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Erro!</strong> @TempData["MSG_E"]
+        </div>
+    }
+    <div class="widget">
+
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-browsers"></i> <span>LISTA DE TODAS AS CATEGORIAS</span></h3>
+        </div>
+        <div class="widget-content">
+            <ul class="nav nav-tabs tabs-iconized" role="tablist">
+                <li class="active"><a href="#home" role="tab" data-toggle="tab"><i class="icon ion-home"></i> Principal</a></li>
+                <li><a href="#discont" role="tab" data-toggle="tab"><i class="icon ion-ios-gear"></i> Descontos</a></li>
+                <li><a href="#sales" role="tab" data-toggle="tab"><i class="icon ion-bag"></i> Vendas</a></li>
+                <li><a href="#purchase" role="tab" data-toggle="tab"><i class="icon ion-pricetag"></i> Compras</a></li>
+            </ul>
+            <div class="tab-content">
+                <div class="tab-pane fade in active" id="home">
+                    <form asp-action="Update" method="post">
+                        <input asp-for="Product.Id" type="hidden" class="form-control" />
+                        <input asp-for="Product.RegisterEmployeeId" type="hidden" class="form-control" />
+                        <input asp-for="Product.InsertDate" type="hidden" class="form-control" />
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label asp-for="Product.Name"></label>
+                                <input asp-for="Product.Name" class="form-control" />
+                                <span asp-validation-for="Product.Name" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="Product.BarCode"></label>
+                                <input asp-for="Product.BarCode" class="form-control" />
+                                <span asp-validation-for="Product.BarCode" class="text-danger"></span>
+                            </div>
+                            <div class="col-md-4">
+                                <label asp-for="ValidationDate"></label>
+                                <input asp-for="ValidationDate" class="form-control" />
+                                <span asp-validation-for="ValidationDate" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <div class="row">
+                            <div class="col-md-4">
+                                <label asp-for="SalesPrice"></label>
+                                <input asp-for="SalesPrice" class="form-control" />
+                                <span asp-validation-for="SalesPrice" class="text-danger"></span>
+                            </div>
+                        </div>
+                        <br />
+                        <div class="row">
+                            <div class="col-md-6">
+                                <button type="submit" class="btn btn-success btn-sm btn-quick-task"><i class="icon"></i> Salvar</button>
+                                <a asp-action="Index" asp-controller="Product" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> voltar</a>
+                            </div>
+                        </div>
+                    </form>
+                </div>
+                <div class="tab-pane fade" id="discont">
+                    <p>Discont</p>
+                </div>
+                <div class="tab-pane fade" id="sales">
+                    <p>Sales</p>
+                </div>
+                <div class="tab-pane fade" id="purchase">
+                    <p>Purchase</p>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,4 +1,4 @@
-﻿using Ragnarok.Models;
+﻿using Ragnarok.Models.ManyToMany;
 using Ragnarok.Repository.Interfaces;
 using System;
 using System.Threading.Tasks;

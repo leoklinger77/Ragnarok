@@ -37,7 +37,9 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return await _context.Stock.Where(x => x.Id == id && x.Product.RegisterEmployee.BusinessId == businessId).FirstOrDefaultAsync();
+                return await _context.Stock.Where(x => x.Id == id && x.Product.RegisterEmployee.BusinessId == businessId)
+                    .Include(x => x.Product)
+                    .FirstOrDefaultAsync();
             }
             catch (Exception e)
             {

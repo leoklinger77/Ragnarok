@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ragnarok.Models
+namespace Ragnarok.Models.ManyToMany
 {
     [Table("TB_PurchaseItemOrder")]
     public class PurchaseItemOrder

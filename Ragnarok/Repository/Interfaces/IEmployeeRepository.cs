@@ -13,7 +13,8 @@ namespace Ragnarok.Repository.Interfaces
         void Insert(Employee employee);        
         void UpdateMain(Employee employee);
         void UpdateAddress(Address address);
-        void UpdatePassword(Employee employee);        
+        void UpdatePassword(Employee employee);
+        Employee UpdateImage(Employee employee);
         void Remove(int id, int businessId);
         void RemoveContact(int id);
         Task<Employee> FindByIdAsync(int id);

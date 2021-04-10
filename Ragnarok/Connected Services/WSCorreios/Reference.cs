@@ -5474,6 +5474,8 @@ namespace WSCorreios
         {
             this.@return = @return;
         }
+
+        public object Result { get; internal set; }
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]

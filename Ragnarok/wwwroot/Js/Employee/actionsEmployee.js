@@ -1,6 +1,4 @@
 ﻿$(document).ready(function () {
-
-
     function validityMan() {
         var name = $('.span-nameCompleto').html();
         var cpf = $('.validationCpf').html();;
@@ -27,7 +25,6 @@
 
         return result;
     }
-
 
     if ($('#insertEmployee').length > 0) {
         $('#insertEmployee').bootstrapWizard({
@@ -115,7 +112,7 @@
                 model += "],";
 
                 model += "Address:{ZipCode:'" + $('#zipCode').cleanVal() +
-                    "',Street:'" + $('#street').val() + 
+                    "',Street:'" + $('#street').val() +
                     "',Number:'" + $('#number').val() +
                     "',Complement:'" + $('#complement').val() +
                     "',Reference:'" + $('#reference').val() +
@@ -144,9 +141,44 @@
         });
     }
 
+    $('.input-file-employee').click(function () {
+        $('#input-file').trigger('click');
+    });
 
- 
+
+    $('#input-file').change(function () {
+
+        var image = $('#input-file')[0].files[0];
+
+        if (typeof image == 'undefined') {
+            return;
+        }
+
+        var file = new FormData();
+        file.append('file', $('#input-file')[0].files[0]);
+        file.append('employeeId', $('#employeeId').val());
+
+
+
+        $.ajax({
+            type: "POST",
+            url: "/Employee/Employee/InsertImage",
+            data: file,
+            contentType: false,
+            processData: false,
+            error: function () {
+
+            },
+            success: function (item) {
+                $('.avatar').attr('src', item.path);
+                $('.avatarHome').attr('src', item.path);
+            }
+        });
+
+
+    });
 });
+
 
 $('#employeeCpf').change(function () {
 
@@ -252,3 +284,5 @@ $('#employeeEmail').change(function () {
 
 
 });
+
+

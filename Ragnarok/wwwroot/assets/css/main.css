@@ -11650,3 +11650,7 @@ ul.project-activity-list > li {
     float: left;
     margin-right: 10px;
 }
+
+#input-file{
+    display:none;
+}

@@ -44,6 +44,7 @@ namespace Ragnarok.Models
         public int AddressId { get; set; }
         public Employee RegisterEmployee { get; set; }
         public int? RegisterEmployeeId { get; set; }
+        public string PathImage { get; set; }
         public ICollection<Contact> Contacts { get; set; } = new HashSet<Contact>();
 
         [Required(ErrorMessageResourceType = typeof(Message), ErrorMessageResourceName = "MSG_E_001")]
@@ -62,7 +63,7 @@ namespace Ragnarok.Models
 
         public Employee(int id, string name, string cPF, DateTime birthDay, Sexo sexo, bool active,
             string email, string login, string password, string confirmePasswor, DateTime insertDate,
-            DateTime? updateDate, Business business, PositionName positionName, Address address, Employee registerEmployee)
+            DateTime? updateDate, Business business, PositionName positionName, Address address, Employee registerEmployee, string pathImage)
         {
             Id = id;
             Name = name;
@@ -80,6 +81,7 @@ namespace Ragnarok.Models
             PositionName = positionName;
             Address = address;
             RegisterEmployee = registerEmployee;
+            PathImage = pathImage;
         }
 
         public override bool Equals(object obj)

@@ -1,8 +1,10 @@
-﻿using Microsoft.AspNetCore.Mvc;
+﻿using Microsoft.AspNetCore.Http;
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Email;
+using Ragnarok.Services.FileImage;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.KeyGenerator;
 using Ragnarok.Services.Lang;
@@ -288,6 +290,29 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_E"] = Message.MSG_E_003;
                 return RedirectToAction(nameof(Index));
             }
+        }
+        [HttpPost]
+        public IActionResult InsertImage(IFormFile file, int employeeId)
+        {
+            try
+            {
+                Models.Employee employee = _employeeLogin.GetEmployee();
+                string path = FileManagement.UploadFileImage(file);
+                if (!string.IsNullOrEmpty(path))
+                {
+                    FileManagement.RemoveFileImage(employee.PathImage);
+                    employee.PathImage = path;                    
+                    _employeeLogin.Update(_employeeRepository.UpdateImage(employee));
+                    return Json(new { path = path });
+                }
+                return BadRequest();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+
         }
 
     }

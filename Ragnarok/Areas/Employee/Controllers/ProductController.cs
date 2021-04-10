@@ -118,12 +118,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         public IActionResult Remove(int id)
         {
             try
-            {
-                if (_employeeLogin.GetEmployee().Id == id)
-                {
-                    TempData["MSG_E"] = Message.MSG_E_004;
-                    return RedirectToAction(nameof(Index));
-                }
+            {                
                 _productRepository.Remove(id,_employeeLogin.GetEmployee().BusinessId);
                 TempData["MSG_S"] = Message.MSG_S_005;
                 return RedirectToAction(nameof(Index));
