@@ -16,7 +16,7 @@
                             <input asp-for="Login" type="email" class="form-control" id="inputEmail3b" placeholder="Email">
                         </div>
                     </div>
-                </div>                
+                </div>
                 <div class="form-group">
                     <div class="col-xs-7">
                         <button type="submit" class="btn btn-success btn-block">Recuperar</button>
@@ -25,8 +25,23 @@
                         <a asp-action="Index"><em>Lembrou a senha ?</em></a>
                     </div>
                 </div>
-            </form>           
-            
+            </form>
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
         </div>
     </div>
     <div class="col-sm-5 col-lg-4">

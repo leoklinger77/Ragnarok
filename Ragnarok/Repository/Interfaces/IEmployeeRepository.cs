@@ -8,7 +8,7 @@ namespace Ragnarok.Repository.Interfaces
     {
         Employee Login(string login, string password);
         Employee LoginUpdate(int id);
-        Employee Forgot(string login);
+        Task<Employee> ForgotAsync(string login);
 
         void Insert(Employee employee);        
         void UpdateMain(Employee employee);

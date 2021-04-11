@@ -20,12 +20,15 @@ namespace Ragnarok.Services.FileImage
 
         public static bool RemoveFileImage(string caminho)
         {
-            string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", caminho.TrimStart('/'));
-
-            if (File.Exists(path))
+            if (!string.IsNullOrEmpty(caminho))
             {
-                File.Delete(path);
-                return true;
+                string path = Path.Combine(Directory.GetCurrentDirectory(), "wwwroot", caminho.TrimStart('/'));
+
+                if (File.Exists(path))
+                {
+                    File.Delete(path);
+                    return true;
+                }
             }
             return false;
 

@@ -102,11 +102,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public Employee Forgot(string login)
+        public async Task<Employee> ForgotAsync(string login)
         {
             try
             {
-                return _context.Employee.Where(x => x.Login == login).AsNoTracking().FirstOrDefault();
+                return await _context.Employee.Where(x => x.Login == login).AsNoTracking().FirstOrDefaultAsync();
             }
             catch (Exception e)
             {

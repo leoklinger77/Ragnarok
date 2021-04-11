@@ -1,0 +1,71 @@
+﻿@model DiscountStockFormViewModel
+@{
+    ViewData["Title"] = "Insert";
+}
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>DESCONTOS</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Discount" asp-area="Employee">Descontos</a></li>
+            <li><a asp-action="Insert" asp-controller="Discount" asp-area="Employee">Novo Desconto</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <a asp-action="Insert" asp-controller="Discount" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Novo Desconto</a>
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-browsers"></i> <span>NOVO DESCONTO</span></h3>            
+        </div>
+        <div class="widget-content">
+            <form method="post" asp-action="Insert">
+                <div class="row">
+                    <div class="col-sm-3">
+                        <label asp-for="DiscountStock.DiscountAmount"></label>
+                        <input asp-for="DiscountStock.DiscountAmount" type="text" class="form-control" required>
+                        <span asp-validation-for="DiscountStock.DiscountAmount" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-3">
+                        <label asp-for="DiscountStock.Start"></label>
+                        <input asp-for="DiscountStock.Start" type="datetime-local" class="form-control">
+                        <span asp-validation-for="DiscountStock.Start" class="text-danger"></span>
+                    </div>
+                    <div class="col-sm-3">
+                        <label asp-for="DiscountStock.End"></label>
+                        <input asp-for="DiscountStock.End" type="datetime-local" class="form-control">
+                        <span asp-validation-for="DiscountStock.End" class="text-danger"></span>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-6">
+                        <label asp-for="ProductsList"> Produtos</label>
+                        <select multiple asp-for="ProductsList" name="ProductsList" id="select2-multiple1" class="select2 select2-multiple" asp-items="@ViewBag.Product">
+                            <option value="">Selecione</option>
+                        </select>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-md-6">
+                        <button type="submit" class="btn btn-success btn-sm btn-quick-task"><i class="icon"></i> Salvar</button>
+                        <a asp-action="Index" asp-controller="Product" asp-area="Employee" type="button" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-arrow-return-left"></i> voltar</a>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>

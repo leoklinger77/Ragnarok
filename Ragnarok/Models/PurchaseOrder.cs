@@ -22,14 +22,13 @@ namespace Ragnarok.Models
         {
         }
 
-        public PurchaseOrder(int id, DateTime insertDate, string notes, Supplier supplier, Employee registerEmployee, ICollection<PurchaseItemOrder> purchaseItemOrder)
+        public PurchaseOrder(int id, DateTime insertDate, string notes, Supplier supplier, Employee registerEmployee)
         {
             Id = id;
             InsertDate = insertDate;
             Notes = notes;
             Supplier = supplier;
-            RegisterEmployee = registerEmployee;
-            PurchaseItemOrder = purchaseItemOrder;
+            RegisterEmployee = registerEmployee;            
         }
 
         public double Total()

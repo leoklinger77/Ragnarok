@@ -8,6 +8,24 @@ namespace Ragnarok.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "TB_DiscountProduct",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DiscountAmount = table.Column<double>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    Start = table.Column<DateTime>(nullable: false),
+                    End = table.Column<DateTime>(nullable: false),
+                    InsertDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_DiscountProduct", x => x.Id);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_State",
                 columns: table => new
                 {
@@ -143,6 +161,7 @@ namespace Ragnarok.Migrations
                     PositionNameId = table.Column<int>(nullable: false),
                     AddressId = table.Column<int>(nullable: false),
                     RegisterEmployeeId = table.Column<int>(nullable: true),
+                    PathImage = table.Column<string>(nullable: true),
                     CPF = table.Column<string>(nullable: false)
                 },
                 constraints: table =>
@@ -322,6 +341,30 @@ namespace Ragnarok.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TB_Stock",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Quantity = table.Column<int>(nullable: false),
+                    ValidationDate = table.Column<DateTime>(nullable: true),
+                    SalesPrice = table.Column<double>(nullable: false),
+                    InsertDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    ProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_Stock", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TB_Stock_TB_Product_ProductId",
+                        column: x => x.ProductId,
+                        principalTable: "TB_Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_Contact",
                 columns: table => new
                 {
@@ -390,6 +433,30 @@ namespace Ragnarok.Migrations
                         name: "FK_TB_PurchaseOrder_TB_Supplier_SupplierId",
                         column: x => x.SupplierId,
                         principalTable: "TB_Supplier",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_DiscontStock",
+                columns: table => new
+                {
+                    StockId = table.Column<int>(nullable: false),
+                    DiscountProductId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_DiscontStock", x => new { x.StockId, x.DiscountProductId });
+                    table.ForeignKey(
+                        name: "FK_TB_DiscontStock_TB_DiscountProduct_DiscountProductId",
+                        column: x => x.DiscountProductId,
+                        principalTable: "TB_DiscountProduct",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TB_DiscontStock_TB_Stock_StockId",
+                        column: x => x.StockId,
+                        principalTable: "TB_Stock",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -479,6 +546,11 @@ namespace Ragnarok.Migrations
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_DiscontStock_DiscountProductId",
+                table: "TB_DiscontStock",
+                column: "DiscountProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_Employee_AddressId",
                 table: "TB_Employee",
                 column: "AddressId");
@@ -524,6 +596,11 @@ namespace Ragnarok.Migrations
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_Stock_ProductId",
+                table: "TB_Stock",
+                column: "ProductId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_Supplier_AddressId",
                 table: "TB_Supplier",
                 column: "AddressId");
@@ -543,6 +620,9 @@ namespace Ragnarok.Migrations
                 name: "TB_Contact");
 
             migrationBuilder.DropTable(
+                name: "TB_DiscontStock");
+
+            migrationBuilder.DropTable(
                 name: "TB_PurchaseItemOrder");
 
             migrationBuilder.DropTable(
@@ -552,10 +632,16 @@ namespace Ragnarok.Migrations
                 name: "TB_Client");
 
             migrationBuilder.DropTable(
-                name: "TB_Product");
+                name: "TB_DiscountProduct");
+
+            migrationBuilder.DropTable(
+                name: "TB_Stock");
 
             migrationBuilder.DropTable(
                 name: "TB_PurchaseOrder");
+
+            migrationBuilder.DropTable(
+                name: "TB_Product");
 
             migrationBuilder.DropTable(
                 name: "TB_Supplier");

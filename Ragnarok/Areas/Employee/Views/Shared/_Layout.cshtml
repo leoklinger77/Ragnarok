@@ -1,7 +1,7 @@
 ﻿@inject Ragnarok.Services.Login.EmployeeLogin _employeeLogin
 
 @{
-    var pahtImage = string.IsNullOrEmpty(_employeeLogin.GetEmployee().PathImage) ? "~/assets/img/user-loggedin.png" : _employeeLogin.GetEmployee().PathImage;
+    var pahtImage = string.IsNullOrEmpty(_employeeLogin.GetEmployee().PathImage) ? "/assets/img/user-loggedin.png" : _employeeLogin.GetEmployee().PathImage;    
 }
 <!DOCTYPE html>
 <html lang="pt-br" class="no-js">
@@ -217,8 +217,14 @@
                             <ul class="list-unstyled sub-menu collapse">
                                 <li><a asp-action="Index" asp-controller="Client" asp-area="Employee"><span class="text">Cliente</span></a></li>
                                 <li><a asp-action="Index" asp-controller="Supplier" asp-area="Employee"><span class="text">Fornecedor</span></a></li>
-                                <li><a asp-action="Index" asp-controller="Category" asp-area="Employee"><span class="text">Categoria</span></a></li>
-                                <li><a asp-action="Index" asp-controller="Product" asp-area="Employee"><span class="text">Produto</span></a></li>
+                                <li><a asp-action="Index" asp-controller="Category" asp-area="Employee"><span class="text">Categoria</span></a></li>                                
+                                <li class="has-submenu">
+                                    <a href="#" class="submenu-toggle"><span class="text">Produtos</span></a>
+                                    <ul class="list-unstyled sub-menu collapse">                                        
+                                        <li><a asp-action="Index" asp-controller="Product" asp-area="Employee"><span class="text">Produto</span></a></li>
+                                        <li><a asp-action="Index" asp-controller="Discount" asp-area="Employee"><span class="text">Descontos</span></a></li>
+                                    </ul>
+                                </li>
                                 <li><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>
                                 <li><a asp-action="Index" asp-controller="PositionName" asp-area="Employee"><span class="text">Departamentos</span></a></li>
                             </ul>

@@ -264,9 +264,8 @@ namespace Ragnarok.Areas.Employee.Controllers
         [ValidationhttpReferer]
         public async Task<IActionResult> ResendPassword(int id)
         {
-            Models.Employee employee = await _employeeRepository.FindByIdAsync(id);
-                        
-            _sendEmail.SendPasswordEmployee(employee);
+            Models.Employee employee = await _employeeRepository.FindByIdAsync(id);                        
+            await _sendEmail.SendPasswordEmployeeAsync(employee);
             TempData["MSG_S"] = Message.MSG_S_004;            
             return RedirectToAction(nameof(Index));
         }

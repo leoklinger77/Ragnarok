@@ -91,6 +91,9 @@ namespace Ragnarok
             services.AddScoped<IStockRepository, StockRepository>();
             services.AddScoped<InventoryManagement>();
 
+            services.AddScoped<IDiscountStock, DiscountStock>();
+            services.AddScoped<IDiscountProductStockRepository, DiscountProductStockRepository>();
+
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.

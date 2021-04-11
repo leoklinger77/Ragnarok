@@ -3,6 +3,7 @@ using Ragnarok.Models;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Email;
 using Ragnarok.Services.Login;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Controllers
 {
@@ -43,13 +44,13 @@ namespace Ragnarok.Controllers
             return View();
         }
         [HttpPost]
-        public IActionResult Forgot(Employee employee)
+        public async Task<IActionResult> ForgotAsync(string login)
         {
-            Employee model = _employeeRepository.Forgot(employee.Login);
+            Employee model = await _employeeRepository.ForgotAsync(login);
 
             if (model != null)
             {
-                _sendEmail.SendPasswordEmployee(model);
+                await _sendEmail.SendPasswordEmployeeAsync(model);
                 TempData["MSG_S"] = "Senda reenviada com sucesso";
                 return RedirectToAction(nameof(Index));
             }

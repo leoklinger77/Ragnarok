@@ -10,8 +10,8 @@ using Ragnarok.Data;
 namespace Ragnarok.Migrations
 {
     [DbContext(typeof(RagnarokContext))]
-    [Migration("20210410113550_PathImageEmployee")]
-    partial class PathImageEmployee
+    [Migration("20210410135405_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -237,6 +237,36 @@ namespace Ragnarok.Migrations
                     b.ToTable("TB_Contact");
                 });
 
+            modelBuilder.Entity("Ragnarok.Models.DiscountStock", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("int")
+                        .HasAnnotation("SqlServer:ValueGenerationStrategy", SqlServerValueGenerationStrategy.IdentityColumn);
+
+                    b.Property<bool>("Active")
+                        .HasColumnType("bit");
+
+                    b.Property<double>("DiscountAmount")
+                        .HasColumnType("float");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("InsertDate")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("datetime2");
+
+                    b.Property<DateTime?>("UpdateDate")
+                        .HasColumnType("datetime2");
+
+                    b.HasKey("Id");
+
+                    b.ToTable("TB_DiscountProduct");
+                });
+
             modelBuilder.Entity("Ragnarok.Models.Employee", b =>
                 {
                     b.Property<int>("Id")
@@ -320,6 +350,21 @@ namespace Ragnarok.Migrations
                     b.HasIndex("ProductId");
 
                     b.ToTable("TB_CategoryProduct");
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.ManyToMany.DiscountProductStock", b =>
+                {
+                    b.Property<int>("StockId")
+                        .HasColumnType("int");
+
+                    b.Property<int>("DiscountProductId")
+                        .HasColumnType("int");
+
+                    b.HasKey("StockId", "DiscountProductId");
+
+                    b.HasIndex("DiscountProductId");
+
+                    b.ToTable("TB_DiscontStock");
                 });
 
             modelBuilder.Entity("Ragnarok.Models.ManyToMany.PurchaseItemOrder", b =>
@@ -772,6 +817,21 @@ namespace Ragnarok.Migrations
                     b.HasOne("Ragnarok.Models.Product", "Product")
                         .WithMany("CategoryProduct")
                         .HasForeignKey("ProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("Ragnarok.Models.ManyToMany.DiscountProductStock", b =>
+                {
+                    b.HasOne("Ragnarok.Models.DiscountStock", "DiscountProduct")
+                        .WithMany("DiscountProductStock")
+                        .HasForeignKey("DiscountProductId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.HasOne("Ragnarok.Models.Stock", "Stock")
+                        .WithMany("DiscountProductStock")
+                        .HasForeignKey("StockId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

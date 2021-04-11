@@ -1,6 +1,7 @@
 ﻿using Microsoft.Extensions.Configuration;
 using Ragnarok.Models;
 using System.Net.Mail;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Services.Email
 {
@@ -15,7 +16,7 @@ namespace Ragnarok.Services.Email
             _configuration = configuration;
         }
 
-        public void SendPasswordEmployee(Employee employee)
+        public async Task SendPasswordEmployeeAsync(Employee employee)
         {
             string corpMsg = string.Format("<h2>Contato Loja Virtual</h2>" +
                 "<b>Sua senha é : </b><br/>" +
@@ -29,7 +30,7 @@ namespace Ragnarok.Services.Email
             message.Body = corpMsg;
             message.IsBodyHtml = true; //True caso vc queira que o body seja enviado html
 
-            _smtp.Send(message);
+            await _smtp.SendMailAsync(message);
         }
     }
 }
