@@ -18,7 +18,8 @@ namespace Ragnarok.Models
         public Product Product { get; set; }
         public int ProductId { get; set; }
 
-        public ICollection<DiscountProductStock> DiscountProductStock { get; set; }
+        public ICollection<DiscountProductStock> DiscountProductStock { get; set; } = new List<DiscountProductStock>();
+        public ICollection<SalesItem> SalesItem { get; set; } = new List<SalesItem>();
 
         public Stock()
         {

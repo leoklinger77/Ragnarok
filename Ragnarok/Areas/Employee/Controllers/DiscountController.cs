@@ -77,8 +77,8 @@ namespace Ragnarok.Areas.Employee.Controllers
                 item.Stock = await _stockRepository.FindByIdAsync(item.StockId, _employeeLogin.GetEmployee().BusinessId);
                 viewModel.ProductsList.Add(item.Stock.ProductId);
                 List.Add(item.Stock);
-            }            
-            
+            }
+
             ViewBag.Product = List.Select(x => new SelectListItem(x.Product.Name, x.ProductId.ToString()));
             return View(viewModel);
         }
@@ -88,19 +88,16 @@ namespace Ragnarok.Areas.Employee.Controllers
             if (ModelState.IsValid)
             {
                 viewModel.DiscountStock.UpdateDate = DateTime.Now;
-                viewModel.DiscountStock.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;
-                viewModel.DiscountStock.Active = true;
+                viewModel.DiscountStock.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;                
                 await _discountStock.UpdateAsync(viewModel.DiscountStock);
 
                 await _discountProductStock.RemoveAllsDiscountIdAsync(viewModel.DiscountStock.Id);
 
                 foreach (var item in viewModel.ProductsList)
                 {
-                    
-                        await _discountProductStock.InsertAsync(new Models.ManyToMany.DiscountProductStock { DiscountProductId = viewModel.DiscountStock.Id, StockId = item });
-                                        
+                    await _discountProductStock.InsertAsync(new Models.ManyToMany.DiscountProductStock { DiscountProductId = viewModel.DiscountStock.Id, StockId = item });
                 }
-                
+
                 TempData["MSG_S"] = Message.MSG_S_001;
                 return RedirectToAction(nameof(Details), new { id = viewModel.DiscountStock.Id });
             }

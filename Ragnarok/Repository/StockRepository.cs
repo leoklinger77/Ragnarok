@@ -51,7 +51,7 @@ namespace Ragnarok.Repository
                                                 " and E.BusinessId = '" + businessId.ToString() + "')";
 
                 
-                return await _context.Stock.FromSql(command).Include(x => x.Product).ToListAsync();
+                return await _context.Stock.FromSql(command).Include(x => x.Product).AsNoTracking().ToListAsync();
             }
             catch (Exception e)
             {

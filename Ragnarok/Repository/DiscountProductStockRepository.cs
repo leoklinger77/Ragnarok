@@ -37,7 +37,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                _context.DiscountProductStock.RemoveRange(await _context.DiscountProductStock.Where(x=>x.DiscountProductId == discountStockId).ToListAsync());
+                _context.DiscountProductStock.RemoveRange(await _context.DiscountProductStock.Where(x=>x.DiscountProductId == discountStockId).AsNoTracking().ToListAsync());
                 await _context.SaveChangesAsync();
             }
             catch (Exception e)
