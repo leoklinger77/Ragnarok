@@ -42,6 +42,7 @@ namespace Ragnarok.Data
 
         public DbSet<SalesOrder> SalesOrder { get; set; }
         public DbSet<SalesItem> SalesItem { get; set; }
+        public DbSet<SaleBox> SaleBox { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

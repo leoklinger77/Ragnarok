@@ -461,3 +461,4 @@ C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Discount\Index.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Discount\Insert.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Discount\Details.cshtml.g.cs
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Sales\Index.cshtml.g.cs

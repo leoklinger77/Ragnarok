@@ -1,0 +1,92 @@
+﻿@model ICollection<SalesOrder>
+@{
+    ViewData["Title"] = "Index";
+}
+
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>ORDENS DE VENDA</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Purchase" asp-area="Employee">Ordens de Venda</a></li>
+        </ul>
+        <div class="sticky-content pull-right">            
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+
+    </div>
+
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODAS AS VENDAS</span></h3>
+        </div>
+        <div class="widget-content">
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
+            <div class="table-responsive">
+                <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable">
+                    <thead>
+                        <tr>
+                            <th>Data da Venda</th>
+                            <th>Client</th>
+                            <th>Total</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@item.InsertDate.Date.ToString("dd/MM/yyyy")</td>
+                                @if (item.Client is ClientJuridical)
+                                {
+                                    ClientJuridical client = (ClientJuridical)item.Client;
+                                    <td>@client.CompanyName</td>
+                                }
+                                else
+                                {
+                                    ClientPhysical client = (ClientPhysical)item.Client;
+                                    <td>@client.FullName</td>
+
+                                }
+                                <td>@item.TotalSales()</td>
+                                <td>
+                                    <a asp-action="Details" asp-controller="Purchase" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
+                                    |
+                                    <a asp-action="Remove" asp-controller="Purchase" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

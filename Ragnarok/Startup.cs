@@ -1,6 +1,5 @@
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
-using Microsoft.AspNetCore.HttpsPolicy;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -14,11 +13,8 @@ using Ragnarok.Services.Session;
 using Ragnarok.Services.Stock;
 using Ragnarok.Services.WebService;
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using System.Net;
 using System.Net.Mail;
-using System.Threading.Tasks;
 
 namespace Ragnarok
 {
@@ -66,8 +62,9 @@ namespace Ragnarok
             services.AddDbContext<RagnarokContext>(options => options.UseSqlServer(Configuration.GetConnectionString("RagnarokContext")));
 
             services.AddScoped<SeedingService>();
-            services.AddScoped<Session>();
+            services.AddScoped<Session>();            
             services.AddScoped<EmployeeLogin>();
+            services.AddScoped<OpenBox>();
             services.AddScoped<SendEmail>();
             services.AddScoped<WSCorreiosAPI>();
 
@@ -93,6 +90,8 @@ namespace Ragnarok
 
             services.AddScoped<IDiscountStock, DiscountStock>();
             services.AddScoped<IDiscountProductStockRepository, DiscountProductStockRepository>();
+
+            services.AddScoped<ISalesOrderRepository, SalesOrderRepository>();
 
         }
 

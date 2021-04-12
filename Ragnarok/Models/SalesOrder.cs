@@ -12,8 +12,10 @@ namespace Ragnarok.Models
         public string Notes { get; set; }
         public Client Client { get; set; }
         public int ClientId { get; set; }
-        public Employee RegisterEmployee { get; set; }
-        public int RegisterEmployeeId { get; set; }
+
+        public SaleBox SaleBox { get; set; }
+        public int SaleBoxId { get; set; }
+
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
@@ -23,12 +25,12 @@ namespace Ragnarok.Models
         {
         }
 
-        public SalesOrder(int id, string notes, Client client, Employee registerEmployee, DateTime insertDate, DateTime? updateDate, ICollection<SalesItem> salesItem)
+        public SalesOrder(int id, string notes, Client client, SaleBox saleBox, DateTime insertDate, DateTime? updateDate, ICollection<SalesItem> salesItem)
         {
             Id = id;
             Notes = notes;
             Client = client;
-            RegisterEmployee = registerEmployee;
+            SaleBox = saleBox;
             InsertDate = insertDate;
             UpdateDate = updateDate;
             SalesItem = salesItem;
