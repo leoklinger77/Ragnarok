@@ -1,7 +1,19 @@
-﻿
+﻿@inject Ragnarok.Services.Login.OpenBox _openBox
 @{
     ViewData["Title"] = "Box";
 }
 
 <h2>Box</h2>
 
+@if (_openBox.GetSaleBox() != null)
+{
+    <p>Caixa Aberto - Tempo : @_openBox.GetSaleBox().OpenTime()</p>
+}
+else
+{
+    <p>Caixa Fechado</p>
+}
+
+<a asp-action="OpenSaleBox">Abrir Caixa</a>
+<br />
+<a asp-action="CloseSaleBox">Fechar Caixa</a>

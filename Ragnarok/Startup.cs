@@ -92,6 +92,7 @@ namespace Ragnarok
             services.AddScoped<IDiscountProductStockRepository, DiscountProductStockRepository>();
 
             services.AddScoped<ISalesOrderRepository, SalesOrderRepository>();
+            services.AddScoped<ISaleBoxRepository, SaleBoxRepository>();
 
         }
 
