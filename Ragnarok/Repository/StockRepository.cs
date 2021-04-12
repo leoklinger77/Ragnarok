@@ -1,7 +1,6 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ragnarok.Data;
 using Ragnarok.Models;
-using Ragnarok.Models.ManyToMany;
 using Ragnarok.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
@@ -33,29 +32,26 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
-
         [Obsolete]
         public async Task<ICollection<Stock>> FindAllsProductsNotDiscount(int businessId)
         {
             try
             {
-                string command = "select ST.id, ST.Quantity,ST.ValidationDate,ST.SalesPrice,ST.InsertDate,ST.UpdateDate,ST.ProductId" +
-                                                                        " from TB_Stock ST" +
-                                                                         " join TB_Product P on ST.ProductId = P.Id" +
-                                                                        " JOIN TB_Employee E on E.Id = P.RegisterEmployeeId" +
-                                                                        " where E.BusinessId = '" + businessId.ToString() +
-                                                                        "' AND ST.Id  not in (" +
-                                                                                        " select StockId " +
-                                                                                                " from TB_DiscontStock D " +
-                                                                                                " join TB_DiscountProduct DP on D.DiscountProductId = DP.Id" +
-                                                                                                " join TB_Stock ST on D.StockId = ST.Id" +
-                                                                                                " join TB_Product P on ST.ProductId = P.Id" +
-                                                                                                " JOIN TB_Employee E on E.Id = P.RegisterEmployeeId" +
-                                                                                        " where DP.Active = 1" +
-                                                                                        " and E.BusinessId = '" + businessId.ToString() + "')";
+                string command = "select ST.id, ST.Quantity, ST.ValidationDate, ST.SalesPrice, ST.InsertDate, ST.UpdateDate, ST.ProductId" +
+                                " from TB_Stock ST" +
+                                " join TB_Product P on ST.ProductId = P.Id" +
+                                " JOIN TB_Employee E on E.Id = P.RegisterEmployeeId" +
+                                " where E.BusinessId = '" + businessId.ToString() +
+                                "' AND ST.Id  not in (" +
+                                                " select StockId " +
+                                                        " from TB_DiscontStock D " +
+                                                        " join TB_DiscountProduct DP on D.DiscountProductId = DP.Id" +
+                                                        " JOIN TB_Employee E on E.Id = DP.RegisterEmployeeId" +
+                                                " where DP.Active = 1" +
+                                                " and E.BusinessId = '" + businessId.ToString() + "')";
 
-                ICollection<Stock> st = await _context.Stock.FromSql(command).Include(x=>x.Product).ToListAsync();
-                return st;
+                
+                return await _context.Stock.FromSql(command).Include(x => x.Product).ToListAsync();
             }
             catch (Exception e)
             {
@@ -79,12 +75,12 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Insert(Stock stock)
+        public async Task Insert(Stock stock)
         {
             try
             {
                 _context.Stock.Add(stock);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -93,12 +89,12 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Update(Stock stock)
+        public async Task Update(Stock stock)
         {
             try
             {
                 _context.Stock.Update(stock);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {

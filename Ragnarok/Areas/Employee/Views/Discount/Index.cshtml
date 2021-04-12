@@ -67,12 +67,17 @@
                                 <td>@item.DiscountAmount</td>
                                 <td>@item.Start</td>
                                 <td>@item.End</td>
-                                <td>@item.Active</td>
+                                @if (item.Active)
+                                {
+                                    <td><span class="label label-success">Ativado</span></td>
+                                }
+                                else
+                                {
+                                    <td><span class="label label-danger">Desativado</span></td>
+                                }                                
                                 <td>@item.InsertDate</td>
                                 <td>
-                                    <a asp-action="Details" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>
-                                    |
-                                    <a asp-action="Remove" asp-controller="Client" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                    <a asp-action="Details" asp-controller="Discount" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Editar</a>                                    
                                 </td>
                             </tr>
                         }

@@ -20,7 +20,7 @@ namespace Ragnarok.Models
         public Employee RegisterEmployee { get; set; }
         public int RegisterEmployeeId { get; set; }
 
-        public ICollection<DiscountProductStock> DiscountProductStock { get; set; }
+        public ICollection<DiscountProductStock> DiscountProductStock { get; set; } = new List<DiscountProductStock>();
 
         public DiscountStock()
         {

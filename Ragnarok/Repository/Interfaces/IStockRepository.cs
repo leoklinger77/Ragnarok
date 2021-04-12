@@ -9,7 +9,7 @@ namespace Ragnarok.Repository.Interfaces
         Task<ICollection<Stock>> FindAllsAsync(int businessId);
         Task<ICollection<Stock>> FindAllsProductsNotDiscount(int businessId);
         Task<Stock> FindByIdAsync(int id, int businessId);
-        void Insert(Stock stock);
-        void Update(Stock stock);
+        Task Insert(Stock stock);
+        Task Update(Stock stock);
     }
 }

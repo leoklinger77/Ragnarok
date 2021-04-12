@@ -36,7 +36,6 @@ namespace Ragnarok.Areas.Employee.Controllers
             ICollection<DiscountStock> list = await _discountStock.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
-
         [HttpGet]
         public async Task<IActionResult> InsertAsync()
         {
@@ -51,6 +50,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             {
                 viewModel.DiscountStock.InsertDate = DateTime.Now;
                 viewModel.DiscountStock.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;
+                //viewModel.DiscountStock.Active = true;
                 await _discountStock.InsertAsync(viewModel.DiscountStock);
 
                 foreach (var item in viewModel.ProductsList)
@@ -63,6 +63,51 @@ namespace Ragnarok.Areas.Employee.Controllers
             ICollection<Stock> List = await _stockRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
             ViewBag.Product = List.Select(x => new SelectListItem(x.Product.Name, x.ProductId.ToString()));
             return View(viewModel);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Details(int id)
+        {
+            DiscountStockFormViewModel viewModel = new DiscountStockFormViewModel
+            {
+                DiscountStock = await _discountStock.FindByAsync(id, _employeeLogin.GetEmployee().BusinessId)
+            };
+            ICollection<Stock> List = await _stockRepository.FindAllsProductsNotDiscount(_employeeLogin.GetEmployee().BusinessId);
+            foreach (var item in viewModel.DiscountStock.DiscountProductStock)
+            {
+                item.Stock = await _stockRepository.FindByIdAsync(item.StockId, _employeeLogin.GetEmployee().BusinessId);
+                viewModel.ProductsList.Add(item.Stock.ProductId);
+                List.Add(item.Stock);
+            }            
+            
+            ViewBag.Product = List.Select(x => new SelectListItem(x.Product.Name, x.ProductId.ToString()));
+            return View(viewModel);
+        }
+        [HttpPost]
+        public async Task<IActionResult> Update(DiscountStockFormViewModel viewModel)
+        {
+            if (ModelState.IsValid)
+            {
+                viewModel.DiscountStock.UpdateDate = DateTime.Now;
+                viewModel.DiscountStock.RegisterEmployeeId = _employeeLogin.GetEmployee().Id;
+                viewModel.DiscountStock.Active = true;
+                await _discountStock.UpdateAsync(viewModel.DiscountStock);
+
+                await _discountProductStock.RemoveAllsDiscountIdAsync(viewModel.DiscountStock.Id);
+
+                foreach (var item in viewModel.ProductsList)
+                {
+                    
+                        await _discountProductStock.InsertAsync(new Models.ManyToMany.DiscountProductStock { DiscountProductId = viewModel.DiscountStock.Id, StockId = item });
+                                        
+                }
+                
+                TempData["MSG_S"] = Message.MSG_S_001;
+                return RedirectToAction(nameof(Details), new { id = viewModel.DiscountStock.Id });
+            }
+            ICollection<Stock> List = await _stockRepository.FindAllsProductsNotDiscount(_employeeLogin.GetEmployee().BusinessId);
+            ViewBag.Product = List.Select(x => new SelectListItem(x.Product.Name, x.ProductId.ToString()));
+            return View(nameof(Details), viewModel);
+
         }
     }
 }

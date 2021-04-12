@@ -25,13 +25,13 @@ namespace Ragnarok.Services.Stock
                 stock.AddQuantityStock(itemOrder.Quantity);
                 stock.SalesPrice = itemOrder.SalesPrice;
                 stock.ValidationDate = itemOrder.ValidationDate;                
-                _stockRepository.Insert(stock);
+                await _stockRepository.Insert(stock);
             }
             else
             {
                 stockDB.AddQuantityStock(itemOrder.Quantity);
                 stockDB.SalesPrice = itemOrder.SalesPrice;
-                _stockRepository.Update(stockDB);
+                await _stockRepository.Update(stockDB);
             }
         }
     }
