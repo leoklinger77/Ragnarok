@@ -1,5 +1,6 @@
 ﻿using Ragnarok.Models;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository.Interfaces
 {
@@ -7,9 +8,9 @@ namespace Ragnarok.Repository.Interfaces
     {
         void Insert(City city);
         void Update(City city);
-        void Delete(int id);
+        Task DeleteAsync(int id);
 
-        City FindById(int id);        
+        Task<City> FindByIdAsync(int id);        
         ICollection<City> FindByName(string name);
         City FindByNameAndState(string name, string stateSigle);
         ICollection<City> FindAlls();

@@ -291,7 +291,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             }
         }
         [HttpPost]
-        public IActionResult InsertImage(IFormFile file, int employeeId)
+        public IActionResult InsertImage(IFormFile file)
         {
             try
             {

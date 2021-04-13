@@ -69,10 +69,10 @@ namespace Ragnarok.Areas.Employee.Controllers
             return Json("Error");
         }
         [HttpGet]
-        public IActionResult Details(int id)
+        public async Task<IActionResult> DetailsAsync(int id)
         {
             ClientFormViewModel viewModel = new ClientFormViewModel();
-            Client client = _clientRepository.FindById(id, _employeeLogin.GetEmployee().BusinessId);
+            Client client = await _clientRepository.FindByIdAsync(id, _employeeLogin.GetEmployee().BusinessId);
             if (client is ClientJuridical)
             {
                 viewModel.ClientJuridical = (ClientJuridical)client;
@@ -126,7 +126,7 @@ namespace Ragnarok.Areas.Employee.Controllers
 
                     _clientRepository.UpdateMain(client.ClientPhysical);
                     TempData["MSG_S"] = Message.MSG_S_001;
-                    return RedirectToAction(nameof(Details), new { Id = client.ClientPhysical.Id });
+                    return RedirectToAction(nameof(DetailsAsync), new { Id = client.ClientPhysical.Id });
                 }
                 else if (client.ClientJuridical != null)
                 {
@@ -151,7 +151,7 @@ namespace Ragnarok.Areas.Employee.Controllers
 
                     _clientRepository.UpdateMain(client.ClientJuridical);
                     TempData["MSG_S"] = Message.MSG_S_001;
-                    return RedirectToAction(nameof(Details), new { Id = client.ClientJuridical.Id });
+                    return RedirectToAction(nameof(DetailsAsync), new { Id = client.ClientJuridical.Id });
                 }
                 else if (client.Address != null)
                 {
@@ -159,18 +159,18 @@ namespace Ragnarok.Areas.Employee.Controllers
                     _clientRepository.UpdateAddress(client.Address);
 
                     TempData["MSG_S"] = Message.MSG_S_001;
-                    return RedirectToAction(nameof(Details), new { Id = _clientRepository.FindTheClientIdByAddress(client.Address.Id) });
+                    return RedirectToAction(nameof(DetailsAsync), new { Id = _clientRepository.FindTheClientIdByAddress(client.Address.Id) });
                 }
             }
-            return View(nameof(Details), client);
+            return View(nameof(DetailsAsync), client);
         }
         [HttpGet]
         [ValidationhttpReferer]
-        public IActionResult Remove(int id)
+        public async Task<IActionResult> RemoveAsync(int id)
         {
             try
             {
-                _clientRepository.Remove(id, _employeeLogin.GetEmployee().BusinessId);
+                await _clientRepository.RemoveAsync(id, _employeeLogin.GetEmployee().BusinessId);
                 TempData["MSG_S"] = Message.MSG_S_005;
                 return RedirectToAction(nameof(Index));
             }
@@ -179,6 +179,42 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_E"] = Message.MSG_E_003;
                 return RedirectToAction(nameof(Index));
             }            
+        }
+        [HttpPost]
+        public async Task<IActionResult> FindByClient(string clientId)
+        {
+            Client Client = await _clientRepository.FindByIdAsync(int.Parse(clientId), _employeeLogin.GetEmployee().BusinessId);
+            if (Client == null)
+            {
+                return Json("Error");
+            }
+            ClientJsonConsultBasic clientJson = new ClientJsonConsultBasic();
+            clientJson.Id = Client.Id.ToString();
+            clientJson.Street = Client.Address.Street;
+            clientJson.Numero = Client.Address.Number.ToString();
+            clientJson.neighborhood = Client.Address.Neighborhood;
+            clientJson.City = Client.Address.City.Name;
+            clientJson.State = Client.Address.City.State.Name;
+            clientJson.Email = Client.Email;
+            foreach (var item in Client.Contacts)
+            {
+                if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
+                {
+                    clientJson.Phone = item.DDD + " - " + item.Number;
+                }
+            }
+            if (Client is ClientJuridical)
+            {
+                ClientJuridical juridical = (ClientJuridical)Client;
+                clientJson.Name = juridical.CompanyName;
+            }
+            else
+            {
+                ClientPhysical physical = (ClientPhysical)Client;
+                clientJson.Name = physical.FullName;
+            }
+
+            return Json(clientJson);
         }
     }
 }

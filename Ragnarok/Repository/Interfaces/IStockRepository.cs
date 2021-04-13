@@ -11,5 +11,6 @@ namespace Ragnarok.Repository.Interfaces
         Task<Stock> FindByIdAsync(int id, int businessId);
         Task Insert(Stock stock);
         Task Update(Stock stock);
+        Task<Stock> FindByProductBarCodeAsync(string productId, int businessId);
     }
 }

@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ragnarok.Models;
+using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Login;
@@ -32,6 +33,20 @@ namespace Ragnarok.Areas.Employee.Controllers
             Stock stock = await _stockRepository.FindByIdAsync(id, _employeeLogin.GetEmployee().BusinessId);
             return View(stock);
         }
-
+        [HttpPost]
+        public async Task<IActionResult> FindByProductAsync(string productBarCode)
+        {
+            Stock stock = await _stockRepository.FindByProductBarCodeAsync(productBarCode, _employeeLogin.GetEmployee().BusinessId);            
+            if (stock == null)
+            {
+                return Json("Error");
+            }
+            ProductJsonConsultPurchase productJson = new ProductJsonConsultPurchase();
+            productJson.Id = stock.Product.Id.ToString();
+            productJson.Name = stock.Product.Name;
+            productJson.BarCode = stock.Product.BarCode;
+            productJson.PriceSale = stock.SalesPrice;
+            return Json(productJson);
+        }
     }
 }

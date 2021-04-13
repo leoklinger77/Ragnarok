@@ -1,19 +1,195 @@
-﻿@inject Ragnarok.Services.Login.OpenBox _openBox
+﻿@model SalesOrder
+@inject Ragnarok.Services.Login.OpenBox _openBox
+
+
 @{
     ViewData["Title"] = "Box";
 }
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>CAIXA DE VENDA</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Box" asp-controller="Sales" asp-area="Employee">Caixa</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            @if (_openBox.GetSaleBox() == null)
+            {
+                <a asp-action="OpenSaleBox" asp-controller="Sales" asp-area="Employee" type="button" class="btn btn-success btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Abrir Caixa</a>
+            }
+            else
+            {
+                <a asp-action="CloseSaleBox" asp-controller="Sales" asp-area="Employee" type="button" class="btn btn-danger btn-sm btn-quick-task"><i class="icon ion-person-add"></i> Fechar Caixa</a>
+            }
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    @if (TempData["MSG_S"] != null)
+    {
+        <div class="alert alert-success fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Feito!</strong> @TempData["MSG_S"]
+        </div>
+    }
+    @if (TempData["MSG_E"] != null)
+    {
+        <div class="alert alert-danger fade in">
+            <button class="close" data-dismiss="alert">&times;</button>
+            <i class="icon ion-checkmark-circled"></i>
+            <strong>Erro!</strong> @TempData["MSG_E"]
+        </div>
+    }
+</div>
+<div class="row">
+    <div class="col-md-12">
+        <div class="invoice-header" style="margin-bottom:-20px;margin-top:-20px">
+            <div class="row">
+                <div class="col-md-3 col-print-3">
+                    <img src="/assets/img/queenadmin-logo.png" class="logo" alt="QueenAdmin Logo" />
+                </div>
+                <div class="col-md-9 col-print-9">
+                    <ul class="list-inline">
+                        <li>Tempo do Caixa Aberto #: <strong>15240776</strong></li>
+                        <li>Data: <strong>Nov 22, 2013</strong></li>
+                        <li>Valor Total: <strong>$12,221</strong></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="col-md-5">
+        <!-- MASKED INPUT -->
+        <div class="widget">
+            <div class="widget-header clearfix">
+                <h3><i class="icon ion-ios-compose-outline"></i> <span>Produto</span></h3>
+            </div>
+            <div class="widget-content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label for="">Codigo de Barras</label>
+                        <input for="Produto" class="form-control fullCpmpanyName" onkeyup="selectProductStock()" id="selectProductStock" />
+                        <span class="text-danger span-produtcStock"></span>
+                    </div>
+                </div>
+                <br />
+                <div class="row">
+                    <div class="col-sm-12">
+                        <label id="productLabel">Produto selecionado: </label>
+                        <input type="hidden" id="product" value="1" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label id="quantityLabel">Quantidade: 1</label>
+                        <input type="hidden" id="quantity" value="1" />
+                    </div>
+                    <div class="col-sm-6">
+                        <label for="" id="priceLabel">Preço: </label>
+                        <input type="hidden" id="price" />
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="widget">
+            <div class="widget-header clearfix">
+                <h3><i class="icon ion-ios-compose-outline"></i> <span>Cliente</span></h3>
+            </div>
+            <div class="widget-content">
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="row">                            
+                            <div class="col-md-12">
+                                <label>Selecione o Cliente</label>
+                                <select name="select2" id="client" class="select2" asp-items="@ViewBag.Client">
+                                    <option value="Selecione">Selecione</option>
+                                </select>
+                            </div>
+                        </div>
+                        <br />
+                        <p class="name" id="companyNameSales"></p>
+                        <input id="selectClient" type="hidden" />
+                        <address id="companyDescriptionSale">
 
-<h2>Box</h2>
+                        </address>
+                    </div>
+                </div>
 
-@if (_openBox.GetSaleBox() != null)
-{
-    <p>Caixa Aberto - Tempo : @_openBox.GetSaleBox().OpenTime()</p>
-}
-else
-{
-    <p>Caixa Fechado</p>
-}
+            </div>
+        </div>
 
-<a asp-action="OpenSaleBox">Abrir Caixa</a>
-<br />
-<a asp-action="CloseSaleBox">Fechar Caixa</a>
+
+
+    </div>
+    <div class="col-md-7">
+        <!-- MASKED INPUT -->
+        <div class="widget">
+            <div class="widget-header clearfix">
+                <h3><i class="icon ion-ios-compose-outline"></i> <span>Lista de Compra</span></h3>
+            </div>
+            <div class="widget-content">
+                <div class="widget-content">
+                    <table class="table table-condensed">
+                        <thead>
+                            <tr>
+                                <th>#</th>
+                                <th>First Name</th>
+                                <th>Last Name</th>
+                                <th>Username</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>1</td>
+                                <td>Steve</td>
+                                <td>Jobs</td>
+                                <td>wayne</td>
+                            </tr>
+
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+        <div class="invoice-footer">
+            <div class="row">
+                <div class="col-sm-5 col-sm-offset-1 col-print-4 col-print-offset-2 right-col">
+                    <div class="invoice-total">
+                        <div class="row">
+                            <div class="col-xs-4 col-xs-offset-4 col-print-6 col-print-offset-2">
+                                <p>Subtotal</p>
+                                <p>VAT (10%)</p>
+                                <p>Total</p>
+                            </div>
+                            <div class="col-xs-4 text-right col-print-4">
+                                <p>$11,110</p>
+                                <p>$1,111</p>
+                                <p>$12,221</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="col-sm-6 col-print-6 left-col">
+                    <blockquote class="invoice-notes">
+                        <strong>Notes:</strong>
+                        <p>Competently brand interactive expertise and interactive solutions. Proactively orchestrate viral innovation vis-a-vis customized leadership.</p>
+                    </blockquote>
+                </div>
+            </div>
+            <div class="invoice-buttons" style="margin-top:0px;margin-right:10px">                
+                <a href="#" class="btn btn-success"><i class="icon ion-ios-arrow-forward"></i> Finalizar Venda</a>
+            </div>
+        </div>
+
+    </div>
+
+</div>

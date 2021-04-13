@@ -70,16 +70,16 @@ namespace Ragnarok.Repository
             }
         }
 
-        public Client FindById(int id, int businessId)
+        public async Task<Client> FindByIdAsync(int id, int businessId)
         {
             try
             {
-                return _context.Client.Where(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId)
+                return await _context.Client.Where(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId)
                     .Include(x=>x.Address)
                     .Include(x => x.Address.City)
                     .Include(x => x.Address.City.State)
                     .Include(x => x.Contacts)
-                    .FirstOrDefault();
+                    .FirstOrDefaultAsync();
             }
             catch (Exception e)
             {
@@ -109,11 +109,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public void Remove(int id, int businessId)
+        public async Task RemoveAsync(int id, int businessId)
         {
             try
             {
-                Client client = FindById(id, businessId);
+                Client client = await FindByIdAsync(id, businessId);
                 _context.Remove(client.Address);
                 _context.Remove(client);
                 _context.RemoveRange(client.Contacts);

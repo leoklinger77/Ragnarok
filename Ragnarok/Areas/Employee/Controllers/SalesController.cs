@@ -1,10 +1,12 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Rendering;
 using Ragnarok.Models;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Login;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace Ragnarok.Areas.Employee.Controllers
@@ -15,14 +17,18 @@ namespace Ragnarok.Areas.Employee.Controllers
     {
         private readonly ISalesOrderRepository _salesOrderRepository;
         private readonly ISaleBoxRepository _saleBoxRepository;
+        private readonly IClientRepository _clientRepository;
+        private readonly IStockRepository _stockRepository;
         private readonly OpenBox _openBox;
         private readonly EmployeeLogin _employeeLogin;
 
 
-        public SalesController(ISalesOrderRepository salesOrderRepository, ISaleBoxRepository saleBoxRepository, OpenBox openBox, EmployeeLogin employeeLogin)
+        public SalesController(ISalesOrderRepository salesOrderRepository, ISaleBoxRepository saleBoxRepository, IClientRepository clientRepository,
+            OpenBox openBox, EmployeeLogin employeeLogin)
         {
             _salesOrderRepository = salesOrderRepository;
             _saleBoxRepository = saleBoxRepository;
+            _clientRepository = clientRepository;
             _openBox = openBox;
             _employeeLogin = employeeLogin;
         }
@@ -33,12 +39,23 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(list);
         }
         [HttpGet]
-        public IActionResult Box()
-        {
-            if (_openBox.GetSaleBox() != null)
+        public async Task<IActionResult> Box()
+        {   
+            Dictionary<string, string> listClient = new Dictionary<string, string>();
+            foreach (var item in await _clientRepository.FIndAllsAsync(_employeeLogin.GetEmployee().BusinessId))
             {
-
+                if (item is ClientJuridical)
+                {
+                    ClientJuridical client = (ClientJuridical)item;
+                    listClient.Add(client.Id.ToString(), client.CompanyName);
+                }
+                else
+                {
+                    ClientPhysical client = (ClientPhysical)item;
+                    listClient.Add(client.Id.ToString(), client.FullName);
+                }
             }
+            ViewBag.Client = listClient.Select(x => new SelectListItem(x.Value, x.Key));
             return View();
         }
         [HttpGet]
@@ -64,9 +81,10 @@ namespace Ragnarok.Areas.Employee.Controllers
                     return RedirectToAction(nameof(Box));
                 }
             }
-            return Ok();
+            return RedirectToAction(nameof(Box));
         }
         [HttpGet]
+        [BoxAuthorization]
         public async Task<IActionResult> CloseSaleBoxAsync()
         {
 

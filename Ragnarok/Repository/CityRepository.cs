@@ -5,6 +5,7 @@ using Ragnarok.Repository.Interfaces;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Repository
 {
@@ -17,13 +18,13 @@ namespace Ragnarok.Repository
             _context = context;
         }
 
-        public void Delete(int id)
+        public async Task DeleteAsync(int id)
         {
             try
             {
-                City city = FindById(id);
+                City city = await FindByIdAsync(id);
                 _context.City.Remove(city);
-                _context.SaveChanges();
+                await _context.SaveChangesAsync();
             }
             catch (Exception e)
             {
@@ -43,11 +44,11 @@ namespace Ragnarok.Repository
             }
         }
 
-        public City FindById(int id)
+        public async Task<City> FindByIdAsync(int id)
         {
             try
             {
-                return _context.City.FirstOrDefault(x => x.Id == id);
+                return await _context.City.FirstOrDefaultAsync(x => x.Id == id);
             }
             catch (Exception e)
             {

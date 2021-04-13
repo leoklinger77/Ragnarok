@@ -201,8 +201,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 if (item.TypeNumber == Models.Enums.TypeNumber.Celular)
                 {
                     supplierJson.Phone = item.DDD + " - " + item.Number;
-                }
-                
+                }                
             }
             if (supplier is SupplierJuridical)
             {

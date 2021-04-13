@@ -75,6 +75,21 @@ namespace Ragnarok.Repository
             }
         }
 
+        public async Task<Stock> FindByProductBarCodeAsync(string productBarCode, int businessId)
+        {
+            try
+            {
+                return await _context.Stock.Where(x => x.Product.BarCode == productBarCode && x.Product.RegisterEmployee.BusinessId == businessId)
+                    .Include(x=>x.Product)
+                    .FirstOrDefaultAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task Insert(Stock stock)
         {
             try
