@@ -60,5 +60,12 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<DiscountProductStock> FindByProdutDiscountAsync(int stockId)
+        {
+            return await _context.DiscountProductStock.Where(x => x.StockId == stockId && x.DiscountProduct.Active == true)
+                .Include(x => x.DiscountProduct)
+                .FirstOrDefaultAsync();
+        }
     }
 }

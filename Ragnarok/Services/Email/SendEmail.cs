@@ -48,7 +48,7 @@ namespace Ragnarok.Services.Email
                                       "<tbody>" +
                                         "<tr>" +
                                           "<td align='center' valign='top' style='padding:10px'>" +
-                                            "<img src='https://ci4.googleusercontent.com/proxy/WYSxfIk5c1Df6IZm27nIvMFAZJkri-2FRuicmSG1xsL0otG6EOO154VVIswMIIJqVZI2IIfzfo32VddYJMmUp4M3J_mjr2yxJ27ybqecqHG0BftDKvn6u360LQ=s0-d-e1-ft#https://breakoutclips.com/assets/images/BREAKOUT_BRAND_TG_004-03-gzl.png' width='130' height='' alt='' style='height:auto;max-width:100%;border:0;line-height:100%;outline:0;color:#ffffff;font-size:14px' class='CToWUd'>" +
+                                            "<img src='https://localhost:44359/assets/img/queenadmin-logo.png' width='130' height='' alt='' style='height:auto;max-width:100%;border:0;line-height:100%;outline:0;color:#ffffff;font-size:14px' class='CToWUd'>" +
                                           "</td>" +
                                         "</tr>" +
                                       "</tbody>" +
@@ -75,7 +75,7 @@ namespace Ragnarok.Services.Email
                                       "</tbody>" +
                                       "<tbody>" +
                                         "<tr>" +
-                                          "<td class='m_2220419024356087086pc-sm-fs-18 m_2220419024356087086pc-xs-fs-16' style='font-family:'Fira Sans',Helvetica,Arial,sans-serif;font-size:18px;font-weight:300;line-height:28px;letter-spacing:-0.2px;color:#9b9b9b;padding:0 10px' valign='top'> Clique no link abaixo para verificar o e-mail da sua nova conta Breakout Clips. </td>" +
+                                          "<td class='m_2220419024356087086pc-sm-fs-18 m_2220419024356087086pc-xs-fs-16' style='font-family:'Fira Sans',Helvetica,Arial,sans-serif;font-size:18px;font-weight:300;line-height:28px;letter-spacing:-0.2px;color:#9b9b9b;padding:0 10px' valign='top'> Clique no botão abaixo para acessar sua conta </td>" +
                                         "</tr>" +
                                         "<tr>" +
                                           "<td height='25' style='line-height:1px;font-size:1px'>&nbsp;</td>" +
@@ -130,7 +130,7 @@ namespace Ragnarok.Services.Email
                                                       "<table border='0' cellpadding='0' cellspacing='0' width='100%' role='presentation'>" +
                                                         "<tbody>" +
                                                           "<tr>" +
-                                                            "<td style='font-family:'Fira Sans',Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;letter-spacing:-0.2px;color:#d8d8d8' valign='top'> Este é um e-mail gerado automaticamente. Por favor não responda esse email. <br>&nbsp;</td>" +
+                                                            "<td style='font-family:Fira Sans,Helvetica,Arial,sans-serif;font-size:14px;line-height:20px;letter-spacing:-0.2px;color:#d8d8d8' valign='top'> Este é um e-mail gerado automaticamente. Por favor não responda esse email. <br>&nbsp;</td>" +
                                                           "</tr>" +
                                                           "<tr>" +
                                                             "<td class='m_2220419024356087086pc-sm-h-20' height='56' style='line-height:1px;font-size:1px'>&nbsp;</td>" +
@@ -140,7 +140,7 @@ namespace Ragnarok.Services.Email
                                                         "</tbody>" +
                                                       "</table>" +
                                                     "</td>" +
-                                                  "/tr>" +
+                                                  "</tr>" +
                                                "</tbody>" +
                                               "</table>" +
                                             "</div>" +
@@ -152,7 +152,7 @@ namespace Ragnarok.Services.Email
                                                       "<table border='0' cellpadding='0' cellspacing='0' width='100%' role='presentation'>" +
                                                         "<tbody>" +
                                                           "<tr>" +
-                                                            "<td style='font-family:'Fira Sans',Helvetica,Arial,sans-serif;font-size:18px;font-weight:500;line-height:24px;letter-spacing:-0.2px;color:#ffffff' valign='top'> Contato </td>" +
+                                                            "<td style='font-family:Fira Sans,Helvetica,Arial,sans-serif;font-size:18px;font-weight:500;line-height:24px;letter-spacing:-0.2px;color:#ffffff' valign='top'> Contato </td>" +
                                                           "</tr>" +
                                                           "<tr>" +
                                                             "<td height='11' style='line-height:1px;font-size:1px'>&nbsp;</td>" +
@@ -160,7 +160,7 @@ namespace Ragnarok.Services.Email
                                                         "</tbody>" +
                                                         "<tbody>" +
                                                           "<tr>" +
-                                                            "<td style='font-family:'Fira Sans',Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;line-height:24px' valign='top'>" +
+                                                            "<td style='font-family:Fira Sans,Helvetica,Arial,sans-serif;font-size:14px;font-weight:500;line-height:24px' valign='top'>" +
                                                               "<a href='mailto:support@breakoutclips.com' style='text-decoration:none;color:#1595e7' target='_blank'> Leandro.klingeroliveira@gmail.com </a>" +
                                                             "</td>" +
                                                           "</tr>" +

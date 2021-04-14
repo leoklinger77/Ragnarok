@@ -51,6 +51,7 @@
                     <thead>
                         <tr>
                             <th>Nome</th>
+                            <th>Código de Barras</th>
                             <th>Quantidade</th>
                             <th>Preço Venda</th>
                             <th>Validade</th>
@@ -61,17 +62,18 @@
                         @foreach (var item in Model)
                         {
 
-                            <tr>
-                                <td>@item.Product.Name</td>
-                                <td>@item.Quantity</td>
-                                <td>@item.SalesPrice</td>
+                        <tr>
+                            <td>@item.Product.Name</td>
+                            <td>@item.Product.BarCode</td>
+                            <td>@item.Quantity</td>
+                            <td>@item.SalesPrice</td>
 
-                                <td>@item.ValidationDate</td>
+                            <td>@item.ValidationDate</td>
 
-                                <td>
-                                    <a asp-action="Details" asp-controller="Stock" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
-                                </td>
-                            </tr>
+                            <td>
+                                <a asp-action="Details" asp-controller="Stock" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
+                            </td>
+                        </tr>
                         }
 
                     </tbody>

@@ -61,9 +61,12 @@
                 </div>
                 <div class="col-md-9 col-print-9">
                     <ul class="list-inline">
-                        <li>Tempo do Caixa Aberto #: <strong>15240776</strong></li>
+                        @if (_openBox.GetSaleBox() != null)
+                        {
+                            <li>Tempo do Caixa Aberto #: <strong id="setTime">@_openBox.GetSaleBox().OpenTime()</strong></li>
+                        }
                         <li>Data: <strong>Nov 22, 2013</strong></li>
-                        <li>Valor Total: <strong>$12,221</strong></li>
+                        <li>Valor Total: <strong id="totalPagar">R$0.00</strong></li>
                     </ul>
                 </div>
             </div>
@@ -136,26 +139,20 @@
             <div class="widget-header clearfix">
                 <h3><i class="icon ion-ios-compose-outline"></i> <span>Lista de Compra</span></h3>
             </div>
-            <div class="widget-content">
+            <div class="widget-content" style="overflow: auto; height: 480px; flex-direction: column-reverse; display:flex" id="tableinvoice">
                 <div class="widget-content">
-                    <table class="table table-condensed">
+                    <table class="table table-condensed" id="invoiceBox" >
                         <thead>
                             <tr>
                                 <th>#</th>
-                                <th>First Name</th>
-                                <th>Last Name</th>
-                                <th>Username</th>
+                                <th>Produto</th>
+                                <th>Quantidade</th>
+                                <th>Preço Unid</th>
+                                <th>Total</th>
+                                <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>1</td>
-                                <td>Steve</td>
-                                <td>Jobs</td>
-                                <td>wayne</td>
-                            </tr>
-
-                        </tbody>
+                        <tbody></tbody>
                     </table>
                 </div>
             </div>
@@ -167,13 +164,13 @@
                         <div class="row">
                             <div class="col-xs-4 col-xs-offset-4 col-print-6 col-print-offset-2">
                                 <p>Subtotal</p>
-                                <p>VAT (10%)</p>
+                                <p>Desconto</p>
                                 <p>Total</p>
                             </div>
                             <div class="col-xs-4 text-right col-print-4">
-                                <p>$11,110</p>
-                                <p>$1,111</p>
-                                <p>$12,221</p>
+                                <p id="resultSubTotal">R$ 0.00</p>
+                                <p id="totaldicount">R$ 0.00</p>
+                                <p id="resultTotalPayment">R$ 0.00</p>
                             </div>
                         </div>
                     </div>
