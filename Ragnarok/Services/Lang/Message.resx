@@ -168,4 +168,7 @@
   <data name="MSG_S_006" xml:space="preserve">
     <value>Ordem de compra criada com sucesso. </value>
   </data>
+  <data name="MSG_S_007" xml:space="preserve">
+    <value>Venda registrada com sucesso!</value>
+  </data>
 </root>

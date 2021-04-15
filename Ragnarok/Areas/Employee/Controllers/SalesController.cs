@@ -3,7 +3,9 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Ragnarok.Models;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
+using Ragnarok.Services.Lang;
 using Ragnarok.Services.Login;
+using Ragnarok.Services.Stock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -17,18 +19,20 @@ namespace Ragnarok.Areas.Employee.Controllers
     {
         private readonly ISalesOrderRepository _salesOrderRepository;
         private readonly ISaleBoxRepository _saleBoxRepository;
-        private readonly IClientRepository _clientRepository;
-        private readonly IStockRepository _stockRepository;
+        private readonly IClientRepository _clientRepository;        
+        private readonly InventoryManagement _inventoryManagement;
         private readonly OpenBox _openBox;
         private readonly EmployeeLogin _employeeLogin;
 
 
-        public SalesController(ISalesOrderRepository salesOrderRepository, ISaleBoxRepository saleBoxRepository, IClientRepository clientRepository,
+        public SalesController(ISalesOrderRepository salesOrderRepository, ISaleBoxRepository saleBoxRepository,
+            InventoryManagement inventoryManagement, IClientRepository clientRepository,
             OpenBox openBox, EmployeeLogin employeeLogin)
         {
             _salesOrderRepository = salesOrderRepository;
             _saleBoxRepository = saleBoxRepository;
             _clientRepository = clientRepository;
+            _inventoryManagement = inventoryManagement;
             _openBox = openBox;
             _employeeLogin = employeeLogin;
         }
@@ -96,12 +100,19 @@ namespace Ragnarok.Areas.Employee.Controllers
             return RedirectToAction(nameof(Box));
         }
         [HttpPost]
+        [BoxAuthorization]
         public async Task<IActionResult> InsertSalesAsync(SalesOrder order)
         {
             if (ModelState.IsValid)
             {
                 order.SaleBoxId = _openBox.GetSaleBox().Id;
-                order.InsertDate = DateTime.Now;                
+                order.InsertDate = DateTime.Now;
+
+                await _inventoryManagement.StockManagementRemoveAsync(order.SalesItem, _employeeLogin.GetEmployee().BusinessId);
+                await _salesOrderRepository.InsertAsync(order);
+
+                TempData["MSG_S"] = Message.MSG_S_007;
+                return Json("Ok");
 
             }
             return Json("Ok");

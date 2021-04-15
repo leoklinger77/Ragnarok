@@ -72,7 +72,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_S"] = Message.MSG_S_006;
                 foreach (var item in order.PurchaseItemOrder)
                 {
-                    await _inventoryManagement.StockManagementAsync(item, order.RegisterEmployeeId);
+                    await _inventoryManagement.StockManagementAddAsync(item, order.RegisterEmployeeId);
                 }
                 
                 return Json("Ok");

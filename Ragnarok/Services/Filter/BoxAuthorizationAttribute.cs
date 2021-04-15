@@ -7,12 +7,12 @@ namespace Ragnarok.Services.Filter
 {
     public class BoxAuthorizationAttribute : Attribute, IAuthorizationFilter
     {
-        private EmployeeLogin _employeeLogin;
+        private OpenBox _openBox;
         public void OnAuthorization(AuthorizationFilterContext context)
         {
-            _employeeLogin = (EmployeeLogin)context.HttpContext.RequestServices.GetService(typeof(EmployeeLogin));
+            _openBox = (OpenBox)context.HttpContext.RequestServices.GetService(typeof(OpenBox));
 
-            if (_employeeLogin.GetEmployee() == null)
+            if (_openBox.GetSaleBox() == null)
             {
                 context.Result = new RedirectToActionResult("Box", "Sales", new { Area = "Employee" }, "#ClosedBox");
             }

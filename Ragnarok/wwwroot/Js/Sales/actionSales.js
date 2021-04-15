@@ -39,7 +39,7 @@ $(function () {
     }
 });
 
-var totalUnd = 0.0;
+var totalFinish = 0.0;
 var totaldicount = 0.0
 
 function selectProductStock() {
@@ -90,8 +90,10 @@ function selectProductStock() {
                         $('#priceLabel').html("Preço: " + salesOfdicount.toFixed(2));
                     });
 
-                    totalUnd += (salesPrice * quantity);
-                    totaldicount += discount;
+                    totalFinish += (salesPrice * quantity);
+                    totaldicount += (discount * quantity);
+
+                    salesOfdicount = salesOfdicount * quantity;
 
                     cadeia = "<tr>" +
                         "<td>" + productId + "</td>" +
@@ -106,11 +108,11 @@ function selectProductStock() {
 
                     //$('#totalTop').html('R$ ' + (total - totalDiscont));
 
-                    $('#resultSubTotal').html('R$ ' + totalUnd.toFixed(2));
+                    $('#resultSubTotal').html('R$ ' + totalFinish.toFixed(2));
 
                     $('#totaldicount').html('R$ ' + totaldicount.toFixed(2));
-                    $('#resultTotalPayment').html('R$ ' + (totalUnd - totaldicount).toFixed(2));
-                    $('#totalPagar').html('R$ ' + (totalUnd - totaldicount).toFixed(2));
+                    $('#resultTotalPayment').html('R$ ' + (totalFinish - totaldicount).toFixed(2));
+                    $('#totalPagar').html('R$ ' + (totalFinish - totaldicount).toFixed(2));
                 }
             }
         });
@@ -150,7 +152,7 @@ $('#selectPayment').change(function () {
 $('#moneyRecebido').change(function () {
     var money = $(this).val();
 
-    var result = (money - (totalUnd - totaldicount));
+    var result = (money - (totalFinish - totaldicount));
 
     $('#troco').val(result.toFixed(2));
 
@@ -165,13 +167,13 @@ $('#finishSales').click(function () {
 
         if (i == 0) {
             envio += "SalesItem:[{Quantity:'" + $(this).find('td').eq(2).text() +
-                "',Price:'" + $(this).find('td').eq(5).text() +
+                "',Price:'" + $(this).find('td').eq(3).text() +
                 "',StockId:'"+ $(this).find('td').eq(0).text() +
                 "',Discount:'" + $(this).find('td').eq(4).text() + "'}";
 
         } else {
             envio += ",{Quantity:'" + $(this).find('td').eq(2).text() +
-                "',Price:'" + $(this).find('td').eq(5).text() +
+                "',Price:'" + $(this).find('td').eq(3).text() +
                 "',StockId:'" + $(this).find('td').eq(0).text() +
                 "',Discount:'" + $(this).find('td').eq(4).text() +"'}";
         }
@@ -186,7 +188,7 @@ $('#finishSales').click(function () {
         url: "/Employee/Sales/InsertSales",
         data: { order, order },
         success: function (message) {
-
+            window.location.href = "/Employee/Sales/Box";
         }
     });
 

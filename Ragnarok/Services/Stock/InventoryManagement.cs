@@ -1,6 +1,7 @@
 ﻿using Ragnarok.Models.ManyToMany;
 using Ragnarok.Repository.Interfaces;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 
 namespace Ragnarok.Services.Stock
@@ -14,7 +15,7 @@ namespace Ragnarok.Services.Stock
             _stockRepository = stockRepository;
         }
 
-        public async Task StockManagementAsync(PurchaseItemOrder itemOrder, int BusinessId)
+        public async Task StockManagementAddAsync(PurchaseItemOrder itemOrder, int BusinessId)
         {
             Models.Stock stockDB = await _stockRepository.FindByIdAsync(itemOrder.ProductId, BusinessId);
             if (stockDB == null)
@@ -33,6 +34,20 @@ namespace Ragnarok.Services.Stock
                 stockDB.SalesPrice = itemOrder.SalesPrice;
                 await _stockRepository.Update(stockDB);
             }
+        }
+        public async Task StockManagementRemoveAsync(ICollection<SalesItem> salesItem, int BusinessId)
+        {
+            foreach (var item in salesItem)
+            {
+                Models.Stock stockDB = await _stockRepository.FindByIdAsync(item.StockId, BusinessId);
+                if (stockDB != null)
+                {
+                    stockDB.RemoveQuantityStock(item.Quantity);
+                    await _stockRepository.Update(stockDB);
+                }
+                //TODO Implementar throw
+            }
+
         }
     }
 }

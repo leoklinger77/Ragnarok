@@ -212,5 +212,14 @@ namespace Ragnarok.Services.Lang {
                 return ResourceManager.GetString("MSG_S_006", resourceCulture);
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to Venda registrada com sucesso!.
+        /// </summary>
+        public static string MSG_S_007 {
+            get {
+                return ResourceManager.GetString("MSG_S_007", resourceCulture);
+            }
+        }
     }
 }
