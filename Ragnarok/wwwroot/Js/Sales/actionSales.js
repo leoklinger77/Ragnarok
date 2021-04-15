@@ -1,7 +1,4 @@
 ﻿$(document).ready(function () {
-
-
-
     //Seleciona Client
     $('#client').change(function () {
         var clientId = $(this).val();
@@ -21,13 +18,10 @@
                             "<br/> " + item.neighborhood + ", " + item.city + ", " + item.state +
                             "<br/>" +
                             "<div class='contact'>" +
-                            "<p><span>Email:</span> " + item.email + "</p>" +
-                            "<p><span>Phone:</span> " + item.phone + "</p>" +
+                            "<p><span>Email:</span>" + item.email + "</p>" +
+                            "<p><span>Phone:</span>" + item.phone + "</p>" +
                             "</div>"
                         );
-
-
-
                     });
                 }
             }
@@ -48,14 +42,13 @@ $(function () {
 var totalUnd = 0.0;
 var totaldicount = 0.0
 
-
 function selectProductStock() {
 
     var productBarCode = $('#selectProductStock').val();
-    
+
     var letra = productBarCode.substr(productBarCode.length - 1, productBarCode.length);
     var quantity = productBarCode.substr(0, productBarCode.length > 1 ? productBarCode.length - 1 : 1)
-    
+
     if ((letra == 'X' || letra == 'x') && (quantity / quantity == 1)) {
         quantity = (quantity == 0) ? 1 : quantity;
         $('#selectProductStock').val('');
@@ -77,8 +70,9 @@ function selectProductStock() {
                     var productId = 0;
                     var productName = "";
                     var salesPrice = 0.0;
-                    var quantity = parseInt($('#quantity').val());         
+                    var quantity = parseInt($('#quantity').val());
                     var discount = 0.0;
+                    var salesOfdicount = 0.0;
 
                     $('#quantityLabel').html('Quantidade: 1');
                     $('#quantity').val('1');
@@ -88,10 +82,13 @@ function selectProductStock() {
                         productName = item.name;
                         salesPrice = item.priceSale;
                         discount = item.discount;
+
+                        salesOfdicount = salesPrice - discount;
+
                         $('#selectedProductId').val(item.id);
                         $('#productLabel').html("Produto selecionado: " + item.name);
-                        $('#priceLabel').html("Preço: " + item.priceSale);
-                    });                   
+                        $('#priceLabel').html("Preço: " + salesOfdicount.toFixed(2));
+                    });
 
                     totalUnd += (salesPrice * quantity);
                     totaldicount += discount;
@@ -100,26 +97,98 @@ function selectProductStock() {
                         "<td>" + productId + "</td>" +
                         "<td>" + productName + "</td>" +
                         "<td>" + quantity + "</td>" +
-                        "<td>" + salesPrice + "</td>" +
-                        "<td>" + (salesPrice * quantity).toFixed(2) + "</td>" +
+                        "<td>" + salesPrice.toFixed(2) + "</td>" +
+                        "<td>" + discount.toFixed(2) + "</td>" +
+                        "<td>" + salesOfdicount.toFixed(2) + "</td>" +
                         "<td><td><a class ='elimina'><button class='btn-danger' id='DeletaLinha' type='button'><span class='icon ion-android-close' ></span></button></a></td></td>" +
                         "</tr> ";
                     $("#invoiceBox tbody").append(cadeia);
 
                     //$('#totalTop').html('R$ ' + (total - totalDiscont));
 
-                    $('#resultSubTotal').html('R$ ' + totalUnd.toFixed(2)); 
-                    
+                    $('#resultSubTotal').html('R$ ' + totalUnd.toFixed(2));
+
                     $('#totaldicount').html('R$ ' + totaldicount.toFixed(2));
                     $('#resultTotalPayment').html('R$ ' + (totalUnd - totaldicount).toFixed(2));
-                    $('#totalPagar').html('R$ ' + (totalUnd - totaldicount).toFixed(2)); 
-
-
-
-
+                    $('#totalPagar').html('R$ ' + (totalUnd - totaldicount).toFixed(2));
                 }
             }
         });
     }
 }
+
+$('#selectPayment').change(function () {
+
+    var type = $(this).val();
+    switch (type) {
+        case 'Money':
+            $('#fiado').hide();
+            $('#credit').hide();
+            $('#money').show();
+            break;
+
+        case 'Credit':
+            $('#fiado').hide();
+            $('#money').hide();
+            $('#credit').show();
+            break;
+
+        case 'Fiado':
+            $('#credit').hide();
+            $('#money').hide();
+            $('#fiado').show();
+            break;
+
+        default:
+            $('#credit').hide();
+            $('#fiado').hide();
+            $('#money').hide();
+    }
+
+});
+
+$('#moneyRecebido').change(function () {
+    var money = $(this).val();
+
+    var result = (money - (totalUnd - totaldicount));
+
+    $('#troco').val(result.toFixed(2));
+
+});
+
+$('#finishSales').click(function () {
+
+    var envio = "{Notes:'" + $('#noteSales').val() + "', ClientId:'" + $('#selectClient').val() +"',";
+
+    var i = 0;
+    $('#invoiceBox tbody tr').each(function (index) {
+
+        if (i == 0) {
+            envio += "SalesItem:[{Quantity:'" + $(this).find('td').eq(2).text() +
+                "',Price:'" + $(this).find('td').eq(5).text() +
+                "',StockId:'"+ $(this).find('td').eq(0).text() +
+                "',Discount:'" + $(this).find('td').eq(4).text() + "'}";
+
+        } else {
+            envio += ",{Quantity:'" + $(this).find('td').eq(2).text() +
+                "',Price:'" + $(this).find('td').eq(5).text() +
+                "',StockId:'" + $(this).find('td').eq(0).text() +
+                "',Discount:'" + $(this).find('td').eq(4).text() +"'}";
+        }
+        i = 1
+    });
+    envio += "]}";
+
+    var order = eval("(" + envio + ")");
+
+    $.ajax({
+        type: "POST",
+        url: "/Employee/Sales/InsertSales",
+        data: { order, order },
+        success: function (message) {
+
+        }
+    });
+
+});
 

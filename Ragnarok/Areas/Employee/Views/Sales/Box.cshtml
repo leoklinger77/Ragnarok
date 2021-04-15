@@ -5,6 +5,12 @@
 @{
     ViewData["Title"] = "Box";
 }
+
+<script type="text/javascript">
+    window.onload = function () {
+        $('#btn-nav-sidebar-minified').click();
+    }
+</script>
 <div class="container-fluid primary-content">
     <!-- PRIMARY CONTENT HEADING -->
     <div class="primary-content-heading clearfix">
@@ -65,7 +71,8 @@
                         {
                             <li>Tempo do Caixa Aberto #: <strong id="setTime">@_openBox.GetSaleBox().OpenTime()</strong></li>
                         }
-                        <li>Data: <strong>Nov 22, 2013</strong></li>
+
+                        <li>Data: <strong>@DateTime.Now.ToString("dd/MM/yyyy hh:mm:ss")</strong></li>
                         <li>Valor Total: <strong id="totalPagar">R$0.00</strong></li>
                     </ul>
                 </div>
@@ -81,8 +88,7 @@
             <div class="widget-content">
                 <div class="row">
                     <div class="col-sm-12">
-                        <label for="">Codigo de Barras</label>
-                        <input for="Produto" class="form-control fullCpmpanyName" onkeyup="selectProductStock()" id="selectProductStock" />
+                        <input for="Produto" class="form-control fullCpmpanyName" onkeyup="selectProductStock()" id="selectProductStock" placeholder="Entre com o Código de Barras" />
                         <span class="text-danger span-produtcStock"></span>
                     </div>
                 </div>
@@ -101,16 +107,9 @@
                         <input type="hidden" id="price" />
                     </div>
                 </div>
-            </div>
-        </div>
-        <div class="widget">
-            <div class="widget-header clearfix">
-                <h3><i class="icon ion-ios-compose-outline"></i> <span>Cliente</span></h3>
-            </div>
-            <div class="widget-content">
                 <div class="row">
-                    <div class="col-sm-12">
-                        <div class="row">                            
+                    <div class="col-md-12">
+                        <div class="row">
                             <div class="col-md-12">
                                 <label>Selecione o Cliente</label>
                                 <select name="select2" id="client" class="select2" asp-items="@ViewBag.Client">
@@ -126,12 +125,8 @@
                         </address>
                     </div>
                 </div>
-
             </div>
         </div>
-
-
-
     </div>
     <div class="col-md-7">
         <!-- MASKED INPUT -->
@@ -139,15 +134,16 @@
             <div class="widget-header clearfix">
                 <h3><i class="icon ion-ios-compose-outline"></i> <span>Lista de Compra</span></h3>
             </div>
-            <div class="widget-content" style="overflow: auto; height: 480px; flex-direction: column-reverse; display:flex" id="tableinvoice">
+            <div class="widget-content" style="overflow: auto; height: 355px; flex-direction: column-reverse; display:flex" id="tableinvoice">
                 <div class="widget-content">
-                    <table class="table table-condensed" id="invoiceBox" >
+                    <table class="table table-condensed" id="invoiceBox">
                         <thead>
                             <tr>
                                 <th>#</th>
                                 <th>Produto</th>
                                 <th>Quantidade</th>
                                 <th>Preço Unid</th>
+                                <th>Desconto</th>
                                 <th>Total</th>
                                 <th></th>
                             </tr>
@@ -178,15 +174,80 @@
                 <div class="col-sm-6 col-print-6 left-col">
                     <blockquote class="invoice-notes">
                         <strong>Notes:</strong>
-                        <p>Competently brand interactive expertise and interactive solutions. Proactively orchestrate viral innovation vis-a-vis customized leadership.</p>
+                        <textarea id="noteSales" class="form-control"></textarea>
                     </blockquote>
                 </div>
             </div>
-            <div class="invoice-buttons" style="margin-top:0px;margin-right:10px">                
-                <a href="#" class="btn btn-success"><i class="icon ion-ios-arrow-forward"></i> Finalizar Venda</a>
+            <div class="invoice-buttons" style="margin-top:0px;margin-right:10px">
+                <button data-toggle="modal" data-target="#finishSale-modal" class="btn btn-success"><i class="icon ion-ios-arrow-forward"></i> Finalizar Venda</button>
             </div>
         </div>
-
     </div>
-
 </div>
+<!--Insert-->
+<div class="modal fade" id="finishSale-modal" tabindex="-1" role="dialog" aria-hidden="true">
+    <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                <h4 class="modal-title" id="myModalLabel">Finalizar Venda</h4>
+            </div>
+            <div class="modal-body">
+                <form class="form-horizontal">
+                    <div class="form-group">
+                        <label for="task-title" class="control-label sr-only">Title</label>
+                        <div class="col-sm-12">
+                            <select id="selectPayment" class="form-control">
+                                <option>Forma de Pagamento</option>
+                                <option value="Money">Dinheiro</option>
+                                <option value="Debit">Debito</option>
+                                <option value="Credit">Credito</option>
+                                <option value="Fiado">Fiado</option>
+                            </select>
+                        </div>
+                        <br />
+                        <br />
+                        <div id="money" style="display:none">
+                            <div class="col-md-6">
+                                <input id="moneyRecebido" class="form-control" placeholder="Dinheiro recebido" />
+                            </div>
+                            <div class="col-md-6">
+                                <input id="troco" class="form-control" placeholder="Troco" />
+                            </div>
+                        </div>
+                        <div id="fiado" style="display:none">
+                            <div class="col-md-6">
+                                <label>Data de Pagamento</label>
+                                <input id="" class="form-control" type="date" />
+                            </div>
+                        </div>
+                        <div id="credit" style="display:none">
+                            <div class="col-md-6">
+                                <label>Quantidade de Parcelas</label>
+                                <select id="parcels" class="form-control">
+                                    <option value="1">1x</option>
+                                    <option value="2">2x</option>
+                                    <option value="3">3x</option>
+                                    <option value="4">4x</option>
+                                    <option value="5">5x</option>
+                                    <option value="6">6x</option>
+                                    <option value="7">7x</option>
+                                    <option value="8">8x</option>
+                                    <option value="9">9x</option>
+                                    <option value="10">10x</option>
+                                    <option value="11">11x</option>
+                                    <option value="12">12x</option>
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                    <button type="button" class="btn btn-success" id="finishSales">Salvar</button>
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--End Insert-->
+
+

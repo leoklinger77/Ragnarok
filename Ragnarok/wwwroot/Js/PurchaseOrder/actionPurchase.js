@@ -62,7 +62,7 @@
         var envio = "{SupplierId:'" + $('#selectProvider').val() + "',Notes:'" + $('#notes').val() +"',";
 
         var i = 0;
-        var list = 0;
+        
         $('#invoicePurchase tbody tr').each(function (index) {
 
             if (i == 0) {
@@ -72,7 +72,7 @@
                     "',Quantity:'" + $(this).find('td').eq(2).text() +
                     "',Discount:'" + $(this).find('td').eq(5).text() +
                     "',ValidationDate:'" + $(this).find('td').eq(7).text() + "'}"
-                list++;
+                
             } else {
                 envio += ",{ProductId:'" + $(this).find('td').eq(0).text() +
                     "',PurchasePrice:'" + $(this).find('td').eq(3).text() +
@@ -80,7 +80,7 @@
                     "',Quantity:'" + $(this).find('td').eq(2).text() +
                     "',Discount:'" + $(this).find('td').eq(5).text() +
                     "',ValidationDate:'" + $(this).find('td').eq(7).text() + "'}"
-                list++;
+                
             }
             i = 1;
         });

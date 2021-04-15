@@ -95,6 +95,17 @@ namespace Ragnarok.Areas.Employee.Controllers
             _openBox.Remove();
             return RedirectToAction(nameof(Box));
         }
+        [HttpPost]
+        public async Task<IActionResult> InsertSalesAsync(SalesOrder order)
+        {
+            if (ModelState.IsValid)
+            {
+                order.SaleBoxId = _openBox.GetSaleBox().Id;
+                order.InsertDate = DateTime.Now;                
+
+            }
+            return Json("Ok");
+        }
 
     }
 }
