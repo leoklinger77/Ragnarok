@@ -18,5 +18,6 @@ namespace Ragnarok.Repository.Interfaces
         ICollection<ClientPhysical> FindByCpf(string cpf, int businessId);
         ICollection<ClientJuridical> FindByCnpj(string cnpj, int businessId);
         void RemoveContact(int id);
+        Task<Client> QuickSaleAsync(int businessId);
     }
 }

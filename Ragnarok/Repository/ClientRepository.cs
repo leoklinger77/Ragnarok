@@ -75,7 +75,7 @@ namespace Ragnarok.Repository
             try
             {
                 return await _context.Client.Where(x => x.Id == id && x.RegisterEmployee.BusinessId == businessId)
-                    .Include(x=>x.Address)
+                    .Include(x => x.Address)
                     .Include(x => x.Address.City)
                     .Include(x => x.Address.City.State)
                     .Include(x => x.Contacts)
@@ -90,7 +90,7 @@ namespace Ragnarok.Repository
 
         public int FindTheClientIdByAddress(int addressId)
         {
-            return _context.Client.Where(x => x.AddressId == addressId)     
+            return _context.Client.Where(x => x.AddressId == addressId)
                     .AsNoTracking()
                     .First().Id;
         }
@@ -106,6 +106,30 @@ namespace Ragnarok.Repository
             {
 
                 throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<Client> QuickSaleAsync(int businessId)
+        {
+            try
+            {
+                Client client = await _context.ClientPhysical.Where(x => x.FullName.Contains("Venda Rápida") && x.RegisterEmployee.BusinessId == businessId)
+                    .Include(x => x.Contacts)
+                    .Include(x => x.Address.City.State)                    
+                    .FirstOrDefaultAsync();
+                if (client == null)
+                {
+                    client = await _context.ClientJuridical.Where(x => x.CompanyName.Contains("Venda Rápida") && x.RegisterEmployee.BusinessId == businessId)
+                        .Include(x => x.Contacts)
+                        .Include(x => x.Address.City.State)
+                        .FirstOrDefaultAsync();
+                }
+                return client;
+            }
+            catch (Exception)
+            {
+
+                throw;
             }
         }
 
@@ -139,7 +163,7 @@ namespace Ragnarok.Repository
                     return;
                 }
                 throw new Exception("Id not found");
-                
+
             }
             catch (Exception e)
             {
@@ -156,7 +180,7 @@ namespace Ragnarok.Repository
                 _context.Entry(address).Property(x => x.InsertDate).IsModified = false;
                 _context.SaveChanges();
             }
-            catch (Exception e) 
+            catch (Exception e)
             {
 
                 throw new Exception(e.Message);

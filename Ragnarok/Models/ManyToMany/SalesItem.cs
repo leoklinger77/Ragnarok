@@ -28,19 +28,17 @@ namespace Ragnarok.Models.ManyToMany
             Price = price;
             Discount = discount;
         }
-
         public override bool Equals(object obj)
         {
             return obj is SalesItem item &&
-                   EqualityComparer<SalesOrder>.Default.Equals(SalesOrder, item.SalesOrder) &&
-                   EqualityComparer<Stock>.Default.Equals(Stock, item.Stock);
+                   SalesOrderId == item.SalesOrderId &&
+                   StockId == item.StockId;
         }
 
         public override int GetHashCode()
         {
-            return HashCode.Combine(SalesOrder, Stock);
+            return HashCode.Combine(SalesOrderId, StockId);
         }
-
         public double Total()
         {
             return (Quantity * Price) - Discount;

@@ -49,7 +49,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             DiscountProductStock discount = await _discountProductStockRepository.FindByProdutDiscountAsync(stock.Id);
 
             ProductJsonConsultPurchase productJson = new ProductJsonConsultPurchase();
-            productJson.Id = stock.Product.Id.ToString();
+            productJson.Id = stock.Id.ToString();
             productJson.Name = stock.Product.Name;
             productJson.BarCode = stock.Product.BarCode;
             productJson.PriceSale = stock.SalesPrice;

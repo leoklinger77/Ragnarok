@@ -35,6 +35,16 @@ namespace Ragnarok.Models
             UpdateDate = updateDate;
             SalesItem = salesItem;
         }
+        public override bool Equals(object obj)
+        {
+            return obj is SalesOrder order &&
+                   Id == order.Id;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(Id);
+        }
 
         public double TotalSales()
         {

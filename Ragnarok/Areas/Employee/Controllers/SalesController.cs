@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
+using Ragnarok.Data;
 using Ragnarok.Models;
+using Ragnarok.Models.ManyToMany;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Lang;
@@ -19,7 +21,8 @@ namespace Ragnarok.Areas.Employee.Controllers
     {
         private readonly ISalesOrderRepository _salesOrderRepository;
         private readonly ISaleBoxRepository _saleBoxRepository;
-        private readonly IClientRepository _clientRepository;        
+        private readonly IClientRepository _clientRepository;
+        private readonly RagnarokContext _context;
         private readonly InventoryManagement _inventoryManagement;
         private readonly OpenBox _openBox;
         private readonly EmployeeLogin _employeeLogin;
@@ -27,7 +30,7 @@ namespace Ragnarok.Areas.Employee.Controllers
 
         public SalesController(ISalesOrderRepository salesOrderRepository, ISaleBoxRepository saleBoxRepository,
             InventoryManagement inventoryManagement, IClientRepository clientRepository,
-            OpenBox openBox, EmployeeLogin employeeLogin)
+            OpenBox openBox, EmployeeLogin employeeLogin, RagnarokContext context)
         {
             _salesOrderRepository = salesOrderRepository;
             _saleBoxRepository = saleBoxRepository;
@@ -35,6 +38,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             _inventoryManagement = inventoryManagement;
             _openBox = openBox;
             _employeeLogin = employeeLogin;
+            _context = context;
         }
         [HttpGet]
         public async Task<IActionResult> IndexAsync()
@@ -44,7 +48,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         }
         [HttpGet]
         public async Task<IActionResult> Box()
-        {   
+        {
             Dictionary<string, string> listClient = new Dictionary<string, string>();
             foreach (var item in await _clientRepository.FIndAllsAsync(_employeeLogin.GetEmployee().BusinessId))
             {
@@ -60,7 +64,12 @@ namespace Ragnarok.Areas.Employee.Controllers
                 }
             }
             ViewBag.Client = listClient.Select(x => new SelectListItem(x.Value, x.Key));
-            return View();
+            
+            SalesOrder order = new SalesOrder
+            {
+                Client = await _clientRepository.QuickSaleAsync(_employeeLogin.GetEmployee().BusinessId)
+            };
+            return View(order);
         }
         [HttpGet]
         public async Task<IActionResult> OpenSaleBoxAsync(double? ApertureValue)
@@ -103,19 +112,43 @@ namespace Ragnarok.Areas.Employee.Controllers
         [BoxAuthorization]
         public async Task<IActionResult> InsertSalesAsync(SalesOrder order)
         {
-            if (ModelState.IsValid)
+            using var beginTransaction = await _context.Database.BeginTransactionAsync();
+            try
             {
-                order.SaleBoxId = _openBox.GetSaleBox().Id;
-                order.InsertDate = DateTime.Now;
+                if (ModelState.IsValid)
+                {
+                    order.SaleBoxId = _openBox.GetSaleBox().Id;
+                    order.InsertDate = DateTime.Now;
 
-                await _inventoryManagement.StockManagementRemoveAsync(order.SalesItem, _employeeLogin.GetEmployee().BusinessId);
-                await _salesOrderRepository.InsertAsync(order);
+                    ICollection<SalesItem> SalesItem = new HashSet<SalesItem>();                    
+                    foreach (var item in order.SalesItem)
+                    {
+                        if (!SalesItem.Contains(item))
+                        {
+                            SalesItem.Add(item);
+                        }
+                        else
+                        {
+                            SalesItem.First(x => x.StockId == item.StockId).Quantity += item.Quantity;
+                        }
+                    }
+                    order.SalesItem = SalesItem;
+                    await _inventoryManagement.StockManagementRemoveAsync(order.SalesItem, _employeeLogin.GetEmployee().BusinessId);
+                    await _salesOrderRepository.InsertAsync(order);                    
 
-                TempData["MSG_S"] = Message.MSG_S_007;
+                    TempData["MSG_S"] = Message.MSG_S_007;
+                    await beginTransaction.CommitAsync();
+                    return Json("Ok");
+
+                }
                 return Json("Ok");
-
             }
-            return Json("Ok");
+            catch (Exception)
+            {
+                await beginTransaction.RollbackAsync();
+                return Json("Error");
+            }
+
         }
 
     }

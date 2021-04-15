@@ -4,11 +4,28 @@
 
 @{
     ViewData["Title"] = "Box";
+    var clientName = "";
+    var clientId = 0;
+
+    if (Model.Client != null && Model.Client is ClientJuridical)
+    {
+        ClientJuridical item = (ClientJuridical)@Model.Client;
+        clientName = item.CompanyName;
+        clientId = item.Id;
+    }
+    else if(Model.Client != null && Model.Client is ClientPhysical)
+    {
+        ClientPhysical item = (ClientPhysical)Model.Client;
+        clientName = item.FullName;
+        clientId = item.Id;
+    }
+
 }
 
 <script type="text/javascript">
     window.onload = function () {
         $('#btn-nav-sidebar-minified').click();
+
     }
 </script>
 <div class="container-fluid primary-content">
@@ -118,10 +135,34 @@
                             </div>
                         </div>
                         <br />
-                        <p class="name" id="companyNameSales"></p>
-                        <input id="selectClient" type="hidden" />
+                        <p class="name" id="companyNameSales">@clientName </p>
+                        <input id="selectClient" type="hidden" value="@clientId" />
                         <address id="companyDescriptionSale">
+                            @if (Model.Client != null)
+                            {
+                                if (Model.Client is ClientJuridical)
+                                {
+                                    ClientJuridical item = (ClientJuridical)Model.Client;
+                                    @item.Address.Street @item.Address.Number
+                                    <br /><p>@item.Address.Neighborhood ,@item.Address.City @item.Address.City.State.Name</p>
+                                    <br />
+                                    <div class="contact">
+                                        <p><span>Email:</span>@item.Email</p>
+                                        <p><span>Phone:</span> @item.Contacts.FirstOrDefault().DDD - @item.Contacts.FirstOrDefault().Number </p>
+                                    </div>
+                                }
+                                else
+                                {
+                                    ClientPhysical item = (ClientPhysical)Model.Client;
+                                    @item.Address.Street @item.Address.Number
+                                    <br /><p>@item.Address.Neighborhood ,@item.Address.City.Name @item.Address.City.State.Name</p>
+                                    <div class="contact">
+                                        <p><span>E-mail:</span>@item.Email</p>
+                                        <p><span>Contato:</span> @item.Contacts.FirstOrDefault().DDD - @item.Contacts.FirstOrDefault().Number </p>
+                                    </div>
+                                }
 
+                            }
                         </address>
                     </div>
                 </div>
@@ -249,5 +290,3 @@
     </div>
 </div>
 <!--End Insert-->
-
-
