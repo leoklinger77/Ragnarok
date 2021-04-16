@@ -10,8 +10,7 @@ namespace Ragnarok.Models
         public int Id { get; set; }
         public DateTime Opening { get; set; }
         public DateTime? Clouse { get; set; }
-        public double ApertureValue { get; set; }
-        public double ClosingValue { get; set; }
+        public double ApertureValue { get; set; }        
         public Employee RegisterSales { get; set; }
         public int RegisterSalesId { get; set; }
 
@@ -21,13 +20,12 @@ namespace Ragnarok.Models
         {
         }
 
-        public SaleBox(int id, DateTime opening, DateTime? clouse, double apertureValue, double closingValue, Employee registerSales)
+        public SaleBox(int id, DateTime opening, DateTime? clouse, double apertureValue, Employee registerSales)
         {
             Id = id;
             Opening = opening;
             Clouse = clouse;
-            ApertureValue = apertureValue;
-            ClosingValue = closingValue;
+            ApertureValue = apertureValue;            
             RegisterSales = registerSales;
         }
 

@@ -8,21 +8,23 @@ namespace Ragnarok.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "TB_DiscountProduct",
+                name: "Payment",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
-                    DiscountAmount = table.Column<double>(nullable: false),
-                    Active = table.Column<bool>(nullable: false),
-                    Start = table.Column<DateTime>(nullable: false),
-                    End = table.Column<DateTime>(nullable: false),
-                    InsertDate = table.Column<DateTime>(nullable: false),
-                    UpdateDate = table.Column<DateTime>(nullable: true)
+                    StatusPayment = table.Column<int>(nullable: false),
+                    Amount = table.Column<double>(nullable: false),
+                    Discriminator = table.Column<string>(nullable: false),
+                    SupposedPaymentDate = table.Column<DateTime>(nullable: true),
+                    Invoice = table.Column<int>(nullable: true),
+                    TimeOfPayment = table.Column<DateTime>(nullable: true),
+                    DueData = table.Column<DateTime>(nullable: true),
+                    PayDay = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_TB_DiscountProduct", x => x.Id);
+                    table.PrimaryKey("PK_Payment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -255,6 +257,31 @@ namespace Ragnarok.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TB_DiscountProduct",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    DiscountAmount = table.Column<double>(nullable: false),
+                    Active = table.Column<bool>(nullable: false),
+                    Start = table.Column<DateTime>(nullable: false),
+                    End = table.Column<DateTime>(nullable: false),
+                    InsertDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    RegisterEmployeeId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_DiscountProduct", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TB_DiscountProduct_TB_Employee_RegisterEmployeeId",
+                        column: x => x.RegisterEmployeeId,
+                        principalTable: "TB_Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_Product",
                 columns: table => new
                 {
@@ -272,6 +299,28 @@ namespace Ragnarok.Migrations
                     table.ForeignKey(
                         name: "FK_TB_Product_TB_Employee_RegisterEmployeeId",
                         column: x => x.RegisterEmployeeId,
+                        principalTable: "TB_Employee",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_SaleBox",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Opening = table.Column<DateTime>(nullable: false),
+                    Clouse = table.Column<DateTime>(nullable: true),
+                    ApertureValue = table.Column<double>(nullable: false),
+                    RegisterSalesId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_SaleBox", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TB_SaleBox_TB_Employee_RegisterSalesId",
+                        column: x => x.RegisterSalesId,
                         principalTable: "TB_Employee",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
@@ -360,6 +409,42 @@ namespace Ragnarok.Migrations
                         name: "FK_TB_Stock_TB_Product_ProductId",
                         column: x => x.ProductId,
                         principalTable: "TB_Product",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "TB_SalesOrder",
+                columns: table => new
+                {
+                    Id = table.Column<int>(nullable: false)
+                        .Annotation("SqlServer:Identity", "1, 1"),
+                    Notes = table.Column<string>(nullable: true),
+                    ClientId = table.Column<int>(nullable: false),
+                    SaleBoxId = table.Column<int>(nullable: false),
+                    InsertDate = table.Column<DateTime>(nullable: false),
+                    UpdateDate = table.Column<DateTime>(nullable: true),
+                    PaymentId = table.Column<int>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_SalesOrder", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_TB_SalesOrder_TB_Client_ClientId",
+                        column: x => x.ClientId,
+                        principalTable: "TB_Client",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TB_SalesOrder_Payment_PaymentId",
+                        column: x => x.PaymentId,
+                        principalTable: "Payment",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TB_SalesOrder_TB_SaleBox_SaleBoxId",
+                        column: x => x.SaleBoxId,
+                        principalTable: "TB_SaleBox",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                 });
@@ -462,6 +547,33 @@ namespace Ragnarok.Migrations
                 });
 
             migrationBuilder.CreateTable(
+                name: "TB_SalesItem",
+                columns: table => new
+                {
+                    SalesOrderId = table.Column<int>(nullable: false),
+                    StockId = table.Column<int>(nullable: false),
+                    Quantity = table.Column<int>(nullable: false),
+                    Price = table.Column<double>(nullable: false),
+                    Discount = table.Column<double>(nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TB_SalesItem", x => new { x.StockId, x.SalesOrderId });
+                    table.ForeignKey(
+                        name: "FK_TB_SalesItem_TB_SalesOrder_SalesOrderId",
+                        column: x => x.SalesOrderId,
+                        principalTable: "TB_SalesOrder",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                    table.ForeignKey(
+                        name: "FK_TB_SalesItem_TB_Stock_StockId",
+                        column: x => x.StockId,
+                        principalTable: "TB_Stock",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Restrict);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "TB_PurchaseItemOrder",
                 columns: table => new
                 {
@@ -551,6 +663,11 @@ namespace Ragnarok.Migrations
                 column: "DiscountProductId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_DiscountProduct_RegisterEmployeeId",
+                table: "TB_DiscountProduct",
+                column: "RegisterEmployeeId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_Employee_AddressId",
                 table: "TB_Employee",
                 column: "AddressId");
@@ -596,6 +713,32 @@ namespace Ragnarok.Migrations
                 column: "SupplierId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_TB_SaleBox_RegisterSalesId",
+                table: "TB_SaleBox",
+                column: "RegisterSalesId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_SalesItem_SalesOrderId",
+                table: "TB_SalesItem",
+                column: "SalesOrderId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_SalesOrder_ClientId",
+                table: "TB_SalesOrder",
+                column: "ClientId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_SalesOrder_PaymentId",
+                table: "TB_SalesOrder",
+                column: "PaymentId",
+                unique: true);
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TB_SalesOrder_SaleBoxId",
+                table: "TB_SalesOrder",
+                column: "SaleBoxId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_TB_Stock_ProductId",
                 table: "TB_Stock",
                 column: "ProductId");
@@ -626,25 +769,37 @@ namespace Ragnarok.Migrations
                 name: "TB_PurchaseItemOrder");
 
             migrationBuilder.DropTable(
-                name: "TB_Category");
+                name: "TB_SalesItem");
 
             migrationBuilder.DropTable(
-                name: "TB_Client");
+                name: "TB_Category");
 
             migrationBuilder.DropTable(
                 name: "TB_DiscountProduct");
 
             migrationBuilder.DropTable(
-                name: "TB_Stock");
-
-            migrationBuilder.DropTable(
                 name: "TB_PurchaseOrder");
 
             migrationBuilder.DropTable(
-                name: "TB_Product");
+                name: "TB_SalesOrder");
+
+            migrationBuilder.DropTable(
+                name: "TB_Stock");
 
             migrationBuilder.DropTable(
                 name: "TB_Supplier");
+
+            migrationBuilder.DropTable(
+                name: "TB_Client");
+
+            migrationBuilder.DropTable(
+                name: "Payment");
+
+            migrationBuilder.DropTable(
+                name: "TB_SaleBox");
+
+            migrationBuilder.DropTable(
+                name: "TB_Product");
 
             migrationBuilder.DropTable(
                 name: "TB_Employee");

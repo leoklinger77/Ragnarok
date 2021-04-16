@@ -101,8 +101,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         public async Task<IActionResult> CloseSaleBoxAsync()
         {
 
-            SaleBox saleBox = _openBox.GetSaleBox();
-            saleBox.ClosingValue = 1000;
+            SaleBox saleBox = _openBox.GetSaleBox();            
             saleBox.Clouse = DateTime.Now;
             await _saleBoxRepository.UpdateAsync(saleBox);
             _openBox.Remove();
@@ -141,15 +140,13 @@ namespace Ragnarok.Areas.Employee.Controllers
                     return Json("Ok");
 
                 }
-                return Json("Ok");
+                return Json("Invalid");
             }
-            catch (Exception)
+            catch (Exception e)
             {
                 await beginTransaction.RollbackAsync();
-                return Json("Error");
+                return Json("Error: " + e.Message);
             }
-
         }
-
     }
 }

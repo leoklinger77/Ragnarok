@@ -44,6 +44,12 @@ namespace Ragnarok.Data
         public DbSet<SalesItem> SalesItem { get; set; }
         public DbSet<SaleBox> SaleBox { get; set; }
 
+        public DbSet<Payment> Payment { get; set; }
+        public DbSet<Debit> Debit { get; set; }
+        public DbSet<Credit> Credit { get; set; }
+        public DbSet<Ticket> Ticket { get; set; }
+        public DbSet<AfterPaid> AfterPaid { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<CategoryProduct>()

@@ -19,13 +19,16 @@ namespace Ragnarok.Models
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
+        public Payment Payment { get; set; }
+        public int PaymentId { get; set; }
+
         public ICollection<SalesItem> SalesItem { get; set; } = new List<SalesItem>();
 
         public SalesOrder()
         {
         }
 
-        public SalesOrder(int id, string notes, Client client, SaleBox saleBox, DateTime insertDate, DateTime? updateDate, ICollection<SalesItem> salesItem)
+        public SalesOrder(int id, string notes, Client client, SaleBox saleBox, DateTime insertDate, DateTime? updateDate, Payment payment)
         {
             Id = id;
             Notes = notes;
@@ -33,7 +36,7 @@ namespace Ragnarok.Models
             SaleBox = saleBox;
             InsertDate = insertDate;
             UpdateDate = updateDate;
-            SalesItem = salesItem;
+            Payment = payment;
         }
         public override bool Equals(object obj)
         {
