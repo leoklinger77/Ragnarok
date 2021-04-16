@@ -55,10 +55,6 @@ namespace Ragnarok.Areas.Employee.Controllers
                     listSupplier.Add(supplier.Id.ToString(), supplier.FullName);
                 }
             }
-            ViewBag.Supplier = listSupplier.ToList().Select(x => new SelectListItem(x.Value, x.Key));
-            ICollection<Product> list = await _productRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
-            ViewBag.Product = list.Select(x => new SelectListItem(x.Name + " - " + x.BarCode, x.Id.ToString()));
-
             return View();
         }
         [HttpPost]

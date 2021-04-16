@@ -1,7 +1,7 @@
-﻿
-@model ICollection<Product>
+﻿@model IPagedList<Product>
 @{
     ViewData["Title"] = "Index";
+    var search = Context.Request.Query["search"];
 }
 
 <div class="container-fluid primary-content">
@@ -50,34 +50,55 @@
             }
 
             <div class="table-responsive">
-                <table id="datatable-column-interactive" class="table table-sorting table-hover table-bordered colored-header datatable ">
-                    <thead>
-                        <tr>
-                            <th>Nome</th>
-                            <th>Ação</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach (var item in Model)
-                        {
-
+                <form method="get" asp-action="Index" asp-controller="Product" asp-area="Employee">
+                    <div class="col-md-4">
+                        <div class="input-group input-group-sm">
+                            <input class="form-control" name="search" id="search" value="@search" placeholder="Pesquise pelo Nome ou Código de barras" />
+                            <div class="input-group-btn">
+                                <button type="submit" class="btn btn-success btn-sm"><i class="icon ion-android-search"></i> Go</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <br />
+                <div class="col-md-12">
+                    <table id="datatable-column-interactive" class="table ">
+                        <thead>
                             <tr>
-                                <td>@item.Name</td>
-                                <td>
-                                    <a asp-action="Details" asp-controller="Product" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
-                                    |
-                                    <a asp-action="Remove" asp-controller="Product" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
-                                </td>
+                                <th>Nome</th>
+                                <th>Codigo de Barras</th>
+                                <th>Ação</th>
                             </tr>
+                        </thead>
+                        <tbody>
+                            @foreach (var item in Model)
+                            {
+
+                                <tr>
+                                    <td>@item.Name</td>
+                                    <td>@item.BarCode</td>
+                                    <td>
+                                        <a asp-action="Details" asp-controller="Product" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
+                                        |
+                                        <a asp-action="Remove" asp-controller="Product" asp-area="Employee" asp-route-id="@item.Id" class="excluir"><i class="icon ion-close"></i> Excluir</a>
+                                    </td>
+                                </tr>
 
 
-                        }
+                            }
 
-                    </tbody>
-                </table>
+                        </tbody>
+
+                    </table>
+                    @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page, search = search }))
+                </div>
+
             </div>
         </div>
     </div>
 
 </div>
+
+
+
 

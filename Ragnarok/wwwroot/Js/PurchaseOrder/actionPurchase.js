@@ -103,6 +103,10 @@
         });
 
     })
+
+    $('').change(function () {
+
+    });
 });
 //Add Product Table
 var total = 0.0;

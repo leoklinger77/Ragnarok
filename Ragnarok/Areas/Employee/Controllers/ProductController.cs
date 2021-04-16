@@ -11,6 +11,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -32,9 +33,9 @@ namespace Ragnarok.Areas.Employee.Controllers
             _employeeLogin = employeeLogin;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page, string search, int? numberPerPage)
         {
-            ICollection<Product> list = await _productRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            IPagedList<Product> list = await _productRepository.FindAllsPagedListAsync(page, search, numberPerPage, _employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]
@@ -98,8 +99,8 @@ namespace Ragnarok.Areas.Employee.Controllers
             {
                 viewModel.Product.UpdateDate = DateTime.Now;
                 foreach (var item in viewModel.categoryList)
-                {                    
-                    viewModel.Product.CategoryProduct.Add(new CategoryProduct { CategoryId = item ,ProductId = viewModel.Product.Id });
+                {
+                    viewModel.Product.CategoryProduct.Add(new CategoryProduct { CategoryId = item, ProductId = viewModel.Product.Id });
                 }
                 List<CategoryProduct> categoryProductsDB = _categoryProductRepository.FindAllsProdut(viewModel.Product.Id).ToList();
                 _categoryProductRepository.Remove(categoryProductsDB);
@@ -118,8 +119,8 @@ namespace Ragnarok.Areas.Employee.Controllers
         public IActionResult Remove(int id)
         {
             try
-            {                
-                _productRepository.Remove(id,_employeeLogin.GetEmployee().BusinessId);
+            {
+                _productRepository.Remove(id, _employeeLogin.GetEmployee().BusinessId);
                 TempData["MSG_S"] = Message.MSG_S_005;
                 return RedirectToAction(nameof(Index));
             }
@@ -142,6 +143,17 @@ namespace Ragnarok.Areas.Employee.Controllers
             productJson.Name = product.Name;
             productJson.BarCode = product.BarCode;
             return Json(productJson);
+        }
+        [HttpPost]
+        public async Task<IActionResult> FindNameOrCodeProdut(string search)
+        {
+            ICollection<Product> list = await _productRepository.FindNameOrCodeProdut(search, _employeeLogin.GetEmployee().BusinessId);
+            if (list.Count > 0)
+            {
+                return Json(list);
+            }
+            return Json("Not found search");
+            
         }
     }
 }

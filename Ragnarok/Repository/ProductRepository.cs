@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Repository
 {
@@ -23,7 +24,7 @@ namespace Ragnarok.Repository
             try
             {
                 return await _context.Product.Where(x => x.RegisterEmployee.BusinessId == businessId)
-                    .Include(x=>x.CategoryProduct)
+                    .Include(x => x.CategoryProduct)
                     .ToListAsync();
             }
             catch (Exception e)
@@ -104,6 +105,38 @@ namespace Ragnarok.Repository
             }
         }
 
+        public async Task<IPagedList<Product>> FindAllsPagedListAsync(int? page, string search, int? numberPerPage, int businessId)
+        {
+            try
+            {
+                int Page = page ?? 1;
+                int quantity = numberPerPage ?? 10;
+                if (string.IsNullOrEmpty(search))
+                {
+                    return await _context.Product.AsQueryable().Where(x => x.RegisterEmployee.BusinessId == businessId).ToPagedListAsync<Product>((int)Page, quantity);
+                }
+                return await _context.Product.AsQueryable()
+                        .Where(x => x.RegisterEmployee.BusinessId == businessId && (x.Name.Contains(search.Trim()) || x.BarCode.Contains(search.Trim())))
+                        .ToPagedListAsync<Product>(Page, quantity);
+            }
+            catch (Exception e)
+            {
 
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<ICollection<Product>> FindNameOrCodeProdut(string search, int businessId)
+        {
+            try
+            {
+                return await _context.Product.Where(x => x.RegisterEmployee.BusinessId == businessId && (x.Name.Contains(search.Trim()) || x.BarCode.Contains(search.Trim()))).ToArrayAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
     }
 }

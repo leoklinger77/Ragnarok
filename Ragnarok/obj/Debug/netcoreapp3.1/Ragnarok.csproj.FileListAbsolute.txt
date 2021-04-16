@@ -463,3 +463,8 @@ C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Discount\Details.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Sales\Index.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Sales\Box.cshtml.g.cs
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\X.PagedList.dll
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\X.PagedList.Mvc.Core.dll
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\X.PagedList.Web.Common.dll

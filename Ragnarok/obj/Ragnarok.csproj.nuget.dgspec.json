@@ -84,6 +84,10 @@
             "System.ServiceModel.Security": {
               "target": "Package",
               "version": "[4.4.*, )"
+            },
+            "X.PagedList.Mvc.Core": {
+              "target": "Package",
+              "version": "[8.0.7, )"
             }
           },
           "imports": [
