@@ -88,6 +88,10 @@
             "X.PagedList.Mvc.Core": {
               "target": "Package",
               "version": "[8.0.7, )"
+            },
+            "bootstrap-select": {
+              "target": "Package",
+              "version": "[1.13.18, )"
             }
           },
           "imports": [

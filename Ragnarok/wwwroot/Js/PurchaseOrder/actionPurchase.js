@@ -104,14 +104,9 @@
 
     })
 
-    $('#selectProduct').change(function () {
-        var search = $(this).val();
-    });
+    
 });
 
-function searchProdutSelect() {
-    var search = $('#s2id_autogen2_search').val();
-}
 
 //Add Product Table
 var total = 0.0;

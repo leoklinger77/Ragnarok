@@ -59,32 +59,39 @@
 
             <div class="table-responsive">
                 <form method="get" asp-action="Index" asp-controller="Product" asp-area="Employee">
-                    <div class="col-md-4 col-lg-offset-8">
+
+                    <div class="col-md-12">
                         <div class="row">
-                            <div class="input-group input-group-sm">
-                                <input class="form-control" name="search" id="search" value="@search" placeholder="Pesquise pelo Nome ou Código de barras" />
-                                <div class="input-group-btn">
-                                    <button id="btn-get-produt" type="submit" class="btn btn-success btn-sm"><i class="icon ion-android-search"></i> Go</button>
+                            <div class="col-md-offset-8 col-md-4">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control" name="search" id="search" value="@search" placeholder="Pesquise pelo Nome ou Código de barras" />
+                                    <div class="input-group-btn">
+                                        <button id="btn-get-produt" type="submit" class="btn btn-success btn-sm"><i class="icon ion-android-search"></i> Go</button>
+                                    </div>
                                 </div>
                             </div>
                         </div>
                     </div>
-                    <div class="col-md-1">
+                    <br />
+                    <br />
+                    <div class="col-md-12">
                         <div class="row">
-                            <select class="form-control" name="numberPerPage" id="numberPerPage" asp-for="@numberPerPage">
-                                <option value="10">10</option>
-                                <option value="30">30</option>
-                                <option value="50">50</option>
-                                <option value="100">100</option>
-                                <option value="500">500</option>
-                                <option value="1000">1000</option>
-                            </select>
+                            <div class="col-md-1">
+                                <select class="form-control" name="numberPerPage" id="numberPerPage" asp-for="@numberPerPage">
+                                    <option value="10">10</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="500">500</option>
+                                    <option value="1000">1000</option>
+                                </select>
+                            </div>
                         </div>
                     </div>
                 </form>
 
                 <br />
-                
+
                 <div class="col-md-12">
                     <table id="datatable-column-interactive" class="table ">
                         <thead>

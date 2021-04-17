@@ -4,3 +4,7 @@
         $('#btn-get-produt').click();
     }    
 });
+
+function searchProduct() {
+
+}

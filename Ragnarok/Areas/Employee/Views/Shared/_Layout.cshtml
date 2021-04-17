@@ -218,21 +218,21 @@
                         </li>
                     </ul>
                     <h3>ESSENTIALS</h3>
-                    <ul class="main-menu">
-                        <li><a asp-action="Index" asp-controller="Stock" asp-area="Employee"><i class="icon ion-social-buffer-outline"></i><span class="text">Estoque</span></a></li>
+                    <ul class="main-menu">                        
+                        <li class="has-submenu">
+                            <a href="#" class="submenu-toggle"><i class="icon ion-android-archive"></i><span class="text">Estoque</span></a>
+                            <ul class="list-unstyled sub-menu collapse">
+                                <li><a asp-action="Index" asp-controller="Stock" asp-area="Employee"><span class="text">Estoque</span></a></li>
+                                <li><a asp-action="Index" asp-controller="Discount" asp-area="Employee"><span class="text">Descontos</span></a></li>
+                            </ul>
+                        </li>
                         <li class="has-submenu">
                             <a href="#" class="submenu-toggle"><i class="icon ion-person"></i><span class="text">Cadastros</span></a>
                             <ul class="list-unstyled sub-menu collapse">
                                 <li><a asp-action="Index" asp-controller="Client" asp-area="Employee"><span class="text">Cliente</span></a></li>
                                 <li><a asp-action="Index" asp-controller="Supplier" asp-area="Employee"><span class="text">Fornecedor</span></a></li>
                                 <li><a asp-action="Index" asp-controller="Category" asp-area="Employee"><span class="text">Categoria</span></a></li>
-                                <li class="has-submenu">
-                                    <a href="#" class="submenu-toggle"><span class="text">Produtos</span></a>
-                                    <ul class="list-unstyled sub-menu collapse">
-                                        <li><a asp-action="Index" asp-controller="Product" asp-area="Employee"><span class="text">Produto</span></a></li>
-                                        <li><a asp-action="Index" asp-controller="Discount" asp-area="Employee"><span class="text">Descontos</span></a></li>
-                                    </ul>
-                                </li>
+                                <li><a asp-action="Index" asp-controller="Product" asp-area="Employee"><span class="text">Produto</span></a></li>                                
                                 <li><a asp-action="Index" asp-controller="Employee" asp-area="Employee"><span class="text">Funcionário</span></a></li>
                                 <li><a asp-action="Index" asp-controller="PositionName" asp-area="Employee"><span class="text">Departamentos</span></a></li>
                             </ul>

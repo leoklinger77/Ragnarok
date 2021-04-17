@@ -1,9 +1,12 @@
 {
   "version": 2,
-  "dgSpecHash": "RcLwiyfhFuHiPoRzgNJPjBy3BHHjOrQKaHMWCTf76pJD+VDSHRAG2AYa9HYS/iUZfXSmw5x2RTjiQxcC/7iQvg==",
+  "dgSpecHash": "rhPpYalkcqymtGjew2g6BLeIV3zDDqaGDmUjOAupzbSku/KtuvW9ZHoDFjjzYh7OcwyjAxrRMi1KseySoOjjXw==",
   "success": true,
   "projectFilePath": "C:\\Users\\Kling\\Desktop\\Project_Ragnarok\\Ragnarok\\Ragnarok\\Ragnarok.csproj",
   "expectedPackageFiles": [
+    "C:\\Users\\Kling\\.nuget\\packages\\bootstrap\\3.0.0\\bootstrap.3.0.0.nupkg.sha512",
+    "C:\\Users\\Kling\\.nuget\\packages\\bootstrap-select\\1.13.18\\bootstrap-select.1.13.18.nupkg.sha512",
+    "C:\\Users\\Kling\\.nuget\\packages\\jquery\\1.9.1\\jquery.1.9.1.nupkg.sha512",
     "C:\\Users\\Kling\\.nuget\\packages\\microsoft.aspnetcore.antiforgery\\2.2.0\\microsoft.aspnetcore.antiforgery.2.2.0.nupkg.sha512",
     "C:\\Users\\Kling\\.nuget\\packages\\microsoft.aspnetcore.authentication.abstractions\\2.2.0\\microsoft.aspnetcore.authentication.abstractions.2.2.0.nupkg.sha512",
     "C:\\Users\\Kling\\.nuget\\packages\\microsoft.aspnetcore.authentication.core\\2.2.0\\microsoft.aspnetcore.authentication.core.2.2.0.nupkg.sha512",

@@ -27,6 +27,65 @@
             </div>
         </div>
 
+        <!--search product-->
+        <div class="modal fade" id="searchProdduct-modal" tabindex="-1" role="dialog" aria-hidden="true">
+            <div class="modal-dialog-searchProduct">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title" id="myModalLabel">Pesquise o Produto</h4>
+                    </div>
+                    <div class="modal-body">
+                        <form class="form-horizontal">
+                            <div class="form-group">
+                                <label for="task-title" class="control-label sr-only">Title</label>
+                                <div class="col-sm-6">
+                                    <div class="input-group input-group-sm">
+                                        <input class="form-control" onkeyup="searchProduct()" placeholder="Pesquise pelo Nome ou Código de barras" />
+                                        <div class="input-group-btn">
+                                            <button id="btn-get-produt" type="submit" class="btn btn-success btn-sm"><i class="icon ion-android-search"></i> Go</button>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="widget">                                
+                                <div class="widget-content">
+                                    <div class="table-responsive">
+                                        <table id="datatable-basic" class="table table-sorting table-striped table-hover datatable">
+                                            <thead>
+                                                <tr>
+                                                    <th>Id</th>
+                                                    <th>Nome</th>
+                                                    <th>Código de Barras</th>                                                    
+                                                </tr>
+                                            </thead>
+                                            <tbody>
+                                                <tr>
+                                                    <td>Chrome</td>
+                                                    <td>Macintosh</td>
+                                                    <td>360</td>                                                    
+                                                </tr>
+                                                <tr>
+                                                    <td>Chrome</td>
+                                                    <td>Windows</td>
+                                                    <td>582</td>
+                                                    
+                                                </tr>
+                                                
+                                            </tbody>
+                                        </table>
+                                    </div>
+                                </div>
+                            </div>
+                            <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!--End Insert-->
+
+
     </div>
     @if (TempData["MSG_S"] != null)
     {
@@ -53,6 +112,7 @@
                 </div>
                 <div class="col-md-9 col-print-9">
                     <ul class="list-inline">
+                        <li><a data-toggle="modal" data-target="#searchProdduct-modal" class="btn btn-default btn-sm btn-quick-task"><i class="icon ion-plus-round"></i> Pesquisar Produto</a></li>
                         <li>Número da Ordem #: <strong></strong></li>
                         <li>Data: <strong>@DateTime.Now.Date.ToString("dd/MM/yyyy")</strong></li>
                         <li>Valor Total: <strong id="totalTop">R$ 0.00</strong></li>
@@ -82,13 +142,7 @@
                 </div>
                 <div class=" col-sm-6 col-print-6">
                     <form action="javascript:addProductList()" method="post">
-                        <div class="row">
-                            <div class="col-md-9">
-                                <label>Selecione o Produto</label>
-                                <select name="select2" id="selectProduct" class="selectpicker" data-live-search="true" asp-items="@ViewBag.Product">
-                                    <option value="">Selecione</option>
-                                </select>
-                            </div>
+                        <div class="row">                            
                             <div class="col-md-9">
                                 <input id="selectedProductId" type="hidden" required />
                                 <label>Produto Selecionado</label>
@@ -96,6 +150,7 @@
                             </div>
                         </div>
                         <div class="row">
+
                             <div class="col-md-3">
                                 <label>Preço Compra</label>
                                 <div class="input-group">
