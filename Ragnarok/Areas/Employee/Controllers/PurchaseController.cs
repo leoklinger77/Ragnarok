@@ -10,6 +10,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -54,6 +55,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                     SupplierPhysical supplier = (SupplierPhysical)item;
                     listSupplier.Add(supplier.Id.ToString(), supplier.FullName);
                 }
+                ViewBag.Purchase = listSupplier.Select(x => new SelectListItem(x.Value, x.Key));
             }
             return View();
         }
@@ -96,6 +98,14 @@ namespace Ragnarok.Areas.Employee.Controllers
                 TempData["MSG_E"] = Message.MSG_E_003;
                 return RedirectToAction(nameof(Index));
             }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> SearchProductAsync(int? page, string search, int? numberPerPage)
+        {
+            IPagedList<Product> list = await _productRepository.FindAllsPagedListAsync(page, search, numberPerPage, _employeeLogin.GetEmployee().BusinessId);
+            return View(list);
+            
         }
     }
 }

@@ -1,0 +1,88 @@
+﻿@model IEnumerable<Product>
+@{
+    ViewData["Title"] = "SearchProdut";
+    string numberPerPage = Context.Request.Query["numberPerPage"];
+
+    if (!string.IsNullOrEmpty(numberPerPage))
+    {
+        numberPerPage = numberPerPage.Replace("{", "").Replace("}", "");
+    }
+
+    var search = Context.Request.Query["search"];
+}
+<br />
+
+
+<div class="widget">
+    <div class="widget-header clearfix">
+        <h3><i class="icon ion-ios-grid-view-outline"></i> <span>PESQUISE O PRODUTO</span></h3>
+    </div>
+    <div class="widget-content">
+        <div class="table-responsive">
+            <form method="get" asp-action="SearchProduct" asp-controller="Purchase" asp-area="Employee">
+
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-offset-8 col-md-4">
+                            <div class="input-group input-group-sm">
+                                <input class="form-control" name="search" id="search" value="@search" placeholder="Pesquise pelo Nome ou Código de barras" />
+                                <div class="input-group-btn">
+                                    <button id="btn-get-produt" type="submit" class="btn btn-success btn-sm"><i class="icon ion-android-search"></i> Go</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <br />
+                <br />
+                <div class="col-md-12">
+                    <div class="row">
+                        <div class="col-md-1">
+                            <select class="form-control" name="numberPerPage" id="numberPerPage" asp-for="@numberPerPage">
+                                <option value="10">10</option>
+                                <option value="30">30</option>
+                                <option value="50">50</option>
+                                <option value="100">100</option>
+                                <option value="500">500</option>
+                                <option value="1000">1000</option>
+                            </select>
+                        </div>
+                    </div>
+                </div>
+            </form>
+
+            <br />
+
+            <div class="col-md-12">
+                <table id="datatable-column-interactive" class="table searchProduct-purchase">
+                    <thead>
+                        <tr>
+                            <th>Id</th>
+                            <th>Nome</th>
+                            <th>Codigo de Barras</th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@item.Id</td>
+                                <td>@item.Name</td>
+                                <td>@item.BarCode</td>
+                            </tr>
+
+
+                        }
+
+                    </tbody>
+
+                </table>
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("SearchProduct", new { page = page, search = search, numberPerPage = numberPerPage }))
+            </div>
+
+        </div>
+    </div>
+</div>
+

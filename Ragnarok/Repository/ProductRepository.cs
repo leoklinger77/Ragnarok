@@ -130,7 +130,7 @@ namespace Ragnarok.Repository
         {
             try
             {
-                return await _context.Product.Where(x => x.RegisterEmployee.BusinessId == businessId && (x.Name.Contains(search.Trim()) || x.BarCode.Contains(search.Trim()))).ToArrayAsync();
+                return await _context.Product.Where(x => x.RegisterEmployee.BusinessId == businessId && (x.Name.Contains(search.Trim()) || x.BarCode.Contains(search.Trim()))).ToListAsync();
             }
             catch (Exception e)
             {

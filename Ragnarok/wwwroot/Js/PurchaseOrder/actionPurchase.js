@@ -29,29 +29,9 @@
         });
     });
 
-    //Select Product
-    $('#selectProduct').change(function () {
-        var productId = $(this).val();
-        $.ajax({
-            type: "POST",
-            url: "/Employee/Product/FindByProduct",
-            data: { productId: productId },
-            success: function (message) {
-                if (message == "Error") {
-
-                } else {
-                    $(message).each(function (index, item) {
-                        $('#selectedProductId').val(item.id);
-                        $('#selectedProduct').val(item.name + " - " + item.barCode);
-                    });
-                }
-            }
-        });
-    });
-
     //Finalizar Compra
     $('#finishPurchase').click(function (e) {
-            var supplierId = $('#selectProvider').val();
+        var supplierId = $('#selectProvider').val();
 
         if (supplierId == '') {
             alert("Selecione um fornecedor")
@@ -59,10 +39,10 @@
             return;
         }
 
-        var envio = "{SupplierId:'" + $('#selectProvider').val() + "',Notes:'" + $('#notes').val() +"',";
+        var envio = "{SupplierId:'" + $('#selectProvider').val() + "',Notes:'" + $('#notes').val() + "',";
 
         var i = 0;
-        
+
         $('#invoicePurchase tbody tr').each(function (index) {
 
             if (i == 0) {
@@ -72,7 +52,7 @@
                     "',Quantity:'" + $(this).find('td').eq(2).text() +
                     "',Discount:'" + $(this).find('td').eq(5).text() +
                     "',ValidationDate:'" + $(this).find('td').eq(7).text() + "'}"
-                
+
             } else {
                 envio += ",{ProductId:'" + $(this).find('td').eq(0).text() +
                     "',PurchasePrice:'" + $(this).find('td').eq(3).text() +
@@ -80,7 +60,7 @@
                     "',Quantity:'" + $(this).find('td').eq(2).text() +
                     "',Discount:'" + $(this).find('td').eq(5).text() +
                     "',ValidationDate:'" + $(this).find('td').eq(7).text() + "'}"
-                
+
             }
             i = 1;
         });
@@ -104,7 +84,7 @@
 
     })
 
-    
+
 });
 
 
@@ -189,4 +169,32 @@ function cleanImput() {
     $('#validition').val('');
     $('#selectProduct').val('Selecione');
 }
+
+
+function novaJanela(URL) {
+    var string = "https://" + window.location.host + '/Employee/Purchase/SearchProduct';
+    window.open(string, "Pesquise o Produto", "height=750,width=1200");
+};
+
+$('.searchProduct-purchase tbody tr').dblclick(function () {
+
+    var product = {};
+    var id, name, barcode;
+
+    id = product.id = $(this).children().eq('0').text();
+    name  = product.name = $(this).children().eq('1').text();
+    barcode = product.barcode = $(this).children().eq('2').text();
+
+    console.info(id, name, barcode);
+    window.opener.getProduct(product)
+    window.close();
+    
+
+});
+
+function getProduct(product) {
+    $('#selectedProductId').val(product.id);
+    $('#selectedProduct').val(product.name);    
+}
+
 
