@@ -9,5 +9,6 @@ namespace Ragnarok.Repository.Interfaces
         Task<ICollection<SalesOrder>> FindAllsAsync(int businessId);
         Task InsertAsync(SalesOrder salesOrder);
         Task<SalesOrder> FindById(int id, int businessId);
+        Task<ICollection<SalesOrder>> TopSeven(int businessId);
     }
 }

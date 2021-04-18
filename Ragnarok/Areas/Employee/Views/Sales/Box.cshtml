@@ -11,7 +11,7 @@
         clientName = item.CompanyName;
         clientId = item.Id;
     }
-    else if(Model.Client != null && Model.Client is ClientPhysical)
+    else if (Model.Client != null && Model.Client is ClientPhysical)
     {
         ClientPhysical item = (ClientPhysical)Model.Client;
         clientName = item.FullName;
@@ -277,6 +277,26 @@
                                 </select>
                             </div>
                         </div>
+
+                        <div id="divStatusPayment">
+                            <div class="col-md-12">
+                                <div class="form-horizontal" style="margin-top:15px">
+                                    <div class="form-group">
+                                        <label class="col-md-1 control-label">Pago</label>
+                                        <div class="col-md-4">
+                                            <label class="radio radio-inline radioLeft">
+                                                <input name="statusPayment" type="radio" value="PaidOut" id="typePaymentStatus" /> Sim
+                                                <span class="text-danger"></span>
+                                            </label>
+                                            <label class="radio radio-inline" style="float:left">
+                                                <input name="statusPayment" type="radio" value="Pending" /> Não
+                                            </label>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+
                     </div>
                     <button type="button" class="btn btn-success" id="finishSales">Salvar</button>
                     <button type="button" class="btn btn-default" data-dismiss="modal">Cancelar</button>

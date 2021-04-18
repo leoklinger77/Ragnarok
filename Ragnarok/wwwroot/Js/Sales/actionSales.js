@@ -127,24 +127,29 @@ $('#selectPayment').change(function () {
             $('#fiado').hide();
             $('#credit').hide();
             $('#money').show();
+            $('#divStatusPayment').show();
             break;
 
         case 'Credit':
             $('#fiado').hide();
             $('#money').hide();
             $('#credit').show();
+            $('#divStatusPayment').show();
             break;
 
         case 'Fiado':
             $('#credit').hide();
             $('#money').hide();
             $('#fiado').show();
+            $('#divStatusPayment').hide();
             break;
 
         default:
             $('#credit').hide();
             $('#fiado').hide();
             $('#money').hide();
+
+
     }
 
 });
@@ -173,7 +178,7 @@ $('#finishSales').click(function () {
     var select = $('#selectPayment').val();
     switch (select) {
         case 'Debit':
-            envioPayment = "{StatusPayment: 'Pending', Amount: '" + totalFinish + "'}";
+            envioPayment = "{StatusPayment: '" + $('#typePaymentStatus').val() + "', Amount: '" + totalFinish + "'}";
             debit = eval("(" + envioPayment + ")");
             break;
 
@@ -183,7 +188,7 @@ $('#finishSales').click(function () {
             if (typeof invoice == 'undefined') {
                 return;
             }
-            envioPayment = "{StatusPayment: 'Pending', Amount: '" + totalFinish + "',Invoice:'" + invoice + "'}";
+            envioPayment = "{StatusPayment: '" + $('#typePaymentStatus').val() + "', Amount: '" + totalFinish + "',Invoice:'" + invoice + "'}";
             credit = eval("(" + envioPayment + ")");
             break;
 
@@ -193,13 +198,8 @@ $('#finishSales').click(function () {
 
             break;
 
-        case 'ticket':
-
-            ticket = eval("(" + envio + ")");
-            break;
-
         case 'Money':
-            envioPayment = "{StatusPayment: 'Pending', Amount: '" + totalFinish + "',GetMoney:'" + $('#moneyRecebido').val() + "',MoneyBack:'" + $('#troco').val() + "'}";
+            envioPayment = "{StatusPayment: '" + $('#typePaymentStatus').val() + "', Amount: '" + totalFinish + "',GetMoney:'" + $('#moneyRecebido').val() + "',MoneyBack:'" + $('#troco').val() + "'}";
             money = eval("(" + envioPayment + ")");
             break;
         default:

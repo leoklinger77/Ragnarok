@@ -56,5 +56,21 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<ICollection<SalesOrder>> TopSeven(int businessId)
+        {
+            try
+            {
+                return await _context.SalesOrder
+                    .Include(x => x.SalesItem)
+                    .Include(x => x.Payment)
+                    .OrderByDescending(x => x.Id).Take(7).ToListAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
     }
 }
