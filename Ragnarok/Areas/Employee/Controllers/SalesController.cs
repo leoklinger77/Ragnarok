@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc.Rendering;
 using Ragnarok.Data;
 using Ragnarok.Models;
 using Ragnarok.Models.ManyToMany;
+using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Lang;
@@ -64,7 +65,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 }
             }
             ViewBag.Client = listClient.Select(x => new SelectListItem(x.Value, x.Key));
-            
+
             SalesOrder order = new SalesOrder
             {
                 Client = await _clientRepository.QuickSaleAsync(_employeeLogin.GetEmployee().BusinessId)
@@ -101,7 +102,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         public async Task<IActionResult> CloseSaleBoxAsync()
         {
 
-            SaleBox saleBox = _openBox.GetSaleBox();            
+            SaleBox saleBox = _openBox.GetSaleBox();
             saleBox.Clouse = DateTime.Now;
             await _saleBoxRepository.UpdateAsync(saleBox);
             _openBox.Remove();
@@ -109,18 +110,45 @@ namespace Ragnarok.Areas.Employee.Controllers
         }
         [HttpPost]
         [BoxAuthorization]
-        public async Task<IActionResult> InsertSalesAsync(SalesOrder order)
+        public async Task<IActionResult> InsertSalesAsync(SalesOrderFormViewModel viewModel)
         {
             using var beginTransaction = await _context.Database.BeginTransactionAsync();
             try
             {
                 if (ModelState.IsValid)
                 {
-                    order.SaleBoxId = _openBox.GetSaleBox().Id;
-                    order.InsertDate = DateTime.Now;
 
-                    ICollection<SalesItem> SalesItem = new HashSet<SalesItem>();                    
-                    foreach (var item in order.SalesItem)
+                    if (viewModel.debit != null)
+                    {
+                        viewModel.debit.TimeOfPayment = DateTime.Now;
+                        viewModel.SalesOrder.Payment = viewModel.debit;
+                    }
+                    else if (viewModel.Credit != null)
+                    {
+                        viewModel.SalesOrder.Payment = viewModel.Credit;
+                    }
+                    else if (viewModel.Ticket != null)
+                    {
+                        viewModel.SalesOrder.Payment = viewModel.Ticket;
+                    }
+                    else if (viewModel.Money != null)
+                    {
+                        viewModel.SalesOrder.Payment = viewModel.Money;
+                    }
+                    else if (viewModel.PayLater != null)
+                    {
+                        viewModel.SalesOrder.Payment = viewModel.PayLater;
+                    }
+                    else
+                    {
+                        return Json("Error: Pendente a forma de Pagamento");
+                    }
+
+                    viewModel.SalesOrder.SaleBoxId = _openBox.GetSaleBox().Id;
+                    viewModel.SalesOrder.InsertDate = DateTime.Now;
+
+                    ICollection<SalesItem> SalesItem = new HashSet<SalesItem>();
+                    foreach (var item in viewModel.SalesOrder.SalesItem)
                     {
                         if (!SalesItem.Contains(item))
                         {
@@ -131,9 +159,9 @@ namespace Ragnarok.Areas.Employee.Controllers
                             SalesItem.First(x => x.StockId == item.StockId).Quantity += item.Quantity;
                         }
                     }
-                    order.SalesItem = SalesItem;
-                    await _inventoryManagement.StockManagementRemoveAsync(order.SalesItem, _employeeLogin.GetEmployee().BusinessId);
-                    await _salesOrderRepository.InsertAsync(order);                    
+                    viewModel.SalesOrder.SalesItem = SalesItem;
+                    await _inventoryManagement.StockManagementRemoveAsync(viewModel.SalesOrder.SalesItem, _employeeLogin.GetEmployee().BusinessId);
+                    await _salesOrderRepository.InsertAsync(viewModel.SalesOrder);
 
                     TempData["MSG_S"] = Message.MSG_S_007;
                     await beginTransaction.CommitAsync();

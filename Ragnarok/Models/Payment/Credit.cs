@@ -1,6 +1,6 @@
 ﻿using Ragnarok.Models.Enums;
 
-namespace Ragnarok.Models
+namespace Ragnarok.Models.Payment
 {
     public class Credit : Payment
     {

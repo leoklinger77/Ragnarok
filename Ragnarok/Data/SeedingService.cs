@@ -1,4 +1,5 @@
-﻿using Ragnarok.Models;
+﻿using Newtonsoft.Json;
+using Ragnarok.Models;
 using System;
 using System.Linq;
 
@@ -15,7 +16,6 @@ namespace Ragnarok.Data
 
         public void Seed()
         {
-
             if (_context.Business.Any() || _context.Address.Any() || _context.Contact.Any())
             {
                 return;

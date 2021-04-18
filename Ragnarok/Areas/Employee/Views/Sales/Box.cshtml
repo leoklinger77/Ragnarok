@@ -1,7 +1,5 @@
 ﻿@model SalesOrder
 @inject Ragnarok.Services.Login.OpenBox _openBox
-
-
 @{
     ViewData["Title"] = "Box";
     var clientName = "";
@@ -19,13 +17,11 @@
         clientName = item.FullName;
         clientId = item.Id;
     }
-
 }
 
 <script type="text/javascript">
     window.onload = function () {
         $('#btn-nav-sidebar-minified').click();
-
     }
 </script>
 <div class="container-fluid primary-content">
@@ -250,7 +246,7 @@
                         <br />
                         <div id="money" style="display:none">
                             <div class="col-md-6">
-                                <input id="moneyRecebido" class="form-control" placeholder="Dinheiro recebido" />
+                                <input onkeyup="GetMoney()" id="moneyRecebido" class="form-control" placeholder="Dinheiro recebido" />
                             </div>
                             <div class="col-md-6">
                                 <input id="troco" class="form-control" placeholder="Troco" />
@@ -259,7 +255,7 @@
                         <div id="fiado" style="display:none">
                             <div class="col-md-6">
                                 <label>Data de Pagamento</label>
-                                <input id="" class="form-control" type="date" />
+                                <input id="supposedPaymentDate" class="form-control" type="date" />
                             </div>
                         </div>
                         <div id="credit" style="display:none">

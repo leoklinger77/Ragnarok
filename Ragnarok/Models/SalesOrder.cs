@@ -19,7 +19,7 @@ namespace Ragnarok.Models
         public DateTime InsertDate { get; set; }
         public DateTime? UpdateDate { get; set; }
 
-        public Payment Payment { get; set; }
+        public Payment.Payment Payment { get; set; }
         public int PaymentId { get; set; }
 
         public ICollection<SalesItem> SalesItem { get; set; } = new List<SalesItem>();
@@ -28,7 +28,7 @@ namespace Ragnarok.Models
         {
         }
 
-        public SalesOrder(int id, string notes, Client client, SaleBox saleBox, DateTime insertDate, DateTime? updateDate, Payment payment)
+        public SalesOrder(int id, string notes, Client client, SaleBox saleBox, DateTime insertDate, DateTime? updateDate, Payment.Payment payment)
         {
             Id = id;
             Notes = notes;

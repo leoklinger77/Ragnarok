@@ -1,7 +1,9 @@
 ﻿using Ragnarok.Models.Enums;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace Ragnarok.Models
+namespace Ragnarok.Models.Payment
 {
+    [Table("TB_Payment")]
     public abstract class Payment
     {
         public int Id { get; set; }

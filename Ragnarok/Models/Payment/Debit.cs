@@ -1,7 +1,7 @@
 ﻿using Ragnarok.Models.Enums;
 using System;
 
-namespace Ragnarok.Models
+namespace Ragnarok.Models.Payment
 {
     public class Debit : Payment
     {

@@ -1,6 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
 using Ragnarok.Models;
 using Ragnarok.Models.ManyToMany;
+using Ragnarok.Models.Payment;
 
 namespace Ragnarok.Data
 {
@@ -48,7 +49,8 @@ namespace Ragnarok.Data
         public DbSet<Debit> Debit { get; set; }
         public DbSet<Credit> Credit { get; set; }
         public DbSet<Ticket> Ticket { get; set; }
-        public DbSet<AfterPaid> AfterPaid { get; set; }
+        public DbSet<PayLater> AfterPaid { get; set; }
+        public DbSet<Money> Money { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {

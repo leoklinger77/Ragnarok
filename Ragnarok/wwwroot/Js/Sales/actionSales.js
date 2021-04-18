@@ -149,18 +149,64 @@ $('#selectPayment').change(function () {
 
 });
 
-$('#moneyRecebido').change(function () {
-    var money = $(this).val();
-
+function GetMoney() {
+    var money = $('#moneyRecebido').val();
     var result = (money - (totalFinish - totaldicount));
-
     $('#troco').val(result.toFixed(2));
-
-});
+}
 
 $('#finishSales').click(function () {
 
-    var envio = "{Notes:'" + $('#noteSales').val() + "', ClientId:'" + $('#selectClient').val() +"',";
+    if (true) {
+
+    }
+
+
+    var envioPayment;
+
+    var debit;
+    var credit;
+    var ticket;
+    var money;
+    var payLater;
+
+    var select = $('#selectPayment').val();
+    switch (select) {
+        case 'Debit':
+            envioPayment = "{StatusPayment: 'Pending', Amount: '" + totalFinish + "'}";
+            debit = eval("(" + envioPayment + ")");
+            break;
+
+        case 'Credit':
+            var invoice = $('#parcels').val();
+
+            if (typeof invoice == 'undefined') {
+                return;
+            }
+            envioPayment = "{StatusPayment: 'Pending', Amount: '" + totalFinish + "',Invoice:'" + invoice + "'}";
+            credit = eval("(" + envioPayment + ")");
+            break;
+
+        case 'Fiado':
+            envioPayment = "{StatusPayment: 'Pending', Amount: '" + totalFinish + "',SupposedPaymentDate:'" + $('#supposedPaymentDate').val() + "'}";
+            payLater = eval("(" + envioPayment + ")");
+
+            break;
+
+        case 'ticket':
+
+            ticket = eval("(" + envio + ")");
+            break;
+
+        case 'Money':
+            envioPayment = "{StatusPayment: 'Pending', Amount: '" + totalFinish + "',GetMoney:'" + $('#moneyRecebido').val() + "',MoneyBack:'" + $('#troco').val() + "'}";
+            money = eval("(" + envioPayment + ")");
+            break;
+        default:
+            return;
+    }
+
+    var envio = "{Notes:'" + $('#noteSales').val() + "', ClientId:'" + $('#selectClient').val() + "',";
 
     var i = 0;
     $('#invoiceBox tbody tr').each(function (index) {
@@ -168,25 +214,27 @@ $('#finishSales').click(function () {
         if (i == 0) {
             envio += "SalesItem:[{Quantity:'" + $(this).find('td').eq(2).text() +
                 "',Price:'" + $(this).find('td').eq(3).text() +
-                "',StockId:'"+ $(this).find('td').eq(0).text() +
+                "',StockId:'" + $(this).find('td').eq(0).text() +
                 "',Discount:'" + $(this).find('td').eq(4).text() + "'}";
 
         } else {
             envio += ",{Quantity:'" + $(this).find('td').eq(2).text() +
                 "',Price:'" + $(this).find('td').eq(3).text() +
                 "',StockId:'" + $(this).find('td').eq(0).text() +
-                "',Discount:'" + $(this).find('td').eq(4).text() +"'}";
+                "',Discount:'" + $(this).find('td').eq(4).text() + "'}";
         }
         i = 1
     });
     envio += "]}";
 
-    var order = eval("(" + envio + ")");
+
+    var salesOrder = eval("(" + envio + ")");
+
 
     $.ajax({
         type: "POST",
         url: "/Employee/Sales/InsertSales",
-        data: { order, order },
+        data: { salesOrder, debit, credit, payLater, money },
         success: function (message) {
             window.location.href = "/Employee/Sales/Box";
         }

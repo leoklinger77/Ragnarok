@@ -8,7 +8,7 @@ namespace Ragnarok.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-                name: "Payment",
+                name: "TB_Payment",
                 columns: table => new
                 {
                     Id = table.Column<int>(nullable: false)
@@ -19,12 +19,14 @@ namespace Ragnarok.Migrations
                     SupposedPaymentDate = table.Column<DateTime>(nullable: true),
                     Invoice = table.Column<int>(nullable: true),
                     TimeOfPayment = table.Column<DateTime>(nullable: true),
+                    GetMoney = table.Column<double>(nullable: true),
+                    MoneyBack = table.Column<double>(nullable: true),
                     DueData = table.Column<DateTime>(nullable: true),
                     PayDay = table.Column<DateTime>(nullable: true)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Payment", x => x.Id);
+                    table.PrimaryKey("PK_TB_Payment", x => x.Id);
                 });
 
             migrationBuilder.CreateTable(
@@ -436,11 +438,11 @@ namespace Ragnarok.Migrations
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
-                        name: "FK_TB_SalesOrder_Payment_PaymentId",
+                        name: "FK_TB_SalesOrder_TB_Payment_PaymentId",
                         column: x => x.PaymentId,
-                        principalTable: "Payment",
+                        principalTable: "TB_Payment",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                     table.ForeignKey(
                         name: "FK_TB_SalesOrder_TB_SaleBox_SaleBoxId",
                         column: x => x.SaleBoxId,
@@ -793,7 +795,7 @@ namespace Ragnarok.Migrations
                 name: "TB_Client");
 
             migrationBuilder.DropTable(
-                name: "Payment");
+                name: "TB_Payment");
 
             migrationBuilder.DropTable(
                 name: "TB_SaleBox");
