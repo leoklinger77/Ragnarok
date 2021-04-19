@@ -19,7 +19,7 @@ namespace Ragnarok.Services.WebService
             
             try
             {
-                var ws = new WSCorreios.AtendeClienteClient().consultaCEPAsync(zipCode);
+                var ws =  new WSCorreios.AtendeClienteClient().consultaCEPAsync(zipCode);
 
                 string cidade = ws.Result.@return.cidade;
                 string siglaUf = ws.Result.@return.uf;

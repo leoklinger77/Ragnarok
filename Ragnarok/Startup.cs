@@ -8,6 +8,7 @@ using Ragnarok.Data;
 using Ragnarok.Repository;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Email;
+using Ragnarok.Services.Graphics;
 using Ragnarok.Services.Login;
 using Ragnarok.Services.Session;
 using Ragnarok.Services.Stock;
@@ -93,6 +94,7 @@ namespace Ragnarok
 
             services.AddScoped<ISalesOrderRepository, SalesOrderRepository>();
             services.AddScoped<ISaleBoxRepository, SaleBoxRepository>();
+            services.AddScoped<GraphicsGenerator>();
 
         }
 

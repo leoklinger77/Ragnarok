@@ -1,10 +1,16 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+using Ragnarok.Models.ViewModels.Graphics;
+using Ragnarok.Services.Filter;
 using Ragnarok.Services.Graphics;
 using Ragnarok.Services.Login;
+using System;
+using System.Collections.Generic;
+using System.Threading.Tasks;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
     [Area("Employee")]
+    [EmployeeAuthorization]
     public class GraphicsController : Controller
     {
         private readonly GraphicsGenerator _graphicsGenerator;
@@ -15,11 +21,20 @@ namespace Ragnarok.Areas.Employee.Controllers
             _graphicsGenerator = graphicsGenerator;
             _employeeLogin = employeeLogin;
         }
-        
-        public IActionResult SalesSevenDays(string result)
+        [HttpPost]
+        public async Task<IActionResult> SalesSevenDaysAsync()
         {
-            var list = _graphicsGenerator.SalesForTheLastSevenDays(_employeeLogin.GetEmployee().BusinessId);
-            return View();
+            try
+            {
+                ICollection<GraphicsStandard> list = await _graphicsGenerator.SalesForTheLastSevenDays(_employeeLogin.GetEmployee().BusinessId);
+                return Json(list);
+            }
+            catch (Exception e)
+            {
+
+                return Json("Error: " + e.Message);
+            }
+            
         }
     }
 }

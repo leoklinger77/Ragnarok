@@ -3,6 +3,7 @@ using Ragnarok.Models;
 using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
+using Ragnarok.Services.Graphics;
 using Ragnarok.Services.Login;
 using Ragnarok.Services.WebService;
 using System.Collections.Generic;
@@ -15,16 +16,16 @@ namespace Ragnarok.Controllers
         private readonly WSCorreiosAPI _correiosAPI;
         private readonly IEmployeeRepository _employeeRepository;
         private readonly IClientRepository _clientRepository;
-        private readonly ISupplierRepository _supplierRepository;
+        private readonly ISupplierRepository _supplierRepository;        
         private readonly EmployeeLogin _employeeLogin;
 
-        public ServiceController(WSCorreiosAPI correiosAPI, IEmployeeRepository employeeRepository, EmployeeLogin employeeLogin, IClientRepository clientRepository, ISupplierRepository supplierRepository)
+        public ServiceController(WSCorreiosAPI correiosAPI, IEmployeeRepository employeeRepository, IClientRepository clientRepository, ISupplierRepository supplierRepository, EmployeeLogin employeeLogin)
         {
             _correiosAPI = correiosAPI;
             _employeeRepository = employeeRepository;
-            _employeeLogin = employeeLogin;
-            _supplierRepository = supplierRepository;
             _clientRepository = clientRepository;
+            _supplierRepository = supplierRepository;
+            _employeeLogin = employeeLogin;
         }
 
         public IActionResult SearchByZipCode(string zipCode)
@@ -128,6 +129,5 @@ namespace Ragnarok.Controllers
             }
             return Json("Ok");
         }
-
     }
 }

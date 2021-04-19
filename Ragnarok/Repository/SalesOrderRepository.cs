@@ -30,25 +30,20 @@ namespace Ragnarok.Repository
             }
         }
         [Obsolete]
-        public async Task<object> FindAllsSevenDadys(int businessId)
+        public async Task<ICollection<SalesOrder>> FindAllsSevenDays(int businessId)
         {
             try
             {
-                var result = await _context.Database.ExecuteSqlCommandAsync("select "+
-                                                                                "CONVERT(varchar(20), O.InsertDate, 1) as [Data], "+
-                                                                                "SUM(CAST(Price * Quantity as float)) as Total "+
-	                                                                                "from TB_SalesOrder O with(nolock) "+
-	                                                                                "join TB_SalesItem SI with(nolock) on SI.SalesOrderId = O.Id "+
-	                                                                                "join TB_SaleBox SB with(nolock) on O.SaleBoxId = SB.Id "+
-	                                                                                "join TB_Employee E with(nolock) on SB.RegisterSalesId = E.id "+
-	                                                                                "where E.BusinessId = 1 "+
-                                                                                "group by convert(varchar(20), O.InsertDate, 1)");
-                return result;
+                return await _context.SalesOrder
+                    .Include(x => x.SalesItem)
+                    .Include(x => x.Payment)
+                    .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate > DateTime.Now.Date.AddDays(-7))
+                    .ToListAsync();
             }
             catch (Exception e)
             {
 
-                throw;
+                throw new Exception(e.Message);
             }
         }
 
