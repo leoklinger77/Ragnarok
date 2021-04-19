@@ -3,6 +3,7 @@
     ViewData["Title"] = "Index";
 }
 
+
 <div class="container-fluid primary-content">
     <!-- PRIMARY CONTENT HEADING -->
     <div class="primary-content-heading clearfix">
@@ -67,13 +68,13 @@
                 <div class="widget-header clearfix no-padding">
                     <h3 class="sr-only"><span>SALES AND VISITS STAT</span></h3>
                     <ul id="dashboard-stat-tab" class="nav nav-pills nav-justified">
-                        <li class="active"><a href="#tab-sales" data-cid="#dashboard-sales-chart">Vendas</a></li>
+                        <li class="active"><a href="#tab-sales" data-cid="#dashboard-sales-main">Vendas</a></li>
                         <li class=""><a href="#tab-visits" data-cid="#dashboard-visits-chart">Fluxo de Caixa</a></li>
                     </ul>
                 </div>
                 <div id="dashboard-stat-tab-content" class="widget-content tab-content">
                     <div class="tab-pane fade in active" id="tab-sales">
-                        <div class="flot-chart" id="dashboard-sales-chart"></div>
+                        <div class="flot-chart" id="dashboard-sales-main"></div>
                     </div>
                     <div class="tab-pane fade" id="tab-visits">
                         <div class="flot-chart" id="dashboard-visits-chart"></div>
@@ -86,11 +87,7 @@
             <!-- ORDER STATUS -->
             <div class="widget">
                 <div class="widget-header clearfix">
-                    <h3><i class="icon ion-bag"></i> <span>Ultimas Vendas</span></h3>
-                    <div class="btn-group widget-header-toolbar">
-                        <a href="#" title="Expand/Collapse" class="btn btn-link btn-toggle-expand"><i class="icon ion-ios-arrow-up"></i></a>
-                        <a href="#" title="Remove" class="btn btn-link btn-remove"><i class="icon ion-ios-close-empty"></i></a>
-                    </div>
+                    <h3><i class="icon ion-bag"></i> <span>Ultimas Vendas</span></h3>                    
                 </div>
                 <div class="widget-content">
                     <table class="table table-condensed">
@@ -129,5 +126,107 @@
     </div>
 
 </div>
+<script language="javascript" type="text/javascript">
+    if ($('.basic-charts').length > 0) {
 
+        if ($('#demo-area-chart').length > 0)
+            chartWeek($('#demo-area-chart'));
+    }
 
+    $('#dashboard-stat-tab a:first').tab('show');
+    if ($('#dashboard-sales-main').length > 0)
+        chartBarVerticalMain($('#dashboard-sales-main'));
+
+    $('#dashboard-stat-tab a').click(function (e) {
+        e.preventDefault();
+
+        $tabId = $(this).attr('href');
+        $chartId = $(this).attr('data-cid');
+
+        $('#dashboard-stat-tab li').removeClass('active');
+        $(this).parents('li').addClass('active');
+
+        /* show/hide tab pane */
+        $('#dashboard-stat-tab-content .tab-pane').css('opacity', 0).removeClass('active');
+        $('#dashboard-stat-tab-content .tab-pane' + $tabId).addClass('active').animate({
+            opacity: 1
+        }, 300);
+
+        if ($chartId == '#dashboard-sales-main') {
+            chartBarVerticalMain($chartId);
+        } else if ($chartId == '#dashboard-visits-chart') {
+            demoChart.linesFill = false;
+            chartWeek($chartId);
+        }
+    });
+
+   function chartBarVerticalMain(placeholder) {
+        var basic = [
+            [gt(2013, 10, 21), 300], [gt(2013, 10, 22), 205], [gt(2013, 10, 23), 250], [gt(2013, 10, 24), 230], [gt(2013, 10, 25), 245], [gt(2013, 10, 26), 260], [gt(2013, 10, 27), 290]
+        ];
+
+        var gold = [
+            [gt(2013, 10, 21), 100], [gt(2013, 10, 22), 110], [gt(2013, 10, 23), 155], [gt(2013, 10, 24), 120], [gt(2013, 10, 25), 135], [gt(2013, 10, 26), 150], [gt(2013, 10, 27), 175]
+        ];
+
+        var platinum = [
+            [gt(2013, 10, 21), 75], [gt(2013, 10, 22), 65], [gt(2013, 10, 23), 80], [gt(2013, 10, 24), 60], [gt(2013, 10, 25), 65], [gt(2013, 10, 26), 80], [gt(2013, 10, 27), 110]
+        ];
+
+        var plot = $.plot(placeholder,
+            [
+                {
+                    data: basic,
+                    label: "Basic"
+                },
+                {
+                    data: gold,
+                    label: "Gold"
+                },
+                {
+                    data: platinum,
+                    label: "Platinum"
+                }
+            ],
+            {
+                bars: {
+                    show: true,
+                    barWidth: 15 * 60 * 60 * 300,
+                    fill: true,
+                    order: true,
+                    lineWidth: 0,
+                    fillColor: { colors: [{ opacity: 1 }, { opacity: 1 }] }
+                },
+                grid: {
+                    hoverable: true,
+                    clickable: true,
+                    borderWidth: 0,
+                    tickColor: demoChart.gridTickColor,
+
+                },
+                colors: ["#919191", "#5399D6", "#d7ea2b"],
+                yaxis: {
+                    font: { color: demoChart.axisFontColor },
+                },
+                xaxis: {
+                    mode: "time",
+                    timezone: "browser",
+                    minTickSize: [1, "day"],
+                    timeformat: "%a",
+                    font: { color: demoChart.axisFontColor },
+                    tickColor: demoChart.xTickColor,
+                    autoscaleMargin: 0.2
+                },
+                legend: {
+                    labelBoxBorderColor: "transparent",
+                    backgroundColor: "transparent"
+                },
+                tooltip: true,
+                tooltipOpts: {
+                    content: '%s: %y'
+                }
+            }
+        );
+    }
+
+</script>

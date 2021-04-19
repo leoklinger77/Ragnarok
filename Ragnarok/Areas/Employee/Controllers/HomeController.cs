@@ -23,7 +23,8 @@ namespace Ragnarok.Areas.Employee.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
-            ICollection<SalesOrder> list = await _salesOrderRepository.TopSeven(_employeeLogin.GetEmployee().BusinessId); ;
+            ICollection<SalesOrder> list = await _salesOrderRepository.TopSeven(_employeeLogin.GetEmployee().BusinessId);
+            var list2 = await _salesOrderRepository.FindAllsSevenDadys(_employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]

@@ -29,6 +29,28 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
+        [Obsolete]
+        public async Task<object> FindAllsSevenDadys(int businessId)
+        {
+            try
+            {
+                var result = await _context.Database.ExecuteSqlCommandAsync("select "+
+                                                                                "CONVERT(varchar(20), O.InsertDate, 1) as [Data], "+
+                                                                                "SUM(CAST(Price * Quantity as float)) as Total "+
+	                                                                                "from TB_SalesOrder O with(nolock) "+
+	                                                                                "join TB_SalesItem SI with(nolock) on SI.SalesOrderId = O.Id "+
+	                                                                                "join TB_SaleBox SB with(nolock) on O.SaleBoxId = SB.Id "+
+	                                                                                "join TB_Employee E with(nolock) on SB.RegisterSalesId = E.id "+
+	                                                                                "where E.BusinessId = 1 "+
+                                                                                "group by convert(varchar(20), O.InsertDate, 1)");
+                return result;
+            }
+            catch (Exception e)
+            {
+
+                throw;
+            }
+        }
 
         public async Task<SalesOrder> FindById(int id, int businessId)
         {
