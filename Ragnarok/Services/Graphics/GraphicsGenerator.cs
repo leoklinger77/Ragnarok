@@ -20,7 +20,7 @@ namespace Ragnarok.Services.Graphics
 
         public async Task<ICollection<GraphicsStandard>> SalesForTheLastSevenDays(int businessId)
         {
-            List<SalesOrder> list = (List<SalesOrder>)await _salesOrderRepository.FindAllsSevenDays(businessId);
+            ICollection<SalesOrder> list = await _salesOrderRepository.FindAllsSevenDaysAsync(businessId);
             ICollection<GraphicsStandard> Graphics = new List<GraphicsStandard>();
 
             for (int i = 0; i < 3; i++)
@@ -86,6 +86,29 @@ namespace Ragnarok.Services.Graphics
                     default:
                         break;
                 }
+            }
+
+            return Graphics;
+        }
+        public async Task<ICollection<GraphicsStandard>> ComparativeWeekly(int businessId)
+        {
+            ICollection<SalesOrder> listOrders = await _salesOrderRepository.LastTwoWeeksAsync(businessId);
+            List<GraphicsStandard> Graphics = new List<GraphicsStandard>();
+
+            for (int i = 0; i < 14; i++)
+            {
+
+                Graphics.Add(new GraphicsStandard
+                {
+                    Date = DateTime.Now.Date.AddDays(-i),
+                    Day = DateTime.Now.Date.AddDays(-i).Day.ToString(),
+                    Month = DateTime.Now.Date.AddDays(-i).Month.ToString(),
+                    Yaer = DateTime.Now.Date.AddDays(-i).Year.ToString(),
+                   
+                });
+
+                List<SalesOrder> itemList = listOrders.Where(x => x.InsertDate.Date == DateTime.Now.Date.AddDays(-i)).ToList();
+                Graphics[i].Value += itemList.Sum(x => x.TotalSales());
             }
 
             return Graphics;

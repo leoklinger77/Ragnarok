@@ -76,9 +76,9 @@
 
         if ($chartId == '#dashboard-sales-main') {
             chartBarVerticalMain($chartId);
-        } else if ($chartId == '#dashboard-visits-chart') {
+        } else if ($chartId == '#dashboard-comparative-weekly') {
             demoChart.linesFill = false;
-            chartWeek($chartId);
+            chartWeekMain($chartId);
         }
     });
 
@@ -191,82 +191,109 @@
             
     }
 
-    function chartWeek(placeholder) {
+    function chartWeekMain(placeholder) {
 
-        var currentWeek = [
-            [gt(2013, 10, 21), 500], [gt(2013, 10, 22), 215], [gt(2013, 10, 23), 250], [gt(2013, 10, 24), 230], [gt(2013, 10, 25), 245],
-            [gt(2013, 10, 26), 260], [gt(2013, 10, 27), 300]
-        ];
+        var result = [];
 
-        var lastWeek = [
-            [gt(2013, 10, 21), 50], [gt(2013, 10, 22), 75], [gt(2013, 10, 23), 205], [gt(2013, 10, 24), 170], [gt(2013, 10, 25), 205],
-            [gt(2013, 10, 26), 198], [gt(2013, 10, 27), 195]
-        ];
+        $.ajax({
 
-        var plot = $.plot(placeholder,
-            [
-                {
-                    data: currentWeek,
-                    label: "Current Week",
-                },
-                {
-                    data: lastWeek,
-                    label: "Last Week",
+            type: "POST",
+            url: "/Employee/Graphics/ComparativeWeekly",
+            async:true,
+            success: function (message) {
+                if (message.includes("Error")) {
+                    //TODO implementar msg de erro
+                } else {
+                    result = message;
+
+                    var currentWeek = [
+                        [gt(result[6].yaer, result[6].month, result[6].day), result[6].value],
+                        [gt(result[5].yaer, result[5].month, result[5].day), result[5].value],
+                        [gt(result[4].yaer, result[4].month, result[4].day), result[4].value],
+                        [gt(result[3].yaer, result[3].month, result[3].day), result[3].value],
+                        [gt(result[2].yaer, result[2].month, result[2].day), result[2].value],
+                        [gt(result[1].yaer, result[1].month, result[1].day), result[1].value],
+                        [gt(result[0].yaer, result[0].month, result[0].day), result[0].value]
+                    ];
+
+                    var lastWeek = [
+                        [gt(result[6].yaer, result[6].month, result[6].day), result[13].value],
+                        [gt(result[5].yaer, result[5].month, result[5].day), result[12].value],
+                        [gt(result[4].yaer, result[4].month, result[4].day), result[11].value],
+                        [gt(result[3].yaer, result[3].month, result[3].day), result[10].value],
+                        [gt(result[2].yaer, result[2].month, result[2].day), result[9].value],
+                        [gt(result[1].yaer, result[1].month, result[1].day), result[8].value],
+                        [gt(result[0].yaer, result[0].month, result[0].day), result[7].value]
+                    ];
+
+                    var plot = $.plot(placeholder,
+                        [
+                            {
+                                data: currentWeek,
+                                label: "Semana atual",
+                            },
+                            {
+                                data: lastWeek,
+                                label: "Semana passada",
+                            }
+                        ],
+
+                        {
+                            series: {
+                                lines: {
+                                    show: true,
+                                    lineWidth: demoChart.linesLineWidth,
+                                    fill: demoChart.linesFill,
+                                },
+                                points: {
+                                    show: true,
+                                    lineWidth: demoChart.pointsLineWidth,
+                                    fill: true,
+                                    fillColor: demoChart.pointsFillColor
+                                },
+
+                                shadowSize: 0
+                            },
+                            grid: {
+                                hoverable: true,
+                                clickable: true,
+                                borderWidth: 0,
+                                tickColor: demoChart.gridTickColor
+                            },
+                            colors: ["#ff9800", "#ccc"],
+                            yaxis: {
+                                font: { color: demoChart.axisFontColor },
+                                ticks: 5
+                            },
+                            xaxis: {
+                                mode: "time",
+                                timezone: "browser",
+                                minTickSize: [1, "day"],
+                                timeformat: "%a",
+                                font: { color: demoChart.axisFontColor },
+                                tickColor: "transparent",
+                                autoscaleMargin: 0.02
+                            },
+                            legend: {
+                                labelBoxBorderColor: "transparent",
+                                backgroundColor: "transparent"
+                            },
+                            tooltip: true,
+                            tooltipOpts: {
+                                content: '%s: %y'
+                            }
+
+                        });
+
+
+
                 }
-            ],
+            }
+        })
 
-            {
-                series: {
-                    lines: {
-                        show: true,
-                        lineWidth: demoChart.linesLineWidth,
-                        fill: demoChart.linesFill,
-                    },
-                    points: {
-                        show: true,
-                        lineWidth: demoChart.pointsLineWidth,
-                        fill: true,
-                        fillColor: demoChart.pointsFillColor
-                    },
 
-                    shadowSize: 0
-                },
-                grid: {
-                    hoverable: true,
-                    clickable: true,
-                    borderWidth: 0,
-                    tickColor: demoChart.gridTickColor
-                },
-                colors: ["#ff9800", "#ccc"],
-                yaxis: {
-                    font: { color: demoChart.axisFontColor },
-                    ticks: 5
-                },
-                xaxis: {
-                    mode: "time",
-                    timezone: "browser",
-                    minTickSize: [1, "day"],
-                    timeformat: "%a",
-                    font: { color: demoChart.axisFontColor },
-                    tickColor: "transparent",
-                    autoscaleMargin: 0.02
-                },
-                legend: {
-                    labelBoxBorderColor: "transparent",
-                    backgroundColor: "transparent"
-                },
-                tooltip: true,
-                tooltipOpts: {
-                    content: '%s: %y'
-                }
-
-            });
+        
     }
 
 });
 
-function GetDataMainSalesChart() {    
-
-
-
-}

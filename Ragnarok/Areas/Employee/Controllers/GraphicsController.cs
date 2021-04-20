@@ -36,5 +36,20 @@ namespace Ragnarok.Areas.Employee.Controllers
             }
             
         }
+        [HttpPost]
+        public async Task<IActionResult> ComparativeWeeklyAsync()
+        {
+            try
+            {
+                ICollection<GraphicsStandard> list = await _graphicsGenerator.ComparativeWeekly(_employeeLogin.GetEmployee().BusinessId);
+                return Json(list);
+
+            }
+            catch (Exception e)
+            {
+
+                return Json("Error: " + e.Message);
+            }
+        }
     }
 }

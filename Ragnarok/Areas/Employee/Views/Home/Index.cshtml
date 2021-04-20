@@ -69,7 +69,7 @@
                     <h3 class="sr-only"><span>SALES AND VISITS STAT</span></h3>
                     <ul id="dashboard-stat-tab" class="nav nav-pills nav-justified">
                         <li class="active"><a href="#tab-sales" data-cid="#dashboard-sales-main">Vendas</a></li>
-                        <li class=""><a href="#tab-visits" data-cid="#dashboard-visits-chart">Fluxo de Caixa</a></li>
+                        <li class=""><a href="#tab-visits" data-cid="#dashboard-comparative-weekly">Semana Passada X Atual</a></li>
                     </ul>
                 </div>
                 <div id="dashboard-stat-tab-content" class="widget-content tab-content">
@@ -77,7 +77,7 @@
                         <div class="flot-chart" id="dashboard-sales-main"></div>
                     </div>
                     <div class="tab-pane fade" id="tab-visits">
-                        <div class="flot-chart" id="dashboard-visits-chart"></div>
+                        <div class="flot-chart" id="dashboard-comparative-weekly"></div>
                     </div>
                 </div>
             </div>
@@ -154,7 +154,7 @@
 
         if ($chartId == '#dashboard-sales-main') {
             chartBarVerticalMain($chartId);
-        } else if ($chartId == '#dashboard-visits-chart') {
+        } else if ($chartId == '#dashboard-comparative-weekly') {
             demoChart.linesFill = false;
             chartWeek($chartId);
         }

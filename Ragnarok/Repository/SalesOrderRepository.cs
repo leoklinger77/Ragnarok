@@ -30,7 +30,7 @@ namespace Ragnarok.Repository
             }
         }
         [Obsolete]
-        public async Task<ICollection<SalesOrder>> FindAllsSevenDays(int businessId)
+        public async Task<ICollection<SalesOrder>> FindAllsSevenDaysAsync(int businessId)
         {
             try
             {
@@ -74,6 +74,23 @@ namespace Ragnarok.Repository
             }
         }
 
+        public async Task<ICollection<SalesOrder>> LastTwoWeeksAsync(int businessId)
+        {
+            try
+            {
+                return await _context.SalesOrder
+                    .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate > DateTime.Now.Date.AddDays(-14))
+                    .Include(x => x.SalesItem)
+                    .Include(x => x.Payment)
+                    .ToListAsync();
+            }
+            catch (Exception)
+            {
+
+                throw;
+            }
+        }
+
         public async Task<ICollection<SalesOrder>> TopSeven(int businessId)
         {
             try
@@ -91,3 +108,4 @@ namespace Ragnarok.Repository
         }
     }
 }
+
