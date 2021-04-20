@@ -8,7 +8,7 @@ namespace Ragnarok.Repository.Interfaces
     {
         Task<Client> FindByIdAsync(int id, int businessId);
         int FindTheClientIdByAddress(int addressId);
-
+        Task<int> NumberOfClients(int businessId);
         void Insert(Client client);
         void UpdateMain(Client client);
         void UpdateAddress(Address address);

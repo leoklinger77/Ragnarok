@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Mvc;
 using Ragnarok.Models;
+using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Login;
@@ -14,17 +15,23 @@ namespace Ragnarok.Areas.Employee.Controllers
     {
         private readonly EmployeeLogin _employeeLogin;
         private readonly ISalesOrderRepository _salesOrderRepository;
+        private readonly IClientRepository _clientRepository;
 
-        public HomeController(EmployeeLogin employeeLogin, ISalesOrderRepository salesOrderRepository)
+        public HomeController(EmployeeLogin employeeLogin, ISalesOrderRepository salesOrderRepository, IClientRepository clientRepository)
         {
             _employeeLogin = employeeLogin;
             _salesOrderRepository = salesOrderRepository;
+            _clientRepository = clientRepository;
         }
 
         public async Task<IActionResult> IndexAsync()
         {
-            ICollection<SalesOrder> list = await _salesOrderRepository.TopSeven(_employeeLogin.GetEmployee().BusinessId);            
-            return View(list);
+            HomePageFormViewModel viewModel = new HomePageFormViewModel
+            {
+                SalesOrder = await _salesOrderRepository.TopSeven(_employeeLogin.GetEmployee().BusinessId),
+                NumberOfClients =await _clientRepository.NumberOfClients(_employeeLogin.GetEmployee().BusinessId)
+            };            
+            return View(viewModel);
         }
         [HttpGet]
         [ValidationhttpReferer]

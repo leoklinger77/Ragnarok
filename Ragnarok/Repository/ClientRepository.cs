@@ -109,6 +109,19 @@ namespace Ragnarok.Repository
             }
         }
 
+        public async Task<int> NumberOfClients(int businessId)
+        {
+            try
+            {
+                return  await _context.Client.Select(x => x.RegisterEmployee.BusinessId == businessId).CountAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<Client> QuickSaleAsync(int businessId)
         {
             try

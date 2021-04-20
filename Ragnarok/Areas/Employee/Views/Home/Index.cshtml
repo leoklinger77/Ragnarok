@@ -1,4 +1,4 @@
-﻿@model IEnumerable<SalesOrder>
+﻿@model HomePageFormViewModel
 @{
     ViewData["Title"] = "Index";
 }
@@ -36,25 +36,25 @@
                 <div class="col-sm-3 text-center">
                     <div class="quick-info horizontal">
                         <i class="icon ion-thumbsup pull-left bg-seagreen"></i>
-                        <p>3700 <span>LIKES</span></p>
+                        <p>3700 <span>Qtd Vendida</span></p>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <div class="quick-info horizontal">
                         <i class="icon ion-arrow-graph-up-right pull-left bg-orange"></i>
-                        <p>27% <span>GROWTH</span></p>
+                        <p>27% <span>Crescimento</span></p>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <div class="quick-info horizontal">
                         <i class="icon ion-cash pull-left bg-green"></i>
-                        <p>$5,400 <span>PROFIT</span></p>
+                        <p>$5,400 <span>Venda de Hoje</span></p>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <div class="quick-info horizontal">
                         <i class="icon ion-person-stalker pull-left bg-blue"></i>
-                        <p>7285 <span>USERS</span></p>
+                        <p>@Model.NumberOfClients <span>Clientes</span></p>
                     </div>
                 </div>
             </div>
@@ -68,7 +68,7 @@
                 <div class="widget-header clearfix no-padding">
                     <h3 class="sr-only"><span>SALES AND VISITS STAT</span></h3>
                     <ul id="dashboard-stat-tab" class="nav nav-pills nav-justified">
-                        <li class="active"><a href="#tab-sales" data-cid="#dashboard-sales-main">Vendas</a></li>
+                        <li class="active"><a href="#tab-sales" data-cid="#dashboard-sales-main">Vendas da Semana</a></li>
                         <li class=""><a href="#tab-visits" data-cid="#dashboard-comparative-weekly">Semana Passada X Atual</a></li>
                     </ul>
                 </div>
@@ -99,7 +99,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach (var item in Model)
+                            @foreach (var item in Model.SalesOrder)
                             {
                                 <tr>
                                     @if (item.Payment.StatusPayment == Ragnarok.Models.Enums.StatusPayment.Pending)
