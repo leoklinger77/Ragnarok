@@ -30,25 +30,24 @@
     <!-- END PRIMARY CONTENT HEADING -->
     <div class="widget widget-no-header widget-transparent bottom-30px">
         <!-- QUICK SUMMARY INFO -->
-        <div class="widget-content">
-            <h3 class="sr-only">QUICK SUMMARY INFO</h3>
-            <div class="row">
-                <div class="col-sm-3 text-center">
-                    <div class="quick-info horizontal">
+        <div class="widget-content">            
+            <div class="row">                
+                <div class="col-sm-3 text-center">                    
+                    <div class="quick-info horizontal">                        
                         <i class="icon ion-thumbsup pull-left bg-seagreen"></i>
-                        <p>3700 <span>Qtd Vendida</span></p>
+                        <p>@Model.NumberOfSales <span>Qtd Vendida</span></p>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <div class="quick-info horizontal">
                         <i class="icon ion-arrow-graph-up-right pull-left bg-orange"></i>
-                        <p>27% <span>Crescimento</span></p>
+                        <p>@Model.Growth.ToString("F2") % <span>Crescimento</span></p>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
                     <div class="quick-info horizontal">
                         <i class="icon ion-cash pull-left bg-green"></i>
-                        <p>$5,400 <span>Venda de Hoje</span></p>
+                        <p>R$ @Model.SalesVelue <span>Venda de Hoje</span></p>
                     </div>
                 </div>
                 <div class="col-sm-3 text-center">
@@ -114,7 +113,7 @@
                                     }
 
                                     <td><a href="#">@item.Id</a></td>
-                                    <td>@item.TotalSales()</td>
+                                    <td>@item.TotalSales().ToString("F2")</td>
                                 </tr>
                             }
                         </tbody>

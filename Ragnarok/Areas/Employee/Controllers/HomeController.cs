@@ -4,6 +4,7 @@ using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Login;
+using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
 
@@ -26,11 +27,17 @@ namespace Ragnarok.Areas.Employee.Controllers
 
         public async Task<IActionResult> IndexAsync()
         {
+            int businessId = _employeeLogin.GetEmployee().BusinessId;
+            double valueToday = await _salesOrderRepository.ValueSold(DateTime.Now, businessId);
+            double valueWeek = await _salesOrderRepository.ValueSold(DateTime.Now.AddDays(-7), businessId);
             HomePageFormViewModel viewModel = new HomePageFormViewModel
             {
-                SalesOrder = await _salesOrderRepository.TopSeven(_employeeLogin.GetEmployee().BusinessId),
-                NumberOfClients =await _clientRepository.NumberOfClients(_employeeLogin.GetEmployee().BusinessId)
-            };            
+                SalesOrder = await _salesOrderRepository.TopSeven(businessId),
+                NumberOfClients = await _clientRepository.NumberOfClients(businessId),
+                NumberOfSales = await _salesOrderRepository.SoldAmount(DateTime.Now, businessId),
+                SalesVelue = valueToday,
+                Growth = (valueWeek == 0) ? 0 : (((valueToday / valueWeek) - 1) * 100)
+            };
             return View(viewModel);
         }
         [HttpGet]
@@ -38,7 +45,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         public IActionResult GetOut()
         {
             _employeeLogin.Remove();
-            return RedirectToAction("Index","Home", new { Area = ""});
+            return RedirectToAction("Index", "Home", new { Area = "" });
         }
     }
 }

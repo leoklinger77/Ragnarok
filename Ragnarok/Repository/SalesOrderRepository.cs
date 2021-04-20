@@ -91,6 +91,19 @@ namespace Ragnarok.Repository
             }
         }
 
+        public async Task<int> SoldAmount(DateTime date, int businessId)
+        {
+            try
+            {
+                return await _context.SalesOrder.Where(x => x.InsertDate.Date == date.Date).Select(x => x.SaleBox.RegisterSales.BusinessId == businessId).CountAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
+
         public async Task<ICollection<SalesOrder>> TopSeven(int businessId)
         {
             try
@@ -99,6 +112,27 @@ namespace Ragnarok.Repository
                     .Include(x => x.SalesItem)
                     .Include(x => x.Payment)
                     .OrderByDescending(x => x.Id).Take(7).ToListAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<double> ValueSold(DateTime date, int businessId)
+        {
+            try
+            {
+                ICollection<SalesOrder> list = await _context.SalesOrder
+                    .Where(x => x.InsertDate.Date == date.Date && x.SaleBox.RegisterSales.BusinessId == businessId)
+                    .Include(x => x.SalesItem)
+                    .AsNoTracking()
+                    .ToListAsync();
+
+                return list.Select(x => x.TotalSales()).Sum();
+                    
+                    
             }
             catch (Exception e)
             {
