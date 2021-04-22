@@ -49,25 +49,20 @@ namespace Ragnarok.Repository
         {
             try
             {
-                if (string.IsNullOrEmpty(search))
+                List<SalesOrder> list = await _context.SalesOrder
+                    .Include(x => x.SalesItem)
+                    .Include(x => x.Client)
+                    .Include(x => x.Payment)
+                    .Include(x => x.SaleBox.RegisterSales)
+                    .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate.Date >= start && x.InsertDate.Date <= end)
+                    .OrderByDescending(x => x.InsertDate)
+                    .ToListAsync();
+                foreach (SalesOrder item in list)
                 {
-                    return await _context.SalesOrder
-                        .Include(x => x.SalesItem)
-                        .Include(x => x.Client)
-                        .Include(x => x.Payment)
-                        .Include(x => x.SaleBox)
-                        .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate.Date >= start && x.InsertDate.Date <= end)
-                        .OrderByDescending(x => x.InsertDate)
-                        .ToListAsync();
+                    item.SalesItem = await _context.SalesItem.Include(x => x.Stock.Product).Where(x => x.SalesOrderId == item.Id).ToListAsync();
                 }
-                return await _context.SalesOrder.AsQueryable()
-                        .Include(x => x.SalesItem)
-                        .Include(x => x.Client)
-                        .Include(x => x.Payment)
-                        .Include(x => x.SaleBox)
-                        .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate.Date >= start.Date && x.InsertDate.Date <= end.Date)
-                        .OrderByDescending(x => x.InsertDate)
-                        .ToListAsync();
+
+                return list;
             }
             catch (Exception e)
             {

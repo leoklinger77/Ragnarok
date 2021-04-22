@@ -62,10 +62,8 @@ namespace Ragnarok.Areas.Employee.Controllers
                 string path = ExcelGenerator.ArquivoExcelCotacoes.GerarArquivo<SalesOrder>(new ExcelConfigurations(),
                     (List<SalesOrder>)await _salesOrderRepository.FindAllsAsync(search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId));
 
-                string contentType = "application/xlsx";
-                                
+                string contentType = "application/xlsx";                                
                 string hostServidor = HttpContext.Request.Host.Host;
-
                 path = Path.Combine(hostServidor, path);
 
                 return File(path, contentType,"Report.xlsx");
