@@ -461,7 +461,6 @@ C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Discount\Index.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Discount\Insert.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Discount\Details.cshtml.g.cs
-C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Sales\Index.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Sales\Box.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\Microsoft.AspNetCore.JsonPatch.dll
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\Newtonsoft.Json.Bson.dll
@@ -940,3 +939,8 @@ C:\Users\Kling\Desktop\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Ragnarok.csproj
 C:\Users\Kling\Desktop\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Ragnarok.dll
 C:\Users\Kling\Desktop\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Ragnarok.pdb
 C:\Users\Kling\Desktop\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Ragnarok.genruntimeconfig.cache
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Sales\Report.cshtml.g.cs
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\ClosedXML.dll
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\DocumentFormat.OpenXml.dll
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\ExcelNumberFormat.dll
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\System.IO.Packaging.dll

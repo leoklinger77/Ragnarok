@@ -2,12 +2,14 @@
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Repository.Interfaces
 {
     public interface ISalesOrderRepository
     {
-        Task<ICollection<SalesOrder>> FindAllsAsync(int businessId);
+        Task<IPagedList<SalesOrder>> FindAllsAsync(int? page, int? numberPerPage, string search, DateTime start, DateTime end, int businessId);
+        Task<ICollection<SalesOrder>> FindAllsAsync(string search, DateTime start, DateTime end, int businessId);
         Task InsertAsync(SalesOrder salesOrder);
         Task<SalesOrder> FindById(int id, int businessId);
         Task<ICollection<SalesOrder>> TopSeven(int businessId);

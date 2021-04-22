@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Repository
 {
@@ -18,17 +19,62 @@ namespace Ragnarok.Repository
             _context = context;
         }
 
-        public async Task<ICollection<SalesOrder>> FindAllsAsync(int businessId)
+        public async Task<IPagedList<SalesOrder>> FindAllsAsync(int? page, int? numberPerPage, string search, DateTime start, DateTime end, int businessId)
         {
             try
             {
-                return await _context.SalesOrder.Where(x => x.SaleBox.RegisterSales.BusinessId == businessId).ToListAsync();
+                int Page = page ?? 1;
+                int quantity = numberPerPage ?? 10;
+                if (string.IsNullOrEmpty(search))
+                {
+                    return await _context.SalesOrder.AsQueryable()
+                        .Include(x => x.SalesItem)
+                        .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate.Date >= start && x.InsertDate.Date <= end)
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToPagedListAsync<SalesOrder>((int)Page, quantity);
+                }
+                return await _context.SalesOrder.AsQueryable()
+                        .Include(x => x.SalesItem)
+                        .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate.Date >= start.Date && x.InsertDate.Date <= end.Date)
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToPagedListAsync<SalesOrder>(Page, quantity);
             }
             catch (Exception e)
             {
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<ICollection<SalesOrder>> FindAllsAsync(string search, DateTime start, DateTime end, int businessId)
+        {
+            try
+            {
+                if (string.IsNullOrEmpty(search))
+                {
+                    return await _context.SalesOrder
+                        .Include(x => x.SalesItem)
+                        .Include(x => x.Client)
+                        .Include(x => x.Payment)
+                        .Include(x => x.SaleBox)
+                        .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate.Date >= start && x.InsertDate.Date <= end)
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToListAsync();
+                }
+                return await _context.SalesOrder.AsQueryable()
+                        .Include(x => x.SalesItem)
+                        .Include(x => x.Client)
+                        .Include(x => x.Payment)
+                        .Include(x => x.SaleBox)
+                        .Where(x => x.SaleBox.RegisterSales.BusinessId == businessId && x.InsertDate.Date >= start.Date && x.InsertDate.Date <= end.Date)
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
         [Obsolete]
         public async Task<ICollection<SalesOrder>> FindAllsSevenDaysAsync(int businessId)
         {
@@ -131,8 +177,8 @@ namespace Ragnarok.Repository
                     .ToListAsync();
 
                 return list.Select(x => x.TotalSales()).Sum();
-                    
-                    
+
+
             }
             catch (Exception e)
             {

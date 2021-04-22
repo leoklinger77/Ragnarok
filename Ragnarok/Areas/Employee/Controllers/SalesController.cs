@@ -8,11 +8,13 @@ using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Lang;
 using Ragnarok.Services.Login;
+using Ragnarok.Services.Report;
 using Ragnarok.Services.Stock;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -42,9 +44,12 @@ namespace Ragnarok.Areas.Employee.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<IActionResult> IndexAsync()
+        public async Task<IActionResult> ReportAsync(int? page, int? numberPerPage, string search, DateTime? start, DateTime? end)
         {
-            ICollection<SalesOrder> list = await _salesOrderRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            DateTime startDate = start ?? DateTime.Now.AddDays(-30);
+            DateTime endDate = end ?? DateTime.Now;
+            ExcelGenerator.ArquivoExcelCotacoes.GerarArquivo<SalesOrder>(new ExcelConfigurations { DiretorioGeracaoArqCotacoes = "C:\\Users\\Kling\\Desktop\\", TemplateArqCotacoes = "C:\\Users\\Kling\\Desktop\\Project_Ragnarok\\Ragnarok\\Planilha.xlsx" }, await _salesOrderRepository.FindAllsAsync(search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId));
+            IPagedList<SalesOrder> list = await _salesOrderRepository.FindAllsAsync(page, numberPerPage, search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId);
             return View(list);
         }
         [HttpGet]
@@ -176,5 +181,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 return Json("Error: " + e.Message);
             }
         }
+
+
     }
 }

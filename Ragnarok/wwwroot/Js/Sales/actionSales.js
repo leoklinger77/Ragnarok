@@ -242,3 +242,72 @@ $('#finishSales').click(function () {
 
 });
 
+$('#numberPerPage').change(function () {
+    var nunber = $(this).val();
+    if (nunber > 0) {
+        $('#btn-get-salesReport').click();
+    }
+});
+
+$(document).ready(function () {
+
+    if ($('body').hasClass('fixed-top-active dashboard')) {
+				
+		$('#reportrange').daterangepicker({
+			startDate: moment().subtract('days', 29),
+			endDate: moment(),
+			minDate: '01/01/2012',
+			maxDate: '12/31/2032',
+			dateLimit: { days: 730 },
+			showDropdowns: true,
+			showWeekNumbers: true,
+			timePicker: false,
+			timePickerIncrement: 1,
+			timePicker12Hour: true,
+			ranges: {
+				'Hojte': [moment(), moment()],
+				'Ontem': [moment().subtract('days', 1), moment().subtract('days', 1)],
+				'Últimos 7 Dias': [moment().subtract('days', 6), moment()],
+				'Últimos 30 Dias': [moment().subtract('days', 29), moment()],
+				'Este Mês': [moment().startOf('month'), moment().endOf('month')],
+				'Últimos Mês': [moment().subtract('month', 1).startOf('month'), moment().subtract('month', 1).endOf('month')]
+			},
+			opens: 'left',
+			applyClass: 'btn btn-small btn-primary',
+			cancelClass: 'btn-small',
+            format: 'DD/MM/YYYY',
+			separator: ' to ',
+			locale: {
+				applyLabel: 'Ok',
+				fromLabel: 'De',
+				toLabel: 'Para',
+				customRangeLabel: 'Faixa Personalizada',
+				daysOfWeek: ['D', 'S', 'T', 'Q', 'Q', 'S', 'S'],
+				monthNames: ['Janeiro', 'Fevereiro', 'Março', 'Abril', 'Maio', 'Junho', 'Julho', 'Agosto', 'Setembro', 'Outubro', 'Novembro', 'Dezenbro'],
+				firstDay: 1
+			}
+		},
+
+			function (start, end) {
+                console.log("Chamada de retorno foi realizada!");
+                $('#reportrange span').html(start.format('D MMMM, YYYY') + ' - ' + end.format('D MMMM, YYYY'));
+
+                $('#start').val(start.format('D MMMM, YYYY'));
+                $('#end').val(end.format('D MMMM, YYYY'));
+                $('#btn-get-salesReport').click();
+
+
+			}
+		);
+
+		// set the initial state of the picker label
+        $('#reportrange span').html(moment().subtract('days', 29).format('D MMMM, YYYY') + ' - ' + moment().format('D MMMM, YYYY'));
+
+	}
+
+});
+
+$("#btnExportSales").click(function (e) {
+    window.open('data:application/vnd.ms-excel,' + $('.exportSales').html());
+    e.preventDefault();
+});
