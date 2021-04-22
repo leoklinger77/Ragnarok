@@ -12,6 +12,7 @@ using Ragnarok.Services.Report;
 using Ragnarok.Services.Stock;
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
 using X.PagedList;
@@ -48,9 +49,32 @@ namespace Ragnarok.Areas.Employee.Controllers
         {
             DateTime startDate = start ?? DateTime.Now.AddDays(-30);
             DateTime endDate = end ?? DateTime.Now;
-            ExcelGenerator.ArquivoExcelCotacoes.GerarArquivo<SalesOrder>(new ExcelConfigurations { DiretorioGeracaoArqCotacoes = "C:\\Users\\Kling\\Desktop\\", TemplateArqCotacoes = "C:\\Users\\Kling\\Desktop\\Project_Ragnarok\\Ragnarok\\Planilha.xlsx" }, await _salesOrderRepository.FindAllsAsync(search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId));
             IPagedList<SalesOrder> list = await _salesOrderRepository.FindAllsAsync(page, numberPerPage, search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId);
             return View(list);
+        }
+        [HttpGet]
+        public async Task<FileResult> DownloadoReport(string search, DateTime? start, DateTime? end)
+        {
+            try
+            {
+                DateTime startDate = start ?? DateTime.Now.AddDays(-30);
+                DateTime endDate = end ?? DateTime.Now;
+                string path = ExcelGenerator.ArquivoExcelCotacoes.GerarArquivo<SalesOrder>(new ExcelConfigurations(),
+                    (List<SalesOrder>)await _salesOrderRepository.FindAllsAsync(search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId));
+
+                string contentType = "application/xlsx";
+                                
+                string hostServidor = HttpContext.Request.Host.Host;
+
+                path = Path.Combine(hostServidor, path);
+
+                return File(path, contentType,"Report.xlsx");
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
         }
         [HttpGet]
         public async Task<IActionResult> Box()

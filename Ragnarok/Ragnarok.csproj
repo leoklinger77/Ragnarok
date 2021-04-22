@@ -11,6 +11,7 @@
   <ItemGroup>
     <Folder Include="wwwroot\assets\js\.vs\js\v16\" />
     <Folder Include="wwwroot\imageEmployee\" />
+    <Folder Include="wwwroot\ReportSheets_Temp\" />
   </ItemGroup>
 
   <ItemGroup>

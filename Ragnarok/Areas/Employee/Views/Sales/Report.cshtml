@@ -35,7 +35,6 @@
                 </ul>
             </div>
         </div>
-
     </div>
 
     <div class="widget">
@@ -85,11 +84,16 @@
                                 <option value="1000">1000</option>
                             </select>
                         </div>
+                        <div class="col-lg-offset-11">
+                            <button asp-action="DownloadoReport" asp-controller="Sales" asp-area="Employee" class="btn btn-default">Exportar Excel</button>
+                        </div>
                     </div>
                 </div>
                 <button id="btn-get-salesReport" type="submit" class="btn btn-success btn-sm" style="display:none"></button>
+                
             </form>
-            <button id="btnExportSales">Exportar</button>
+
+            
             <div id="exportSales">
                 <table id="datatable-column-interactive" class="table exportSales">
                     <thead>
