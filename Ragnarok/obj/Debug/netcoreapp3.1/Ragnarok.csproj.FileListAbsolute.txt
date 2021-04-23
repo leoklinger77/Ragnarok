@@ -946,3 +946,4 @@ C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\bin\Debug\netcoreapp3.1\System.IO.Packaging.dll
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Stock\Report.cshtml.g.cs
 C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Product\Report.cshtml.g.cs
+C:\Users\Kling\Desktop\Project_Ragnarok\Ragnarok\Ragnarok\obj\Debug\netcoreapp3.1\Razor\Areas\Employee\Views\Client\Report.cshtml.g.cs

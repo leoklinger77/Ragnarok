@@ -5,10 +5,12 @@ using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Lang;
 using Ragnarok.Services.Login;
+using Ragnarok.Services.Report;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.IO;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -215,6 +217,27 @@ namespace Ragnarok.Areas.Employee.Controllers
             }
 
             return Json(clientJson);
+        }
+        [HttpGet]
+        public async Task<IActionResult> Report(int? page, int? numberPerPage, string search, DateTime? start, DateTime? end)
+        {
+            DateTime startDate = start ?? DateTime.Now.AddDays(-30);
+            DateTime endDate = end ?? DateTime.Now;
+            IPagedList<Client> list = await _clientRepository.FindAllsPagedListAsync(page, numberPerPage, search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId);
+            return View(list);
+        }
+        [HttpGet]
+        public async Task<FileResult> DownloadReport(string search, DateTime? start, DateTime? end)
+        {
+            DateTime startDate = start ?? DateTime.Now.AddDays(-30);
+            DateTime endDate = end ?? DateTime.Now;
+            string path = ExcelGenerator.FileExcel.GerarArquivo<Client>(new ExcelConfigurations(),
+                    (List<Client>)await _clientRepository.FindAllsAsync(search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId));
+            string contentType = "application/xlsx";
+            string hostServidor = HttpContext.Request.Host.Host;
+            path = Path.Combine(hostServidor, path);
+
+            return File(path, contentType, "Stock.xlsx");
         }
     }
 }

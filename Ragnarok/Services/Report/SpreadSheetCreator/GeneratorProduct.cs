@@ -36,59 +36,8 @@ namespace Ragnarok.Services.Report.SpreadSheetCreator
                         worksheet.Cell("C" + (2 + i)).Value =
                             obj.Name;
                         worksheet.Cell("D" + (2 + i)).Value =
-                            obj.BarCode;
-
-                        worksheet.Cell("G" + (2 + i)).Value =
-                            obj.Id;
-                        worksheet.Cell("H" + (2 + i)).Value =
-                            obj.InsertDate;
-                        worksheet.Cell("I" + (2 + i)).Value =
-                            obj.Name;
-                        worksheet.Cell("J" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("K" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("L" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("M" + (2 + i)).Value =
-                            obj.Id;
-                        worksheet.Cell("N" + (2 + i)).Value =
-                            obj.InsertDate;
-                        worksheet.Cell("O" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("P" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("Q" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("R" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("S" + (2 + i)).Value =
-                            obj.Id;
-                        worksheet.Cell("T" + (2 + i)).Value =
-                            obj.InsertDate;
-                        worksheet.Cell("U" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("V" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("W" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("X" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("Y" + (2 + i)).Value =
-                            obj.Id;
-                        worksheet.Cell("Z" + (2 + i)).Value =
-                            obj.InsertDate;
-                        worksheet.Cell("AA" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("AB" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("AC" + (2 + i)).Value =
-                            obj.BarCode;
-                        worksheet.Cell("AD" + (2 + i)).Value =
-                            obj.BarCode;
-
+                            obj.BarCode;                        
                         i++;
-
                     }
                     workbook.Save();
                     return Path.Combine("/ReportSheets_Temp/", fileName);

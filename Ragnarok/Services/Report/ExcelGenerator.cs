@@ -8,7 +8,7 @@ namespace Ragnarok.Services.Report
 {
     public class ExcelGenerator
     {
-        public static class ArquivoExcelCotacoes
+        public static class FileExcel
         {
             public static string GerarArquivo<T>(ExcelConfigurations configurations,List<T> list)
             {
@@ -32,6 +32,13 @@ namespace Ragnarok.Services.Report
                             break;
                         case "Ragnarok.Models.Product":
                             path = GeneratorProduct.SheetsProduct((List<Product>)(Object)list, caminhoArqCotacoes, name);
+                            break;
+                            //client
+                        case "Ragnarok.Models.ClientPhysical":
+                            path = GeneratorClient.SheetsClient((List<Client>)(Object)list, caminhoArqCotacoes, name);
+                            break;
+                        case "Ragnarok.Models.ClientJuridical":
+                            path = GeneratorClient.SheetsClient((List<Client>)(Object)list, caminhoArqCotacoes, name);
                             break;
                     }
                     return path;

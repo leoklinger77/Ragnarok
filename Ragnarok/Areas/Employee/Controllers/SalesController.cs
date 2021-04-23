@@ -59,7 +59,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             {
                 DateTime startDate = start ?? DateTime.Now.AddDays(-30);
                 DateTime endDate = end ?? DateTime.Now;
-                string path = ExcelGenerator.ArquivoExcelCotacoes.GerarArquivo<SalesOrder>(new ExcelConfigurations(),
+                string path = ExcelGenerator.FileExcel.GerarArquivo<SalesOrder>(new ExcelConfigurations(),
                     (List<SalesOrder>)await _salesOrderRepository.FindAllsAsync(search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId));
 
                 string contentType = "application/xlsx";                                
