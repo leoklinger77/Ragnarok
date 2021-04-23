@@ -45,7 +45,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             _context = context;
         }
         [HttpGet]
-        public async Task<IActionResult> ReportAsync(int? page, int? numberPerPage, string search, DateTime? start, DateTime? end)
+        public async Task<IActionResult> Report(int? page, int? numberPerPage, string search, DateTime? start, DateTime? end)
         {
             DateTime startDate = start ?? DateTime.Now.AddDays(-30);
             DateTime endDate = end ?? DateTime.Now;
@@ -53,7 +53,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(list);
         }
         [HttpGet]
-        public async Task<FileResult> DownloadoReport(string search, DateTime? start, DateTime? end)
+        public async Task<FileResult> DownloadReport(string search, DateTime? start, DateTime? end)
         {
             try
             {
@@ -66,7 +66,7 @@ namespace Ragnarok.Areas.Employee.Controllers
                 string hostServidor = HttpContext.Request.Host.Host;
                 path = Path.Combine(hostServidor, path);
 
-                return File(path, contentType,"Report.xlsx");
+                return File(path, contentType,"Sales.xlsx");
             }
             catch (Exception e)
             {
@@ -100,7 +100,7 @@ namespace Ragnarok.Areas.Employee.Controllers
             return View(order);
         }
         [HttpGet]
-        public async Task<IActionResult> OpenSaleBoxAsync(double? ApertureValue)
+        public async Task<IActionResult> OpenSaleBox(double? ApertureValue)
         {
             if (_openBox.GetSaleBox() == null)
             {
@@ -126,7 +126,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         }
         [HttpGet]
         [BoxAuthorization]
-        public async Task<IActionResult> CloseSaleBoxAsync()
+        public async Task<IActionResult> CloseSaleBox()
         {
 
             SaleBox saleBox = _openBox.GetSaleBox();
@@ -137,7 +137,7 @@ namespace Ragnarok.Areas.Employee.Controllers
         }
         [HttpPost]
         [BoxAuthorization]
-        public async Task<IActionResult> InsertSalesAsync(SalesOrderFormViewModel viewModel)
+        public async Task<IActionResult> InsertSales(SalesOrderFormViewModel viewModel)
         {
             using var beginTransaction = await _context.Database.BeginTransactionAsync();
             try

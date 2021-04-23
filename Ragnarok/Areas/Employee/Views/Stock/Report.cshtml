@@ -1,0 +1,129 @@
+﻿@model IPagedList<Stock>
+@{
+    ViewData["Title"] = "Index";
+    string numberPerPage = Context.Request.Query["Report Stock"];
+
+    if (!string.IsNullOrEmpty(numberPerPage))
+    {
+        numberPerPage = numberPerPage.Replace("{", "").Replace("}", "");
+    }
+
+    var search = Context.Request.Query["search"];
+}
+<div class="container-fluid primary-content">
+    <!-- PRIMARY CONTENT HEADING -->
+    <div class="primary-content-heading clearfix">
+        <h2>RELATÓRIOS ESTOQUE DE PRODUTOS</h2>
+        <ul class="breadcrumb pull-left">
+            <li><i class="icon ion-home"></i><a asp-action="Index" asp-controller="Home" asp-area="Employee">Home</a></li>
+            <li><a asp-action="Index" asp-controller="Stock" asp-area="Employee">Estoque</a></li>
+        </ul>
+        <div class="sticky-content pull-right">
+            <div class="btn-group btn-dropdown">
+                <button type="button" class="btn btn-default btn-sm btn-favorites" data-toggle="dropdown"><i class="icon ion-android-star"></i> Favorites</button>
+                <ul class="dropdown-menu dropdown-menu-right list-inline">
+                    <li><a href="#"><i class="icon ion-pie-graph"></i> <span>Statistics</span></a></li>
+                    <li><a href="#"><i class="icon ion-email"></i> <span>Inbox</span></a></li>
+                    <li><a href="#"><i class="icon ion-chatboxes"></i> <span>Chat</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-circled"></i> <span>Help</span></a></li>
+                    <li><a href="#"><i class="icon ion-gear-a"></i> <span>Settings</span></a></li>
+                    <li><a href="#"><i class="icon ion-help-buoy"></i> <span>Support</span></a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+    <div class="widget">
+        <div class="widget-header clearfix">
+            <h3><i class="icon ion-ios-grid-view-outline"></i> <span>LISTA DE TODOS OS PRODUTOS NO ESTOQUE</span></h3>
+        </div>
+        <div class="widget-content">
+            @if (TempData["MSG_S"] != null)
+            {
+                <div class="alert alert-success fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Feito!</strong> @TempData["MSG_S"]
+                </div>
+            }
+            @if (TempData["MSG_E"] != null)
+            {
+                <div class="alert alert-danger fade in">
+                    <button class="close" data-dismiss="alert">&times;</button>
+                    <i class="icon ion-checkmark-circled"></i>
+                    <strong>Erro!</strong> @TempData["MSG_E"]
+                </div>
+            }
+
+            <div class="table-responsive">
+                <form method="get" asp-action="Report" asp-controller="Stock" asp-area="Employee">
+
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-offset-8 col-md-4">
+                                <div class="input-group input-group-sm">
+                                    <input class="form-control" name="search" id="search" value="@search" placeholder="Pesquise pelo Nome ou Código de barras" />
+                                    <div class="input-group-btn">
+                                        <button id="btn-get-produt" type="submit" class="btn btn-success btn-sm"><i class="icon ion-android-search"></i> Go</button>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <br />
+                    <br />
+                    <div class="col-md-12">
+                        <div class="row">
+                            <div class="col-md-1">
+                                <select class="form-control" name="numberPerPage" id="numberPerPage" asp-for="@numberPerPage">
+                                    <option value="10">10</option>
+                                    <option value="30">30</option>
+                                    <option value="50">50</option>
+                                    <option value="100">100</option>
+                                    <option value="500">500</option>
+                                    <option value="1000">1000</option>
+                                </select>
+                            </div>
+                            <div class="col-lg-offset-11">
+                                <button asp-action="DownloadReport" asp-controller="Stock" asp-area="Employee" class="btn btn-default">Exportar Excel</button>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+                <table id="datatable-column-interactive" class="table">
+                    <thead>
+                        <tr>
+                            <th>Nome</th>
+                            <th>Código de Barras</th>
+                            <th>Quantidade</th>
+                            <th>Preço Venda</th>
+                            <th>Validade</th>
+                            <th>Ação</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+
+                            <tr>
+                                <td>@item.Product.Name</td>
+                                <td>@item.Product.BarCode</td>
+                                <td>@item.Quantity</td>
+                                <td>@item.SalesPrice</td>
+
+                                <td>@item.ValidationDate</td>
+
+                                <td>
+                                    <a asp-action="Details" asp-controller="Stock" asp-area="Employee" asp-route-id="@item.Id"><i class="icon ion-edit"></i> Detalhes</a>
+                                </td>
+                            </tr>
+                        }
+
+                    </tbody>
+                </table>
+                @Html.PagedListPager((IPagedList)Model, page => Url.Action("Index", new { page = page, search = search, numberPerPage = numberPerPage }))
+            </div>
+        </div>
+    </div>
+
+</div>
+

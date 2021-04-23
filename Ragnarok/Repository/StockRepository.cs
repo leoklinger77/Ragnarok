@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Repository
 {
@@ -18,13 +19,25 @@ namespace Ragnarok.Repository
             _context = context;
         }
 
-        public async Task<ICollection<Stock>> FindAllsAsync(int businessId)
+        public async Task<ICollection<Stock>> FindAllsAsync(string search, DateTime startDate, DateTime endDate, int businessId)
         {
             try
             {
-                return await _context.Stock.Where(x => x.Product.RegisterEmployee.BusinessId == businessId)
-                    .Include(x => x.Product)
-                    .ToListAsync();
+
+                if (string.IsNullOrEmpty(search))
+                {
+                    return await _context.Stock
+                        .Include(x=>x.Product)
+                        .Where(x => x.Product.RegisterEmployee.BusinessId == businessId
+                        && (x.InsertDate >= startDate && x.InsertDate <= endDate))
+                        .ToListAsync();
+                }
+                return await _context.Stock
+                        .Include(x => x.Product)
+                        .Where(x => x.Product.RegisterEmployee.BusinessId == businessId
+                        && (x.InsertDate >= startDate && x.InsertDate <= endDate)
+                        && (x.Product.Name.Contains(search.Trim()) || x.Product.BarCode.Contains(search.Trim())))
+                        .ToListAsync();
             }
             catch (Exception e)
             {
@@ -32,6 +45,58 @@ namespace Ragnarok.Repository
                 throw new Exception(e.Message);
             }
         }
+
+        public async Task<ICollection<Stock>> FindAllsAsync(int businessId)
+        {
+            try
+            {
+                return await _context.Stock
+                    .Include(x => x.Product)
+                    .Where(x=>x.Product.RegisterEmployee.BusinessId == businessId)
+                    .ToListAsync();
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message); ;
+            }
+        }
+
+        public async Task<IPagedList<Stock>> FindAllsPagedListAsync(int? page, int? numberPerPage, string search, DateTime startDate, DateTime endDate, int businessId)
+        {
+            try
+            {
+                try
+                {
+                    int Page = page ?? 1;
+                    int quantity = numberPerPage ?? 10;
+                    if (string.IsNullOrEmpty(search))
+                    {
+                        return await _context.Stock.AsQueryable()
+                            .Include(x => x.Product)
+                            .Where(x => x.Product.RegisterEmployee.BusinessId == businessId 
+                            && (x.InsertDate >= startDate && x.InsertDate <= endDate))
+                            .ToPagedListAsync<Stock>((int)Page, quantity);
+                    }
+                    return await _context.Stock.AsQueryable()
+                            .Include(x => x.Product)
+                            .Where(x => x.Product.RegisterEmployee.BusinessId == businessId                             
+                            && (x.InsertDate >= startDate && x.InsertDate <= endDate) 
+                            && (x.Product.Name.Contains(search.Trim()) || x.Product.BarCode.Contains(search.Trim()) ))
+                            .ToPagedListAsync<Stock>(Page, quantity);
+                }
+                catch (Exception e)
+                {
+
+                    throw new Exception(e.Message);
+                }
+            }
+            catch (Exception e)
+            {
+
+                throw new Exception(e.Message);
+            }
+        }               
         [Obsolete]
         public async Task<ICollection<Stock>> FindAllsProductsNotDiscount(int businessId)
         {

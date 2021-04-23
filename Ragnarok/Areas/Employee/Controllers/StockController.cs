@@ -5,8 +5,12 @@ using Ragnarok.Models.ViewModels;
 using Ragnarok.Repository.Interfaces;
 using Ragnarok.Services.Filter;
 using Ragnarok.Services.Login;
+using Ragnarok.Services.Report;
+using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Areas.Employee.Controllers
 {
@@ -25,10 +29,36 @@ namespace Ragnarok.Areas.Employee.Controllers
             _discountProductStockRepository = discountProductStockRepository;
         }
         [HttpGet]
-        public async Task<IActionResult> Index()
+        public async Task<IActionResult> Index(int? page, int? numberPerPage, string search, DateTime? start, DateTime? end)
         {
-            ICollection<Stock> list = await _stockRepository.FindAllsAsync(_employeeLogin.GetEmployee().BusinessId);
+            DateTime startDate = start ?? DateTime.Now.AddDays(-30);
+            DateTime endDate = end ?? DateTime.Now;
+            IPagedList<Stock> list = await _stockRepository.FindAllsPagedListAsync(page, numberPerPage, search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId);
+            
             return View(list);
+        }
+        [HttpGet]
+        public async Task<IActionResult> ReportAsync(int? page, int? numberPerPage, string search, DateTime? start, DateTime? end)
+        {
+            DateTime startDate = start ?? DateTime.Now.AddDays(-30);
+            DateTime endDate = end ?? DateTime.Now;
+            IPagedList<Stock> list = await _stockRepository.FindAllsPagedListAsync(page, numberPerPage, search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId);
+            return View(list);
+        }
+        [HttpGet]
+        public async Task<FileResult> DownloadReport(string search, DateTime? start, DateTime? end)
+        {
+            DateTime startDate = start ?? DateTime.Now.AddDays(-30);
+            DateTime endDate = end ?? DateTime.Now;
+            
+            string path = ExcelGenerator.ArquivoExcelCotacoes.GerarArquivo<Stock>(new ExcelConfigurations(),
+                    (List<Stock>)await _stockRepository.FindAllsAsync(search, startDate, endDate, _employeeLogin.GetEmployee().BusinessId));
+            
+            string contentType = "application/xlsx";
+            string hostServidor = HttpContext.Request.Host.Host;
+            path = Path.Combine(hostServidor, path);
+
+            return File(path, contentType, "Stock.xlsx");
         }
         [HttpGet]
         public async Task<IActionResult> Details(int id)
@@ -56,5 +86,9 @@ namespace Ragnarok.Areas.Employee.Controllers
             productJson.Discount = discount != null ? discount.DiscountProduct.DiscountAmount : 0;
             return Json(productJson);
         }
+        
+
     }
+
+   
 }

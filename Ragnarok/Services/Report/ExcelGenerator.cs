@@ -1,10 +1,7 @@
-﻿using ClosedXML.Excel;
-using Ragnarok.Models;
+﻿using Ragnarok.Models;
 using Ragnarok.Services.Report.SpreadSheetCreator;
 using System;
 using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
 using System.IO;
 
 namespace Ragnarok.Services.Report
@@ -29,6 +26,12 @@ namespace Ragnarok.Services.Report
                     {
                         case "Ragnarok.Models.SalesOrder":
                             path = GeneratorSalesOrder.SheetsSalesOrder((List<SalesOrder>)(Object)list, caminhoArqCotacoes, name);                            
+                            break;
+                        case "Ragnarok.Models.Stock":
+                            path = GeneratorStock.SheetsStock((List<Models.Stock>)(Object)list, caminhoArqCotacoes, name);
+                            break;
+                        case "Ragnarok.Models.Product":
+                            path = GeneratorProduct.SheetsProduct((List<Product>)(Object)list, caminhoArqCotacoes, name);
                             break;
                     }
                     return path;
