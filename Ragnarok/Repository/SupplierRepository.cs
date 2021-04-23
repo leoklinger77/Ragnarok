@@ -6,6 +6,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
+using X.PagedList;
 
 namespace Ragnarok.Repository
 {
@@ -27,6 +28,68 @@ namespace Ragnarok.Repository
             catch (Exception e)
             {
 
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<List<Supplier>> FindAllsAsync(string search, DateTime startDate, DateTime endDate, int businessId)
+        {
+            try
+            {
+                if (!string.IsNullOrEmpty(search))
+                {
+                    return await _context.Supplier
+                        .Include(x => x.RegisterEmployee)
+                        .Include(x => x.Address.City.State)
+                        .Include(x => x.Contacts)
+                        .Where(x => x.RegisterEmployee.BusinessId == businessId
+                        && (x.InsertDate.Date >= startDate.Date && x.InsertDate.Date <= endDate.Date))
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToListAsync();
+                }
+                return await _context.Supplier
+                        .Include(x => x.RegisterEmployee)
+                        .Include(x => x.Address.City.State)
+                        .Include(x => x.Contacts)
+                        .Where(x => x.RegisterEmployee.BusinessId == businessId
+                        && x.InsertDate.Date >= startDate.Date && x.InsertDate.Date <= endDate.Date)
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToListAsync();
+            }
+            catch (Exception e)
+            {
+                throw new Exception(e.Message);
+            }
+        }
+
+        public async Task<IPagedList<Supplier>> FindAllsPagedListAsync(int? page, int? numberPerPage, string search, DateTime startDate, DateTime endDate, int businessId)
+        {
+            try
+            {
+                int Page = page ?? 1;
+                int quantity = numberPerPage ?? 10;
+                if (!string.IsNullOrEmpty(search))
+                {
+                    return await _context.Supplier.AsQueryable()
+                        .Include(x => x.RegisterEmployee)
+                        .Include(x => x.Address)
+                        .Include(x => x.Contacts)
+                        .Where(x => x.RegisterEmployee.BusinessId == businessId
+                        && (x.InsertDate.Date >= startDate.Date && x.InsertDate.Date <= endDate.Date))
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToPagedListAsync<Supplier>((int)Page, quantity);
+                }
+                return await _context.Supplier.AsQueryable()
+                        .Include(x => x.RegisterEmployee)
+                        .Include(x => x.Address)
+                        .Include(x => x.Contacts)
+                        .Where(x => x.RegisterEmployee.BusinessId == businessId
+                        && x.InsertDate.Date >= startDate.Date && x.InsertDate.Date <= endDate.Date)
+                        .OrderByDescending(x => x.InsertDate)
+                        .ToPagedListAsync<Supplier>(Page, quantity);
+            }
+            catch (Exception e)
+            {
                 throw new Exception(e.Message);
             }
         }

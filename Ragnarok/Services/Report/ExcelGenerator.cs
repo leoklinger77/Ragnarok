@@ -40,6 +40,13 @@ namespace Ragnarok.Services.Report
                         case "Ragnarok.Models.ClientJuridical":
                             path = GeneratorClient.SheetsClient((List<Client>)(Object)list, caminhoArqCotacoes, name);
                             break;
+                        //supplier
+                        case "Ragnarok.Models.SupplierPhysical":
+                            path = GeneratorSupplier.SheetsSupplier((List<Supplier>)(Object)list, caminhoArqCotacoes, name);
+                            break;
+                        case "Ragnarok.Models.SupplierJuridical":
+                            path = GeneratorSupplier.SheetsSupplier((List<Supplier>)(Object)list, caminhoArqCotacoes, name);
+                            break;
                     }
                     return path;
                 }
